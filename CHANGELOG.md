@@ -1,3 +1,10 @@
+# 1.0.0 (2024-11-07)
+
+
+### Features
+
+* release ([959640d](https://github.com/OpenCommissioning/OC_Unity_Core/commit/959640d86566c5c00e6c2e175679b844172ad2fb))
+
 # 1.0.0 (2024-11-06)
 
 
