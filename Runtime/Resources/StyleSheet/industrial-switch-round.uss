@@ -1,0 +1,88 @@
+.switch-round-background {
+    flex-grow: 1;
+    background-color: rgb(80, 80, 80);
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.switch-round {
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    flex-grow: 1;
+    background-color: rgb(144, 144, 144);
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.switch-rotation-base {
+    flex-grow: 0;
+    align-items: center;
+    justify-content: center;
+    width: 8px;
+    height: 40px;
+    flex-shrink: 0;
+    background-color: rgb(0, 0, 0);
+}
+
+.switch-rotation-pointer {
+    background-color: rgb(255, 255, 255);
+    width: 4px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 10px;
+    align-items: center;
+    justify-content: center;
+    translate: 0 -14px;
+}
+
+.switch-rotation-index {
+    width: 10px;
+    height: 10px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    color: rgb(255, 255, 255);
+    max-width: 10px;
+    max-height: 10px;
+    min-height: 10px;
+    min-width: 10px;
+    font-size: 8px;
+    -unity-text-align: middle-left;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+}

@@ -1,0 +1,25 @@
+{
+    "name": "OC.Editor.Tests",
+    "rootNamespace": "OC.Editor.Tests",
+    "references": [
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:47fad80190177a94f917a02743203241",
+        "GUID:3b4286cfcf2bfc24395a8d834c659111"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

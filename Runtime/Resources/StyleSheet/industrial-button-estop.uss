@@ -1,0 +1,43 @@
+.button-base {
+    flex-grow: 0;
+    background-color: rgb(231, 216, 7);
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.button {
+    flex-grow: 1;
+    background-color: rgb(71, 96, 134);
+    border-radius: 100px;
+    margin: 10px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background-image: resource('Icons/Button_Estop_off');
+}
+
+.button:active {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    background-image: resource('Icons/Button_Estop_on');
+}
+
+.button-active {
+    background-image: resource('Icons/Button_Estop_on');
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Type>
+	<Entry Type="UINT32" Key="MDS_UniqueId">00000000</Entry>
+	<Entry Type="CHARS" Key="Chars Data 1">RFID</Entry>
+	<Entry Type="BYTES" Key="Bytes Data 1">0x22</Entry>
+	<Entry Type="INT16" Key="Int Data 1">23</Entry>
+	<Entry Type="INT32" Key="Int Data 2">234253</Entry>
+	<Entry Type="UINT16" Key="Int Data 3">24</Entry>
+	<Entry Type="UINT32" Key="Int Data 4">2452566</Entry>
+</Type>

@@ -1,0 +1,19 @@
+{
+    "name": "OC.Editor",
+    "rootNamespace": "OC",
+    "references": [
+        "GUID:47fad80190177a94f917a02743203241",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

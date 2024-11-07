@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/com.open-commissioning.core/Runtime/Resources/StyleSheet/industrial-switch-round.uss?fileID=7433441132597879392&amp;guid=2f3d04f01ff14e08842097bb524ff954&amp;type=3#industrial-switch-round" />
+    <Style src="project://database/Assets/com.open-commissioning.core/Runtime/Resources/StyleSheet/industrial-panel.uss?fileID=7433441132597879392&amp;guid=1a28cd0fdefead1499acd0f8d13fc3d4&amp;type=3#industrial-panel" />
+    <ui:VisualElement name="container" class="item-container">
+        <ui:VisualElement name="base" class="item-interaction-base">
+            <ui:VisualElement tooltip="00000" name="container" class="switch-round-background">
+                <ui:VisualElement name="switch-rotary" class="switch-round">
+                    <ui:VisualElement name="knob" class="switch-rotation-base">
+                        <ui:VisualElement name="pointer" class="switch-rotation-pointer" style="position: relative; left: 0; top: 0; right: 0;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Label picking-mode="Ignore" name="index" text="0" class="switch-rotation-index" style="min-width: 10px;" />
+        </ui:VisualElement>
+        <ui:Label text="AUTOMATIC START" display-tooltip-when-elided="true" enable-rich-text="true" name="label" class="item-label" />
+    </ui:VisualElement>
+</ui:UXML>

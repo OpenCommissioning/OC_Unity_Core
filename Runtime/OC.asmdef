@@ -1,0 +1,23 @@
+{
+    "name": "OC",
+    "rootNamespace": "OC",
+    "references": [
+        "Unity.TextMeshPro",
+        "NaughtyAttributes.Core",
+        "NaughtyAttributes.Editor",
+        "UniTask"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

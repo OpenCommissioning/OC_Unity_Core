@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <uie:Toolbar style="justify-content: space-between; align-items: center; flex-shrink: 1;">
+        <uie:ToolbarMenu display-tooltip-when-elided="true" text="File" style="flex-shrink: 0;" />
+    </uie:Toolbar>
+    <ui:VisualElement name="file">
+        <ui:Label text="File Name" display-tooltip-when-elided="true" name="name" style="font-size: 16px; -unity-text-align: middle-center; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;" />
+        <ui:DropdownField label="Directory" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="directory" />
+        <ui:ListView show-foldout-header="false" name="list" show-border="true" show-add-remove-footer="false" show-bound-collection-size="false" horizontal-scrolling="false" virtualization-method="DynamicHeight" reorderable="false" picking-mode="Ignore" focusable="true" fixed-item-height="30" show-alternating-row-backgrounds="ContentOnly" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;" />
+        <ui:Button text="Overwrite" display-tooltip-when-elided="true" name="overwrite" />
+    </ui:VisualElement>
+    <ui:VisualElement name="empty" style="flex-grow: 1;">
+        <ui:VisualElement style="flex-direction: column; flex-grow: 1; align-items: center; justify-content: center;">
+            <ui:Label text="Product Data is not selected.&#10;Select GameObject with PayloadTag in hierarchy.&#10;Viewer is active only in Play Mode.&#10;" display-tooltip-when-elided="true" style="align-items: center; justify-content: center; -unity-text-align: upper-center; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

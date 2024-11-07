@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/com.open-commissioning.core/Runtime/Resources/StyleSheet/industrial-panel.uss?fileID=7433441132597879392&amp;guid=1a28cd0fdefead1499acd0f8d13fc3d4&amp;type=3#industrial-panel" />
+    <Style src="project://database/Assets/com.open-commissioning.core/Runtime/Resources/StyleSheet/industrial-button.uss?fileID=7433441132597879392&amp;guid=938d094e89bc23445ae623e4857b0773&amp;type=3#industrial-button" />
+    <ui:VisualElement name="container" class="knob-container item-container">
+        <ui:VisualElement name="base" class="item-interaction-base">
+            <ui:VisualElement name="lamp" class="button-background" style="border-top-width: 6px; border-right-width: 6px; border-bottom-width: 6px; border-left-width: 6px; border-left-color: rgb(79, 79, 79); border-right-color: rgb(79, 79, 79); border-top-color: rgb(79, 79, 79); border-bottom-color: rgb(79, 79, 79);" />
+        </ui:VisualElement>
+        <ui:Label text="AUTOMATIC START" display-tooltip-when-elided="true" enable-rich-text="true" name="label" class="item-label" />
+    </ui:VisualElement>
+</ui:UXML>

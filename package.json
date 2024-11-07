@@ -1,0 +1,27 @@
+{
+  "name": "com.open-commissioning.core",
+  "version": "1.0.0",
+  "displayName": "Open Commissioning",
+  "description": "Open Commissioning is an open source framework for virtual commissioning. The goal is to provide an open platform for testing and commissioning of PLC code using a virtual model.",
+  "unity": "2022.3",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "author": {
+    "name": "SpiraTec AG",
+    "email": [
+      "michael.kasseckert@spiratec.com",
+      "viktor.gaponenko@spiratec.com",
+      "jan.nagel@spiratec.com",
+      "moritz.langer@spiratec.com"
+    ],
+    "url": "https://www.spiratec.com/en/contact/"
+  },
+  "samples": [
+    {
+      "displayName": "Demo",
+      "description": "Demo scenes with basic components",
+      "path": "Samples~/Demo"
+    }
+  ]
+}
