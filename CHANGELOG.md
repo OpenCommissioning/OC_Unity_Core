@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.0.0...v1.0.1) (2024-11-07)
+
+
+### Bug Fixes
+
+* Demo Samples material ([c824809](https://github.com/OpenCommissioning/OC_Unity_Core/commit/c8248092f4a5f20556c80dd5620c160f86cf4098))
+* product data directory path for demo ([aa97bb6](https://github.com/OpenCommissioning/OC_Unity_Core/commit/aa97bb6f34996a683050f54c7c7d10b8d9488b54))
+
 # 1.0.0 (2024-11-07)
 
 
