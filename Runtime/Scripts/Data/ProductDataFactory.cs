@@ -29,14 +29,17 @@ namespace OC.Data
                         continue;
                     }
                     string directory;
+                    var configuredPath = ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryId].Path;
                     
-                    if (Path.IsPathRooted(ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryId].Path))
+                    if (configuredPath.StartsWith("streamingassets:", StringComparison.OrdinalIgnoreCase))
                     {
-                        directory = ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryId].Path;
+                        var relativePath = configuredPath.Substring("streamingassets:".Length).TrimStart('/','\\');
+                        directory = Path.Combine(Application.streamingAssetsPath, relativePath);
+                        Directory.CreateDirectory(directory);
                     }
                     else
                     {
-                        directory = $"{Application.dataPath}\\{ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryId].Path}";
+                        directory = configuredPath;
                     }
                     
                     CreateProductDataFile(payloadTag, directory, content); 
