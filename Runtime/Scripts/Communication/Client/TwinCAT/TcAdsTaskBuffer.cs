@@ -60,7 +60,25 @@ namespace OC.Communication.TwinCAT
             _isConnected = false;
             Logging.Logger.Log(LogType.Log, $"TcAds Task Client is <color=red>disconnected</color> from {_netId}:{_port}");
         }
-
+        
+        public void Read()
+        {
+            if (!_isConnected) return;
+            if (!_adsClient.IsConnected) return;
+            if (_inputBuffer.Length == 0) return;
+            
+            _adsClient.Read(_addrGroup, ADDR_OFFSET_INPUTS, _inputBuffer, 0, _inputBuffer.Length);
+        }
+        
+        public void Write()
+        {
+            if (!_isConnected) return;
+            if (!_adsClient.IsConnected) return;
+            if (_inputBuffer.Length == 0) return;
+            
+            _adsClient.Write(_addrGroup, ADDR_OFFSET_OUTPUTS, _outputBuffer, 0, _outputBuffer.Length);
+        }
+        
         private void Initialize()
         {
             var symbolLoaderSettings = new SymbolLoaderSettings(SymbolsLoadMode.Flat);
@@ -111,19 +129,6 @@ namespace OC.Communication.TwinCAT
                 variables.Add(new ClientVariable(buffer, name, length, offset));
                 offset += length;
             }
-        }
-
-        public void Read()
-        {
-            if (!_isConnected) return;
-            _adsClient.Read(_addrGroup, ADDR_OFFSET_INPUTS, _inputBuffer, 0, _inputBuffer.Length);
-        }
-        
-        public void Write()
-        {
-            if (!_isConnected) return;
-            if (!_adsClient.IsConnected) return;
-            _adsClient.Write(_addrGroup, ADDR_OFFSET_OUTPUTS, _outputBuffer, 0, _outputBuffer.Length);
         }
 
         private void WriteNullData()
