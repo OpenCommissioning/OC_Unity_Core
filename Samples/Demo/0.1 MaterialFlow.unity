@@ -3851,7 +3851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _productDataDirectories:
   - Name: RFID
-    Path: Samples\Open Commissioning\1.0.1\Demo\Data\RFID
+    Path: streamingassets:Data/RFID
 --- !u!1 &1629764384
 GameObject:
   m_ObjectHideFlags: 0
