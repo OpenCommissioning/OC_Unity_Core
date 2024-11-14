@@ -1,6 +1,6 @@
 {
   "name": "com.open-commissioning.core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Open Commissioning",
   "description": "Open Commissioning is an open source framework for virtual commissioning. The goal is to provide an open platform for testing and commissioning of PLC code using a virtual model.",
   "unity": "2022.3",
