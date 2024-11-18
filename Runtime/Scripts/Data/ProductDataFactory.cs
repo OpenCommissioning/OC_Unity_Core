@@ -15,8 +15,8 @@ namespace OC.Data
         private const string TEMPLATE_NAME = "Type";
         private const string DATA_NAME = "ID";
         private const string TAG_UNIQUE_ID = "UniqueId";
+        private const string STREAMING_ASSETS_PREFIX = "streamingassets:";
         
-
         public static void CreateProductData(this PayloadTag payloadTag, Dictionary<string, string> content = null)
         {
             try
@@ -29,14 +29,16 @@ namespace OC.Data
                         continue;
                     }
                     string directory;
+                    var configuredPath = ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryId].Path;
                     
-                    if (Path.IsPathRooted(ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryId].Path))
+                    if (configuredPath.StartsWith(STREAMING_ASSETS_PREFIX, StringComparison.OrdinalIgnoreCase))
                     {
-                        directory = ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryId].Path;
+                        var relativePath = configuredPath.Substring(STREAMING_ASSETS_PREFIX.Length).TrimStart('/','\\');
+                        directory = Path.Combine(Application.streamingAssetsPath, relativePath);
                     }
                     else
                     {
-                        directory = $"{Application.dataPath}\\{ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryId].Path}";
+                        directory = configuredPath;
                     }
                     
                     CreateProductDataFile(payloadTag, directory, content); 
