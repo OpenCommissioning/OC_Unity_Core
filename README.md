@@ -821,7 +821,8 @@ with a `Payload Tag` is created using a [`Source`](#source) component, a corresp
 named after the [`Payload`](#payload)
 _unique ID_. This file initially contains default values derived from a template.
 The locations for both the template file and the generated tag file are defined in the _Directory Id_ property of
-the component, which corresponds to the index of the Product `Data Directory Manager`.
+the component, which corresponds to the index of the Product `Data Directory Manager`. When the path begins with the prefix `streamingassets:`, 
+the path will be interpreted as relative to the [StreamingAssets](https://docs.unity3d.com/Manual/StreamingAssets.html) folder.
 
 ![PayloadTag_Inspector.png](Documentation%2FImages%2FPayloadTag_Inspector.png)
 
