@@ -64,6 +64,8 @@ namespace OC.Communication.TwinCAT
         public void Read()
         {
             if (!_isConnected) return;
+            if (!_adsClient.IsConnected) return;
+            if (_inputSymbols.Count == 0) return;
             
             _adsClient.ReadWrite(
                 0xF080, 
@@ -80,6 +82,7 @@ namespace OC.Communication.TwinCAT
         {
             if (!_isConnected) return;
             if (!_adsClient.IsConnected) return;
+            if (_outputSymbols.Count == 0) return;
             
             _adsClient.ReadWrite(
                 0xF081, 
@@ -107,22 +110,25 @@ namespace OC.Communication.TwinCAT
 
             foreach (var symbol in symbols)
             {
-                if (string.IsNullOrEmpty(symbol.Comment)) continue;
-                if (!symbol.Comment.ToLower().Contains("{simulation-interface}")) continue;
+                if (!symbol.InstancePath.Contains(_client.RootName)) continue;
+                if (!symbol.Attributes.TryGetAttribute("simulation_interface", out _)) continue;
+                if (!symbol.Attributes.TryGetAttribute("TcAddressType", out var attribute)) continue;
                 
-                if (symbol.Attributes.TryGetAttribute("TcAddressType", out var attribute))
+                switch (attribute.Value.ToLower())
                 {
-                    if (attribute.Value.ToLower() == "output")
+                    case "output":
                     {
                         _inputSymbols.Add((IAdsSymbol)symbol);
                         _inputSize += symbol.ByteSize;
                         if (_client.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : TcOutput");
+                        break;
                     }
-                    else if (attribute.Value.ToLower() == "input")
+                    case "input":
                     {
                         _outputSymbols.Add((IAdsSymbol)symbol);
                         _outputSize += symbol.ByteSize;
                         if (_client.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : TcInput");
+                        break;
                     }
                 }
             }
