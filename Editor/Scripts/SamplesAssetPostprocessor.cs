@@ -1,43 +1,54 @@
+using System;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
 
-public class SamplesAssetPostprocessor : AssetPostprocessor
+namespace OC.Editor
 {
-    const string FILE_NAME = "Type0.xml";
-    const string SOURCE_PATH = @"Packages/com.open-commissioning.core/Samples~/Demo/Data/RFID";
-    const string DESTINATION_PATH = "Data/RFID"; // relative to StreamingAssets
-
-    private static void OnPostprocessAllAssets(
-        string[] importedAssets,
-        string[] deletedAssets,
-        string[] movedAssets,
-        string[] movedFromAssetPaths)
+    public class SamplesAssetPostprocessor : AssetPostprocessor
     {
-        if (importedAssets.Length == 0 || !importedAssets[0].StartsWith($"Assets/Samples/Open Commissioning")) return;
-        CopyTemplateFile();
-    }
-
-    private static void CopyTemplateFile()
-    {
-        if (!Directory.Exists(Application.streamingAssetsPath))
-            Directory.CreateDirectory(Application.streamingAssetsPath);
-
-        var targetDirectory = Path.Combine(Application.streamingAssetsPath, DESTINATION_PATH);
-        if (!Directory.Exists(targetDirectory)) Directory.CreateDirectory(targetDirectory);
-
-        var sourcePath = Path.Combine(Path.GetFullPath(SOURCE_PATH), FILE_NAME);
-        var destinationPath = Path.Combine(targetDirectory, FILE_NAME);
-
-        try
+        private const string DATA_PATH = "Demo/Data/RFID";
+        private const string SAMPLE_IDENTIFIER = "Samples/Open Commissioning/";
+        private static void OnPostprocessAllAssets(
+            string[] importedAssets,
+            string[] deletedAssets,
+            string[] movedAssets,
+            string[] movedFromAssetPaths)
         {
-            if (!File.Exists(sourcePath)) return;
-            if (!File.Exists(destinationPath))
-                File.Copy(sourcePath, destinationPath, true);
+            if (Directory.Exists(Path.Combine(Application.streamingAssetsPath, DATA_PATH))) return;
+            if (importedAssets.Length == 0 || !importedAssets[0].StartsWith("Assets/"+SAMPLE_IDENTIFIER)) return;
+
+            var splits = importedAssets[0].Split('/');
+            var versionString = splits[3];
+
+            var sourceFullPath = Path.Combine(Path.GetFullPath(Application.dataPath), "Samples/Open Commissioning/", versionString, DATA_PATH);
+
+            MoveTemplateFiles(sourceFullPath);
+
+            var deletePath = Directory.GetParent(sourceFullPath)!.FullName;
+            FileUtil.DeleteFileOrDirectory(deletePath);
+            FileUtil.DeleteFileOrDirectory(deletePath + ".meta");
+            AssetDatabase.Refresh();
         }
-        catch (System.Exception e)
+
+        private static void MoveTemplateFiles(string sourceFullPath)
         {
-            Debug.LogError($"Error copying file to StreamingAssets: {e.Message}");
+            var targetDirectory = Path.Combine(Application.streamingAssetsPath, DATA_PATH);
+
+            if (!Directory.Exists(targetDirectory)) Directory.CreateDirectory(targetDirectory);
+
+            try
+            {
+                foreach (var file in Directory.GetFiles(sourceFullPath))
+                {
+                    var targetFileName = Path.Combine(targetDirectory, Path.GetFileName(file));
+                    File.Move(file, targetFileName);
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Error moving files to StreamingAssets: {e.Message}");
+            }
         }
     }
 }
