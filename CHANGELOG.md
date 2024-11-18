@@ -1,3 +1,14 @@
+## [1.0.2](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.0.1...v1.0.2) (2024-11-18)
+
+
+### Bug Fixes
+
+* ads filter with custom attribute ([11fe54f](https://github.com/OpenCommissioning/OC_Unity_Core/commit/11fe54fce06ad81b126f88bde485f469defdd05b))
+* copy product data template to StreamingAssets on sample import ([0fe9ce4](https://github.com/OpenCommissioning/OC_Unity_Core/commit/0fe9ce4cf3c393a2e97677748e5e98aa1e6e3c92))
+* fixed data path in demo scene ([197c0d7](https://github.com/OpenCommissioning/OC_Unity_Core/commit/197c0d74beb3016abb50b8546e6b305c7b2f3cff))
+* improved path for product data directories ([290a5c6](https://github.com/OpenCommissioning/OC_Unity_Core/commit/290a5c62b08cbaf7747c4266c0f04a90d7fbd9f4))
+* move whole data directory from samples to streamingassets ([21642f7](https://github.com/OpenCommissioning/OC_Unity_Core/commit/21642f7d97eb12866822683244701528bbe022c4))
+
 ## [1.0.1](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.0.0...v1.0.1) (2024-11-07)
 
 
