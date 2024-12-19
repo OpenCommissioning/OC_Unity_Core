@@ -14,18 +14,13 @@ namespace OC
     [Icon(ICON)]
     public class SceneInteractionTool : EditorTool
     {
-        public const string ICON = "d_EventTrigger Icon";
-        
-        private readonly RaycastHit[] _hits = new RaycastHit[10];
-        private Interaction _activeInteraction;
-
-        [SerializeField]
-        private List<Interaction> _hitInteractions = new ();
-        [SerializeField]
-        private int[] _outlineRenderers;
-
         private readonly LayerMask _layerMask = 1 << (int)DefaultLayers.Interactions;
+        private readonly RaycastHit[] _hits = new RaycastHit[10];
+        private readonly List<Interaction> _hitInteractions = new ();
         private int _hitsCount;
+        private Interaction _activeInteraction;
+        private int[] _outlineRenderers = Array.Empty<int>();
+        private const string ICON = "d_EventTrigger Icon";
         
         [Shortcut("Scene Interaction Tool", typeof(SceneView), KeyCode.I)]
         private static void SceneViewInteractionShortcut()
