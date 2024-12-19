@@ -11,8 +11,11 @@ using UnityEngine.EventSystems;
 namespace OC
 {
     [EditorTool("Scene Interaction")]
+    [Icon(ICON)]
     public class SceneInteractionTool : EditorTool
     {
+        public const string ICON = "d_EventTrigger Icon";
+        
         private readonly RaycastHit[] _hits = new RaycastHit[10];
         private Interaction _activeInteraction;
 
