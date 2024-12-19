@@ -6,10 +6,9 @@ namespace OC.Interactions
     [Flags]
     public enum InteractionState
     {
-        Disabled = 1,
-        Enabled = 2,
-        Selected = 4,
-        Hovered = 8
+        Idle = 1,
+        Hovered = 2,
+        Selected = 4
     }
 
     public static class InteractionStateExtension

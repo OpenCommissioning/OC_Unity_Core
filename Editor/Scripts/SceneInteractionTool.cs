@@ -14,10 +14,12 @@ namespace OC
     public class SceneInteractionTool : EditorTool
     {
         private readonly RaycastHit[] _hits = new RaycastHit[10];
+        private Interaction _activeInteraction;
 
         [SerializeField]
         private List<Interaction> _hitInteractions = new ();
-        private Interaction _activeInteraction;
+        [SerializeField]
+        private int[] _outlineRenderers;
 
         private readonly LayerMask _layerMask = 1 << (int)DefaultLayers.Interactions;
         private int _hitsCount;
@@ -43,14 +45,7 @@ namespace OC
         public override void OnWillBeDeactivated()
         {
             SceneView.lastActiveSceneView.ShowNotification(new GUIContent("Scene Interaction Deactivated"), .1f);
-            
-            _hitInteractions.Clear();
-            if (_activeInteraction != null)
-            {
-                _activeInteraction.OnPointerExit(null);
-                _activeInteraction.OnDeselect(null);
-            }
-            _activeInteraction = null;
+            ResetHit();
         }
 
         public override void OnToolGUI(EditorWindow window)
@@ -59,48 +54,16 @@ namespace OC
             if (window is not SceneView) return;
 
             var currentEvent = Event.current;
+
+            if (currentEvent.type == EventType.Repaint)
+            {
+                Handles.DrawOutline(_outlineRenderers, Color.white, 0.05f);
+            }
+            
             if (currentEvent.type is not (EventType.MouseMove or EventType.MouseUp or EventType.MouseDown)) return;
             if (currentEvent.button != 0) return;
 
-            Array.Clear(_hits, 0, _hitsCount);
-            _hitInteractions.Clear();
-                
-            var ray = HandleUtility.GUIPointToWorldRay(currentEvent.mousePosition);
-            _hitsCount = Physics.RaycastNonAlloc(ray, _hits, 500, _layerMask);
-
-            if (_hitsCount == 0)
-            {
-                ResetHit();
-                currentEvent.Use();
-                return;
-            }
-                
-            var hits = _hits.OrderBy(hit => hit.distance);
-            foreach (var raycast in hits)
-            {
-                if (raycast.distance < Utils.TOLERANCE) continue;
-                if (raycast.collider.gameObject.TryGetComponent<Interaction>(out var interaction))
-                {
-                    _hitInteractions.Add(interaction);
-                }
-            }
-                
-            if (_hitInteractions.Count < 1)
-            {
-                ResetHit();
-                currentEvent.Use();
-                return; 
-            }
-            
-            if (_activeInteraction == _hitInteractions.First())
-            {
-                currentEvent.Use();
-                return;
-            }
-                
-            if (_activeInteraction != null) PointerExitEvent(_activeInteraction);
-            _activeInteraction = _hitInteractions.First();
-            PointerEnterEvent(_activeInteraction);
+            RayCast(currentEvent);
 
             if (currentEvent.type == EventType.MouseDown && currentEvent.button == 0)
             {
@@ -125,6 +88,52 @@ namespace OC
                 currentEvent.Use();
             }
         }
+        
+        private void RayCast(Event currentEvent)
+        {
+            Array.Clear(_hits, 0, _hitsCount);
+            _hitInteractions.Clear();
+                
+            var ray = HandleUtility.GUIPointToWorldRay(currentEvent.mousePosition);
+            _hitsCount = Physics.RaycastNonAlloc(ray, _hits, 500, _layerMask);
+
+            if (_hitsCount == 0)
+            {
+                ResetHit();
+                return;
+            }
+                
+            var hits = _hits.OrderBy(hit => hit.distance);
+            foreach (var raycast in hits)
+            {
+                if (raycast.distance < Utils.TOLERANCE) continue;
+                if (raycast.collider.gameObject.TryGetComponent<Interaction>(out var interaction))
+                {
+                    _hitInteractions.Add(interaction);
+                }
+            }
+                
+            if (_hitInteractions.Count < 1)
+            {
+                ResetHit();
+                return; 
+            }
+            
+            if (_activeInteraction == _hitInteractions.First())
+            {
+                return;
+            }
+                
+            if (_activeInteraction != null) PointerExitEvent(_activeInteraction);
+            _activeInteraction = _hitInteractions.First();
+            PointerEnterEvent(_activeInteraction);
+
+            _outlineRenderers = new int[_activeInteraction.Renderers.Count];
+            for (var i = 0; i < _activeInteraction.Renderers.Count; i++)
+            {
+                _outlineRenderers[i] = _activeInteraction.Renderers[i].GetInstanceID();
+            }
+        }
 
         private void ResetHit()
         {
@@ -135,6 +144,7 @@ namespace OC
             }
             
             _hitInteractions.Clear();
+            Array.Clear(_outlineRenderers, 0, _outlineRenderers.Length);
             _activeInteraction = null;
         }
         
