@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -49,22 +50,24 @@ namespace OC.Interactions
         public UnityEvent OnPointerDownEvent;
         public UnityEvent OnPointerUpEvent;
 
-        private Collider _collider;
         private List<Renderer> _renderers;
         
         protected void Awake()
         {
             _renderers = GetComponentsInChildren<Renderer>().ToList();
-            _collider = GetComponent<Collider>();
-            _collider.isTrigger = true;
-            gameObject.layer = (int)DefaultLayers.Interactions;
         }
 
         protected void OnDestroy()
         {
             OnDestroyAction?.Invoke();
         }
-        
+
+        private void Reset()
+        {
+            BoundColliderSize();
+            gameObject.layer = (int)DefaultLayers.Interactions;
+        }
+
         [Flags]
         public enum InteractionMode
         {
@@ -121,6 +124,17 @@ namespace OC.Interactions
             if (!isActiveAndEnabled) return;
             if (_debug) Debug.Log("Event: OnPointerUp", this);
             if (_mode.HasFlag(InteractionMode.Click)) OnPointerUpEvent?.Invoke();
+        }
+
+        [Button]
+        public void BoundColliderSize()
+        {
+            var bounds = Utils.GetLocalBoundsForChildrenMeshes(gameObject);
+
+            var boxCollider = GetComponent<BoxCollider>();
+            boxCollider.isTrigger = true;
+            boxCollider.center = bounds.center;
+            boxCollider.size = bounds.size;
         }
     }
 }
