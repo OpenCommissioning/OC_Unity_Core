@@ -39,6 +39,8 @@ namespace OC.Interactions
         private InteractionMode _mode = InteractionMode.Hover | InteractionMode.Click;
         [SerializeField]
         protected GameObject _target;
+        [SerializeField]
+        protected bool _debug;
 
         public event Action OnDestroyAction;
         public UnityEvent OnPointerClickEvent;
@@ -109,42 +111,49 @@ namespace OC.Interactions
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (_debug) Debug.Log("Event: OnPointerEnter", this);
             if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_mode.HasFlag(InteractionMode.Hover)) _state.Value = _state.Value.SetFlag(InteractionState.Hovered);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (_debug) Debug.Log("Event: OnPointerExit", this);
             if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_mode.HasFlag(InteractionMode.Hover)) _state.Value = _state.Value.RemoveFlag(InteractionState.Hovered);
         }
 
         public void OnSelect(BaseEventData eventData)
         {
+            if (_debug) Debug.Log("Event: OnSelect", this);
             if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_mode.HasFlag(InteractionMode.Selection)) _state.Value = _state.Value.SetFlag(InteractionState.Selected);
         }
 
         public void OnDeselect(BaseEventData eventData)
         {
+            if (_debug) Debug.Log("Event: OnDeselect", this);
             if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_mode.HasFlag(InteractionMode.Selection)) _state.Value = _state.Value.RemoveFlag(InteractionState.Selected);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (_debug) Debug.Log("Event: OnPointerClick", this);
             if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_mode.HasFlag(InteractionMode.Click)) OnPointerClickEvent?.Invoke();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (_debug) Debug.Log("Event: OnPointerDown", this);
             if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_mode.HasFlag(InteractionMode.Click)) OnPointerDownEvent?.Invoke();
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (_debug) Debug.Log("Event: OnPointerUp", this);
             if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_mode.HasFlag(InteractionMode.Click)) OnPointerUpEvent?.Invoke();
         }
