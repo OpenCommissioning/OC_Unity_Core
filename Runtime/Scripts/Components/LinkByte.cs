@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace OC.Components
 {
-    [AddComponentMenu("Open Commissioning/Interaction/Link Byte")]
+    [AddComponentMenu("Open Commissioning/Links/Link Byte")]
     public class LinkByte : MonoComponent, IDevice
     {
         public Link Link => _link;

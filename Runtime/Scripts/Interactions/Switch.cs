@@ -48,6 +48,8 @@ namespace OC.Interactions
 
         public void Click()
         {
+            if (!Application.isPlaying) return;
+            
             if (_stateCount < 1)
             {
                 Logging.Logger.Log(LogType.Warning,"Position count < 1",this);

@@ -909,6 +909,33 @@ where the tag content is stored in a file and managed through the Tag Reader's _
 The [`Payload Data`](#payload-data) and [`Payload Data Reader`](#payload-data-reader) deal with the [`Payload`](#payload)'s internal properties,
 which are made accessible to _TwinCAT_ through the [`Sensor Analog`](#sensor-analog) component.
 
+## Scene View Interactions
+
+Interactions with components in the Scene View are managed through the [`Interaction`](#interaction) Script. 
+To activate interaction mode, simply press the `I` shortcut key. Alternatively, use a toolbar toggle button. 
+When Interaction mode is enabled, the standard Editor Handles are disabled.
+
+![InteractionMode_Toolbar.PNG](Documentation%2FImages%2FInteractionMode_Toolbar.PNG)
+
+### Interaction
+
+The Interaction Script handles mouse events such as _Hover_, _Click_, _PointerDown_, and _PointerUp_ on this GameObject. 
+A `Collider` must be defined for these interactions to work.
+The script assigns the GameObject's layer to _Interaction_. (See ['Setting Up a New Project'](#setting-up-a-new-project))
+
+![Interaction_Inspector.PNG](Documentation%2FImages%2FInteraction_Inspector.PNG)
+
+**Properties**:
+
+- Config: 
+    - Mode: Specify which events will be handled
+    - Target: The target GameObject is used to bind the UI to a specific component
+    - Debug: Display event debug logs
+
+- Functions:
+    - Events: Unity events for handling mouse interactions
+    - Bound Collider Size: Recalculate the size of the Box Collider based on the combined mesh dimensions of the child objects.
+
 
 ## Connection to _TwinCAT_
 
