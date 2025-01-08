@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 namespace OC.Interactions
 {
-    [AddComponentMenu("Open Commissioning/Interaction")]
+    [AddComponentMenu("Open Commissioning/Interactions/Interaction")]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(BoxCollider))]
     public class Interaction : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
