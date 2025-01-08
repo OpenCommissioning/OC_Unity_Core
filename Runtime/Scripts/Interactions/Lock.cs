@@ -30,7 +30,7 @@ namespace OC.Interactions
         [SerializeField]
         private List<Door> _doors = new ();
         [SerializeField]
-        private List<Button> _buttons = new ();
+        private List<Device> _buttons = new ();
 
         public UnityEvent<bool> OnLockChanged;
         public UnityEvent<bool> OnClosedChanged;
@@ -73,10 +73,18 @@ namespace OC.Interactions
         {
             _lock.OnValidate();
             
-            if (_buttons.Count > 8)
+            var index = 0;
+            foreach (var item in _buttons)
             {
-                Logging.Logger.Log(LogType.Warning, "Buttons max count is 8", this);
-                _buttons.RemoveRange(8, _buttons.Count - 8);
+                for (var j = 0; j < item.AllocatedBitLength; j++)
+                {
+                    index++;
+                }
+            }
+            
+            if (index > 8)
+            {
+                Logging.Logger.Log(LogType.Error, "Interface length is exceeded! Max length is 8 bit", this);
             }
         }
 
@@ -117,10 +125,15 @@ namespace OC.Interactions
 
         private void UpdateButtons()
         {
-            for (var i = 0; i < _buttons.Count; i++)
+            var index = 0;
+            foreach (var item in _buttons)
             {
-                _buttons[i].Connector.Control.SetBit(0, _connector.ControlData.GetBit(i));
-                _connector.StatusData.SetBit(i, _buttons[i].Connector.Status.GetBit(0));
+                for (var j = 0; j < item.AllocatedBitLength; j++)
+                {
+                    _connector.StatusData.SetBit(index,item.Connector.Status.GetBit(j));
+                    item.Connector.Control.SetBit(j,_connector.ControlData.GetBit(index));
+                    index++;
+                }
             }
         }
     }
