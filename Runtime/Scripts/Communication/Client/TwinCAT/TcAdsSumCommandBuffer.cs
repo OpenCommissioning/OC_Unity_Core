@@ -112,20 +112,21 @@ namespace OC.Communication.TwinCAT
             {
                 if (!symbol.InstancePath.Contains(_client.RootName)) continue;
                 if (!symbol.Attributes.TryGetAttribute("simulation_interface", out _)) continue;
-                if (!symbol.Attributes.TryGetAttribute("TcAddressType", out var attribute)) continue;
-                
-                switch (attribute.Value.ToLower())
+
+                var adsSymbol = (IAdsSymbol)symbol;
+
+                switch (adsSymbol.IndexGroup)
                 {
-                    case "output":
+                    case 0xF030:
                     {
-                        _inputSymbols.Add((IAdsSymbol)symbol);
+                        _inputSymbols.Add(adsSymbol);
                         _inputSize += symbol.ByteSize;
                         if (_client.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : TcOutput");
                         break;
                     }
-                    case "input":
+                    case 0xF020:
                     {
-                        _outputSymbols.Add((IAdsSymbol)symbol);
+                        _outputSymbols.Add(adsSymbol);
                         _outputSize += symbol.ByteSize;
                         if (_client.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : TcInput");
                         break;
