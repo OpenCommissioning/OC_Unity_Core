@@ -1,3 +1,24 @@
+# [1.1.0](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.0.2...v1.1.0) (2025-01-08)
+
+
+### Bug Fixes
+
+* interaction contex name ([7e5976f](https://github.com/OpenCommissioning/OC_Unity_Core/commit/7e5976f4c97d200b93b2a1287a8e75785ab8a754))
+* interaction context menu ([0d49e40](https://github.com/OpenCommissioning/OC_Unity_Core/commit/0d49e40618bdd49e9a34afb676228e332a581bc1))
+* interaction reset collider bounds ([a8aa553](https://github.com/OpenCommissioning/OC_Unity_Core/commit/a8aa5536e87d0a7b7e28746046abe7f5ebd245ff))
+* lock devices reference ([c4614f4](https://github.com/OpenCommissioning/OC_Unity_Core/commit/c4614f4a48fdea7c460ebfc0e7e0fd73eb3c0a77))
+* rotary switch click ([c25063b](https://github.com/OpenCommissioning/OC_Unity_Core/commit/c25063b3a32d7d6ef0f40cf185eca68da15f1277))
+* scene interaction tool ([0be8c7f](https://github.com/OpenCommissioning/OC_Unity_Core/commit/0be8c7fce90788436860b021cd5bff8b2b737945))
+* scene interaction tool icon ([30850a3](https://github.com/OpenCommissioning/OC_Unity_Core/commit/30850a33700504e86a939a4366b37978015c82d8))
+* scene interaction tool initialization ([c836542](https://github.com/OpenCommissioning/OC_Unity_Core/commit/c8365421dc444b900c4cd6e5f5c0f7b57ab97f07))
+* scene interaction tool outline ([9532284](https://github.com/OpenCommissioning/OC_Unity_Core/commit/9532284f0ed980cd013566cc6c8d9da74d5a7cc3))
+
+
+### Features
+
+* binary signal ([b27d946](https://github.com/OpenCommissioning/OC_Unity_Core/commit/b27d94683ef9105689374366f6559a05e2f5c70a))
+* Interaction base ([aa19894](https://github.com/OpenCommissioning/OC_Unity_Core/commit/aa19894aba7cc1f2ae321c227d7db3a52ad24ad4))
+
 ## [1.0.2](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.0.1...v1.0.2) (2024-11-18)
 
 
