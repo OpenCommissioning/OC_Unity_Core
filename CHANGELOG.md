@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.0...v1.1.1) (2025-01-08)
+
+
+### Bug Fixes
+
+* use IndexGroup instead of attributes to collect instance variables ([6415f26](https://github.com/OpenCommissioning/OC_Unity_Core/commit/6415f26444ee7a8de5e9244be93985b67867a3d1))
+
 # [1.1.0](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.0.2...v1.1.0) (2025-01-08)
 
 
