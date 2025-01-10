@@ -95,6 +95,11 @@ namespace OC
 
             foreach (var attribute in link.Attributes)
             {
+                if (string.IsNullOrEmpty(attribute.Key))
+                {
+                    Logging.Logger.LogWarning($"Device: {link.Path} {link.Type}: Attribute Key is empty");
+                    continue;
+                }
                 device.Add(new XElement(attribute.Key, attribute.Value));
             }
             
