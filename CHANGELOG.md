@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.1...v1.1.2) (2025-01-10)
+
+
+### Bug Fixes
+
+* **TreeFactory:** empty link attribute key ([68cebcd](https://github.com/OpenCommissioning/OC_Unity_Core/commit/68cebcd5b209577105bad9387f39d5a458d75298))
+
 ## [1.1.1](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.0...v1.1.1) (2025-01-08)
 
 
