@@ -25,7 +25,7 @@ namespace OC.Data
                 {
                     if (!ProductDataDirectoryManager.Instance.Contains(directoryId))
                     {
-                        Logging.Logger.Log(LogType.Warning, $"{TAG} DirectoryId [{directoryId}] isn't contains in Directory Manager! Payload Product Data isn't created!");
+                        Logging.Logger.Log(LogType.Warning, $"DirectoryId [{directoryId}] isn't contains in Directory Manager! Payload Product Data isn't created!");
                         continue;
                     }
                     string directory;
@@ -46,7 +46,7 @@ namespace OC.Data
             }
             catch (Exception exception)
             {
-                Logging.Logger.Log(LogType.Error, exception.Message);
+                Logging.Logger.Log(LogType.Error, $"{TAG}: {exception.Message}");
             }
         }
 
@@ -85,7 +85,7 @@ namespace OC.Data
             }
             
             new XDocument(elem).Save(path);
-            Logging.Logger.Log(LogType.Log, $"{TAG} Template saved as {path}");
+            Logging.Logger.Log(LogType.Log, $"{TAG}: Template saved as {path}");
         }
 
         public static List<EntryData> GetTemplateContent(string path)
@@ -118,11 +118,11 @@ namespace OC.Data
             try
             {
                 var templatePath = Path.Combine(directory, $"{TEMPLATE_NAME}{payloadTag.Payload.TypeId}.xml");
-                if (!File.Exists(templatePath)) throw new Exception($"{TAG} Template Data {templatePath} cannot be found!");
+                if (!File.Exists(templatePath)) throw new Exception($"Template Data {templatePath} cannot be found!");
                 
                 var template = XDocument.Load(templatePath);
                 var file = Path.Combine(directory, $"{DATA_NAME}{payloadTag.Payload.UniqueId}.{DATA_EXTENSION}");
-                if (!File.Exists(file)) throw new Exception($"{TAG} Product Data {file} cannot be found!");
+                if (!File.Exists(file)) throw new Exception($"Product Data {file} cannot be found!");
                 
                 var bytes = File.ReadAllBytes(file);
                 var document = ReadDataBytes(template, bytes);
@@ -162,7 +162,7 @@ namespace OC.Data
 
             try
             {
-                if (!File.Exists(path)) throw new Exception($"{TAG} Product data template not found! {path}");
+                if (!File.Exists(path)) throw new Exception($"Product data template not found! {path}");
                 var template = XDocument.Load(path);
                 var bytes = CreateTemplate(template, content);
                 var file = Path.Combine(directory, payloadTag.GetProductDataPath());
@@ -170,7 +170,7 @@ namespace OC.Data
             }
             catch (Exception exception)
             {
-                Logging.Logger.Log(LogType.Error, exception.Message, payloadTag);
+                Logging.Logger.Log(LogType.Error, $"{TAG}: {exception.Message}", payloadTag);
             }
         }
 
@@ -190,17 +190,17 @@ namespace OC.Data
 
             try
             {
-                if (!File.Exists(path)) throw new Exception($"{TAG} Product Data {path} cannot be found!");
+                if (!File.Exists(path)) throw new Exception($"Product Data {path} cannot be found!");
                 var template = new XDocument(elem);
                 var dictinary = new Dictionary<string, string> { { "Number", payloadTag.Payload.UniqueId.ToString() } };
                 var bytes = CreateTemplate(template, dictinary);
                 File.WriteAllBytes(path, bytes);
-                Logging.Logger.Log(LogType.Log, $"{TAG} Product Data {path} successfully overwritten!");
+                Logging.Logger.Log(LogType.Log, $"Product Data {path} successfully overwritten!");
                 
             }
             catch (Exception exception)
             {
-                Logging.Logger.Log(LogType.Error, exception.Message);
+                Logging.Logger.Log(LogType.Error, $"{TAG}: {exception.Message}");
             }
         }
         
@@ -273,15 +273,42 @@ namespace OC.Data
                 var type = (EntryDataType)Enum.Parse(typeof(EntryDataType), entry.Attribute("Type")?.Value.ToUpper() ?? string.Empty);
                 var bytes = new byte[1];
 
-                if (entry.Attribute("Key") != null)
+                var key = entry.Attribute("Key");
+                if (key != null && content.TryGetValue(key.Value, out var value))
                 {
-                    var key = entry.Attribute("Key")?.Value;
-                    if (key != null && content.ContainsKey(key))
-                        if (content[key].Length == entry.Value.Length || type != EntryDataType.CHARS)
-                            entry.Value = content[key];
+                    if (type == EntryDataType.CHARS)
+                    {
+                        var byteOffset = entry.Value.Length - value.Length;
+                        if (byteOffset >= 0)
+                        {
+                            var entryBytes = Encoding.ASCII.GetBytes(entry.Value);
+                            var contentBytes = Encoding.ASCII.GetBytes(value);
+                            for (var i = 0; i < contentBytes.Length; i++)
+                            {
+                                entryBytes[byteOffset + i] = contentBytes[i];
+                            }
+
+                            entry.Value = Encoding.ASCII.GetString(entryBytes);
+                        }
+                        else
+                        {
+                            throw new Exception($"Product Data [Name:{key.Name} Value:{key.Value} Length: {key.Value.Length}] can't be written in template [Name:{entry.Name} Value:{entry.Value} Length: {entry.Value.Length}]");
+                        }
+                    }
+                    else
+                    {
+                        if (value.Length == entry.Value.Length)
+                        {
+                            entry.Value = value;
+                        }
+                        else
+                        {
+                            throw new Exception($"Product Data [Name:{key.Name} Value:{key.Value} Length: {key.Value.Length}] can't be written in template [Name:{entry.Name} Value:{entry.Value} Length: {entry.Value.Length}]");
+                        }
+                    }
                 }
 
-                entry.Value = entry.Value == "" ? "0" : entry.Value;
+                if (string.IsNullOrEmpty(entry.Value)) entry.Value = "0";
 
                 bytes = type switch
                 {
