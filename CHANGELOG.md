@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.2...v1.1.3) (2025-01-30)
+
+
+### Bug Fixes
+
+* **data:** UniqueId content as CHAR Array ([3c64e69](https://github.com/OpenCommissioning/OC_Unity_Core/commit/3c64e69a053e5056e45cd1e7bbc5399642bb14db))
+
 ## [1.1.2](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.1...v1.1.2) (2025-01-10)
 
 
