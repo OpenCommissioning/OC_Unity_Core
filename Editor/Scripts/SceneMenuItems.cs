@@ -33,13 +33,13 @@ namespace OC.Editor
         [MenuItem("Open Commissioning/Scene/Create Configuration", priority = 20)]
         private static void CreateConfiguration()
         {
-            SceneConfiguration.Create();
+            SceneConfigurationManager.Save();
         }
         
         [MenuItem("Open Commissioning/Scene/Load Configuration", priority = 21)]
         private static void LoadConfiguration()
         {
-            SceneConfiguration.Load();
+            SceneConfigurationManager.Load();
         }
         
         [MenuItem("Open Commissioning/Settings/Apply Default Layers", priority = 100)]

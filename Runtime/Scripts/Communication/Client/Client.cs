@@ -15,11 +15,6 @@ namespace OC.Communication
         public IPropertyReadOnly<bool> IsConnected => _isConnected;
         public abstract IClientBuffer Buffer { get; }
         public string RootName => _rootName;
-        public bool Verbose
-        {
-            get => _verbose;
-            set => _verbose = value;
-        }
         
         public float TimeScale
         {
@@ -33,8 +28,6 @@ namespace OC.Communication
         [Header("Settings")]
         [SerializeField] 
         protected string _rootName = "MAIN";
-        [SerializeField]
-        protected bool _verbose;
 
         [HideInInspector]
         [SerializeField]
