@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.3...v1.1.4) (2025-02-07)
+
+
+### Bug Fixes
+
+* **scene configuration:** add Client ClearBuffer flag + Config serialization ([510feb6](https://github.com/OpenCommissioning/OC_Unity_Core/commit/510feb6c18dc07d33766c6e9662c9acb219343fd))
+
 ## [1.1.3](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.2...v1.1.3) (2025-01-30)
 
 
