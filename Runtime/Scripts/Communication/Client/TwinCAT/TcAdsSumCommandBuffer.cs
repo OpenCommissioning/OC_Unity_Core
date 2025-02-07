@@ -20,7 +20,7 @@ namespace OC.Communication.TwinCAT
         private readonly List<ClientVariable> _outputVariables = new();
         private readonly List<IAdsSymbol> _inputSymbols = new();
         private readonly List<IAdsSymbol> _outputSymbols = new();
-        private readonly Client _client;
+        private readonly TcAdsClient _client;
         private AdsClient _adsClient;
         private string _netId;
         private int _port;
@@ -33,7 +33,7 @@ namespace OC.Communication.TwinCAT
         
         private bool _isConnected;
         
-        public TcAdsSumCommandBuffer(Client client)
+        public TcAdsSumCommandBuffer(TcAdsClient client)
         {
             _client = client;
         }
@@ -54,7 +54,7 @@ namespace OC.Communication.TwinCAT
         
         public void Disconnect()
         {
-            WriteNullData();
+            if (_client.Config.ClearBuffer) WriteNullData();
             Clear();
             _adsClient?.Disconnect();
             _isConnected = false;
@@ -121,14 +121,14 @@ namespace OC.Communication.TwinCAT
                     {
                         _inputSymbols.Add(adsSymbol);
                         _inputSize += symbol.ByteSize;
-                        if (_client.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : TcOutput");
+                        if (_client.Config.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : TcOutput");
                         break;
                     }
                     case 0xF020:
                     {
                         _outputSymbols.Add(adsSymbol);
                         _outputSize += symbol.ByteSize;
-                        if (_client.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : TcInput");
+                        if (_client.Config.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : TcInput");
                         break;
                     }
                 }

@@ -1,164 +1,77 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 using OC.Communication.TwinCAT;
 using OC.Data;
-using UnityEngine.SceneManagement;
-using Object = UnityEngine.Object;
+using Unity.Plastic.Newtonsoft.Json;
+using UnityEngine;
 
 namespace OC.Project
 {
-    public static class SceneConfiguration
+    public class SceneConfiguration
     {
-        private const string CONFIG_FILE_NAME = "Config";
-        private const string TAG = "<color=#b78cf9>Scene Configuration Manager</color>";
-        private const string ROOT = "SceneConfiguration";
-        
-        public static void Create()
+        public string SceneName; 
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        // ReSharper disable once CollectionNeverQueried.Local
+        public List<TcAdsClientConfig> Clients = new ();
+        // ReSharper disable once NotAccessedField.Local
+        public List<ProductDataDirectory> Directories = new ();
+
+        public SceneConfiguration Create(string sceneName)
         {
-            var path = FileBrowser.SaveFilePanel("Create Scene Configuration", Application.streamingAssetsPath, GetFileName(), "json");
-            if (string.IsNullOrEmpty(path))
+            SceneName = sceneName;
+            Clients.Clear();
+            var clients = Object.FindObjectsByType<MonoBehaviour>(sortMode: FindObjectsSortMode.InstanceID).OfType<TcAdsClient>().ToList();
+            foreach (var client in clients)
             {
-                return;
+                Clients.Add(client.Config);
             }
             
-            CreateConfigurationFile(path);
+            var directories = Object.FindObjectsByType<MonoBehaviour>(sortMode: FindObjectsSortMode.InstanceID).OfType<ProductDataDirectoryManager>().ToList();
+            if (directories.Count > 0) Directories = directories[0].ProductDataDirectories;
+            return this;
         }
-        
-        public static void Load()
+
+        public void Save(string path)
         {
-            var paths = FileBrowser.OpenFilePanel("Load Scene Configuration", Application.streamingAssetsPath, "xml", false);
-            if (paths == null || paths.Length == 0)
+            var data = JsonConvert.SerializeObject(this, Formatting.Indented);
+            File.WriteAllText(path, data);
+        }
+
+        public SceneConfiguration Load(string path)
+        {
+            if (!File.Exists(path))
             {
-                return;
+                throw new FileLoadException($"Path: {path} isn't valid!");
             }
             
-            var path = paths[0];
-            if (string.IsNullOrEmpty(path))
-            {
-                return;
-            }
+            using var stream = File.OpenRead(path);
+            var config = JsonConvert.DeserializeObject<SceneConfiguration>(new StreamReader(stream).ReadToEnd());
+            Clients = config.Clients;
+            Directories = config.Directories;
+            return this;
+        }
+
+        public void ApplyToActiveScene()
+        {
+            var clients = Object.FindObjectsByType<TcAdsClient>(sortMode: FindObjectsSortMode.InstanceID).ToList();
+            var productDataDiractoryManagers = Object.FindObjectsByType<ProductDataDirectoryManager>(sortMode: FindObjectsSortMode.InstanceID).ToList();
             
-            LoadConfiguration(path);
-        }
-
-        public static void LoadFromDefaultPath()
-        {
-            var path = GetDefaultFilePath();
-            LoadConfiguration(path);
-        }
-        
-        public static void SaveInDefaultPath()
-        {
-            var path = GetDefaultFilePath();
-            CreateConfigurationFile(path);
-        }
-
-        private static void LoadConfiguration(string path)
-        {
-            try
+            foreach (var client in clients)
             {
-                if (!File.Exists(path))
+                foreach (var tcAdsClientConfig in Clients)
                 {
-                    return;
-                }
-                
-                using var stream = File.Open(path, FileMode.Open);
-                var document = XDocument.Load(stream);
-                
-                var root  = document.Descendants(ROOT).FirstOrDefault();
-                if (root is null)
-                {
-                    throw new Exception($"{TAG} Configuration isn't valid! {path}");
-                }
-
-                
-                
-                var configAssets = Object.FindObjectsByType<MonoBehaviour>(sortMode: FindObjectsSortMode.InstanceID).OfType<IConfigAsset>().ToList();
-                foreach (var item in configAssets)
-                {
-                    if (TryFindElementByAttribute(root, item.Component.name, out var asset))
+                    if (string.Equals(client.Config.Name, tcAdsClientConfig.Name))
                     {
-                        item.SetAsset(asset);
+                        client.Config = tcAdsClientConfig;
                     }
                 }
-            
-                Logging.Logger.Log(LogType.Log, $"{TAG} Configuration loaded {path}");
-                
             }
-            catch (Exception exception)
+
+            foreach (var productDataDiractoryManager in productDataDiractoryManagers)
             {
-                Logging.Logger.LogError(exception);
+                productDataDiractoryManager.ProductDataDirectories = Directories;
             }
-        }
-
-        private static void CreateConfigurationFile(string path)
-        {
-            try
-            {
-                var config = new Configuration();
-                var clients = Object.FindObjectsByType<MonoBehaviour>(sortMode: FindObjectsSortMode.InstanceID).OfType<TcAdsClient>().ToList();
-
-                foreach (var client in clients)
-                {
-                    config.Clients.Add(new TcAdsClientConfig(client));
-                }
-                
-                var directories = Object.FindObjectsByType<MonoBehaviour>(sortMode: FindObjectsSortMode.InstanceID).OfType<ProductDataDirectoryManager>().ToList();
-                if (directories.Count > 0) config.Directories = directories[0].ProductDataDirectories;
-
-                var data = JsonUtility.ToJson(config);
-                File.WriteAllText(path, data);
-            
-                Logging.Logger.Log(LogType.Log, $"{TAG} Saved Client Configuration to {path}");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
-
-        private static string GetFileName()
-        {
-            var sceneName = SceneManager.GetActiveScene().name.Replace(" ", "_").Replace(".", "_");
-            return $"{sceneName}_{CONFIG_FILE_NAME}";
-        }
-        
-        private static string GetDefaultFilePath()
-        {
-            if (!Directory.Exists(Application.streamingAssetsPath))
-            {
-                Directory.CreateDirectory(Application.streamingAssetsPath);
-            }
-            
-            return $"{Application.streamingAssetsPath}/{GetFileName()}";
-        }
-        
-        private static bool TryFindElementByAttribute(XContainer root, string value, out XElement xElement)
-        {
-            xElement = root.Elements().FirstOrDefault(element => element.Attribute("Name")?.Value == value);
-            return xElement is not null; 
-        }
-        
-        private static XDocument CreateEmpty()
-        {
-            var document = new XDocument(); 
-            var root = new XElement(ROOT);
-            document.Add(root);
-            return document;
-        }
-
-        private class Configuration
-        {
-            // ReSharper disable once FieldCanBeMadeReadOnly.Local
-            // ReSharper disable once CollectionNeverQueried.Local
-            public List<TcAdsClientConfig> Clients = new ();
-            // ReSharper disable once NotAccessedField.Local
-            public List<ProductDataDirectory> Directories = new ();
         }
     }
 }
