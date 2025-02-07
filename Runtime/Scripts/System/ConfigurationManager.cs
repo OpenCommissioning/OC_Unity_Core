@@ -30,7 +30,7 @@ namespace OC.Project
 
         private void OnEnable()
         {
-            SceneConfiguration.LoadFromDefaultPath();
+            SceneConfigurationManager.LoadFile();
         }
 
         private void Start()
@@ -43,7 +43,7 @@ namespace OC.Project
         [Button]
         public void SaveConfig()
         {
-            SceneConfiguration.SaveInDefaultPath();
+            SceneConfigurationManager.SaveFile();
         }
 
         public void ConnectClients()

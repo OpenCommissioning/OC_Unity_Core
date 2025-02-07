@@ -10,18 +10,16 @@ namespace OC.Communication.TwinCAT
     public class TcAdsClient : Client
     {
         public override IClientBuffer Buffer => _adsClientBuffer;
-        public bool AutoConnect => _autoConnect;
-        public string NetId => _netId;
-        public int Port => _port;
+
+        public TcAdsClientConfig Config
+        {
+            get => _config;
+            set => _config = value;
+        }
 
         [Header("ADS")]
         [SerializeField]
-        private bool _autoConnect;
-        [SerializeField]
-        private string _netId = "Local";
-        [SerializeField]
-        [Tooltip("Port range [301...399], [851...899]")]
-        private int _port = 851;
+        private TcAdsClientConfig _config = TcAdsClientConfig.Default;
 
         private TcClientStateHandler _clientStateHandler;
         private IClientBuffer _adsClientBuffer;
@@ -37,7 +35,7 @@ namespace OC.Communication.TwinCAT
             base.Start();
             _clientStateHandler = new TcClientStateHandler();
             _clientStateHandler.OnStateChanged += OnClientStateChanged;
-            _clientStateHandler.Connect(_netId);
+            _clientStateHandler.Connect(_config.NetId);
         }
 
         public override void BeforeFixedUpdate()
@@ -54,7 +52,7 @@ namespace OC.Communication.TwinCAT
         
         private void OnClientStateChanged(TcAdsExtension.TcClientState state)
         {
-            if (!_autoConnect) return;
+            if (!_config.Reconnect) return;
 
             switch (state)
             {
@@ -77,26 +75,26 @@ namespace OC.Communication.TwinCAT
 
             try
             {
-                _ = ValidatePort(_port);
+                _ = ValidatePort(_config.Port);
                 
                 if (!_clientStateHandler.IsRunning)
                 {
                     throw new Exception("Target system isn't in run mode");
                 }
 
-                var tcAdsBufferType = GetTcAdsBufferType(_port);
+                var tcAdsBufferType = GetTcAdsBufferType(_config.Port);
 
                 switch (tcAdsBufferType)
                 {
                     case TcAdsBufferType.None:
-                        throw new Exception($"Port:{_port} is out of range [301...399], [851...899]");
+                        throw new Exception($"Port:{_config.Port} is out of range [301...399], [851...899]");
                     case TcAdsBufferType.Array:
                         _adsClientBuffer = new TcAdsTaskBuffer(this);
-                        _adsClientBuffer.Connect(_netId, _port);
+                        _adsClientBuffer.Connect(_config.NetId, _config.Port);
                         break;
                     case TcAdsBufferType.SumCommand:
                         _adsClientBuffer = new TcAdsSumCommandBuffer(this);
-                        _adsClientBuffer.Connect(_netId, _port);
+                        _adsClientBuffer.Connect(_config.NetId, _config.Port);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -107,7 +105,7 @@ namespace OC.Communication.TwinCAT
             catch (Exception exception)
             {
                 _isConnected.Value = false;
-                Logging.Logger.Log(LogType.Error, $"TcAdsClient failed to connect: {_netId}:{_port}. {exception.Message}. \n{exception.Source}{exception.StackTrace}");
+                Logging.Logger.Log(LogType.Error, $"TcAdsClient failed to connect: {_config.NetId}:{_config.Port}. {exception.Message}. \n{exception.Source}{exception.StackTrace}");
             }
         }
 
@@ -177,7 +175,7 @@ namespace OC.Communication.TwinCAT
             {
                 > 300 and < 400 => true,
                 > 850 and < 900 => true,
-                _ => throw new Exception($"Port:{_port} is out of range [301...399], [851...899]")
+                _ => throw new Exception($"Port:{_config.Port} is out of range [301...399], [851...899]")
             };
         }
 
@@ -193,8 +191,7 @@ namespace OC.Communication.TwinCAT
         
         public override XElement GetAsset()
         {
-            var config = new TcAdsClientConfig(this);
-            var element = config.ToXElement<TcAdsClientConfig>();
+            var element = _config.ToXElement<TcAdsClientConfig>();
             element.SetAttributeValue("Name", name);
             return element;
         }
@@ -203,11 +200,7 @@ namespace OC.Communication.TwinCAT
         {
             try
             {
-                var config = xElement.FromXElement<TcAdsClientConfig>();
-                _autoConnect = config.Reconnect;
-                _netId = config.NetId;
-                _port = config.Port;
-                _verbose = config.Verbose;
+                _config = xElement.FromXElement<TcAdsClientConfig>();
             }
             catch (Exception exception)
             {

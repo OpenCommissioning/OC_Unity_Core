@@ -22,7 +22,7 @@ namespace OC.Communication.TwinCAT
         private readonly List<ClientVariable> _outputVariables = new();
         private readonly List<IAdsSymbol> _inputSymbols = new();
         private readonly List<IAdsSymbol> _outputSymbols = new();
-        private readonly Client _client;
+        private readonly TcAdsClient _client;
         private AdsClient _adsClient;
         private string _netId;
         private int _port;
@@ -33,7 +33,7 @@ namespace OC.Communication.TwinCAT
         private byte[] _outputBuffer;
         private bool _isConnected;
         
-        public TcAdsTaskBuffer(Client client)
+        public TcAdsTaskBuffer(TcAdsClient client)
         {
             _client = client;
         }
@@ -54,7 +54,7 @@ namespace OC.Communication.TwinCAT
 
         public void Disconnect()
         {
-            WriteNullData();
+            if (_client.Config.ClearBuffer) WriteNullData();
             Clear();
             _adsClient?.Disconnect();
             _isConnected = false;
@@ -172,7 +172,7 @@ namespace OC.Communication.TwinCAT
                         throw new ArgumentOutOfRangeException();
                 }
                 
-                if (_client.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : {direction}");
+                if (_client.Config.Verbose) Logging.Logger.Log(LogType.Log, Logging.Logger.VERBOSE_TAG + " <color=green>Find ADS Variable:</color>" + $"{symbol.InstancePath} : {symbol.TypeName} : {direction}");
             }
             catch (Exception exception)
             {
