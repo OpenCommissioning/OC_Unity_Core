@@ -110,7 +110,7 @@ namespace OC.Components
             _length = Mathf.Clamp(size.z, 0, Mathf.Infinity);
             _width = Mathf.Clamp(size.x, 0, Mathf.Infinity);
             _height = Mathf.Clamp(size.y, 0, Mathf.Infinity);
-            _size.SetWithoutNotify(new Vector3(_width, _height, _length));
+            _size.SetValueWithoutNotify(new Vector3(_width, _height, _length));
             CreateSurface();
         }
 
