@@ -30,7 +30,7 @@ namespace Components
         [UnityTest]
         public IEnumerator MoveToLimit([ValueSource(nameof(GetMoveToLimitCase))]MoveToLimitCase testCase)
         {
-            _cylinder.Override.Value = true;
+            _cylinder.Force.Value = true;
             _cylinder.TimeToMin.Value = 0.01f;
             _cylinder.TimeToMax.Value = 0.01f;
             
@@ -49,7 +49,7 @@ namespace Components
         [UnityTest]
         public IEnumerator MoveToTime([ValueSource(nameof(GetMoveTimeCase))] float timeTo)
         {
-            _cylinder.Override.Value = true;
+            _cylinder.Force.Value = true;
             _cylinder.TimeToMin.Value = timeTo;
             _cylinder.TimeToMax.Value = timeTo;
             _cylinder.Limits.Value = new Vector2(0, 10);

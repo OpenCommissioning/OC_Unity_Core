@@ -16,8 +16,8 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddOverrideOption(component);
             groupControl.Add(new FloatField("Value").BindProperty(component.Value).AlignedField());
+            groupControl.AddForceOption(component, new IProperty[]{component.Value});
             
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new FloatField("Value"){isReadOnly = true}.BindProperty(component.Value).AlignedField());

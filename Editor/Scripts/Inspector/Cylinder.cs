@@ -16,11 +16,11 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddOverrideOption(component);
             var hStack = new StackHorizontal();
             hStack.Add(new PushButton("Minus").BindProperty(component.Minus));
             hStack.Add(new PushButton("Plus").BindProperty(component.Plus));
             groupControl.Add(hStack);
+            groupControl.AddForceOption(component, new IProperty[]{component.Minus, component.Plus});
 
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new ProgressBar("Progress"){bindingPath = "_progress._value", ShowLimits = true});

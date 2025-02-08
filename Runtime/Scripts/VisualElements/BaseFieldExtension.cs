@@ -37,7 +37,10 @@ namespace OC.VisualElements
 
         private static void OnFieldValueChange<T>(ChangeEvent<T> evt)
         {
-            if ((evt.target as BaseField<T>)?.userData is Property<T> property) property.Value = evt.newValue;
+            if ((evt.target as BaseField<T>)?.userData is Property<T> property)
+            {
+                property.SetValue(evt.newValue);
+            }
         }
 
         private static Action<T> OnPropertyValueChange<T>(BaseField<T> field)

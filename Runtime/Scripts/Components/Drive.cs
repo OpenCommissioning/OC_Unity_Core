@@ -10,13 +10,16 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Actor/Drive")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public abstract class Drive : Actor, IDeviceMetadata, IControlOverridable, ICustomInspector, IInteractable
+    public abstract class Drive : Actor, IDeviceMetadata, IPropertyForce, ICustomInspector, IInteractable
     {
         public Link Link => _link;
         public int MetadataAssetLength => 1;
 
         public IProperty<bool> IsActive => _isActive;
-
+        public IProperty<bool> Force => _force;
+        
+        [SerializeField]
+        private Property<bool> _force = new ();
         [SerializeField]
         protected Property<bool> _isActive = new (false);
 
@@ -41,9 +44,9 @@ namespace OC.Components
         
         private void FixedUpdate()
         {
-            if (!Override.Value && _link.IsConnected) GetLinkData();
+            if (_link.IsConnected) GetLinkData();
             Operation(Time.fixedDeltaTime);
-            SetLinkData();
+            if (_link.IsConnected) SetLinkData();
         }
 
         protected abstract void GetLinkData();

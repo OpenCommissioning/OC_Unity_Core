@@ -36,7 +36,8 @@ namespace OC.Editor
         private readonly Label _labelElement;
         private readonly VisualElement _options;
         private readonly VisualElement _content;
-        private readonly ToggleButton _toggleButtonOverride; 
+        private readonly ToggleButton _toggleButtonOverride;
+        private List<IProperty> _properties;
         
         private const string USS = "StyleSheet/oc-inspector";
         private const string USS_CLASS_NAME = "property-group";
@@ -84,15 +85,23 @@ namespace OC.Editor
         public void AddOptions(VisualElement visualElement)
         {
             _options.Add(visualElement);
-        } 
+        }
 
-        public void AddOverrideOption(IControlOverridable component)
+        public void AddForceOption(IPropertyForce component, IProperty[] properties)
         {
-            var toggleButtonOverride = new ToggleButton("Override").BindProperty(component.Override);
-            _options.Add(toggleButtonOverride);
+            var toggleButtonForce = new ToggleButton("Force").BindProperty(component.Force);
+            _options.Add(toggleButtonForce);
             
-            component.Override.OnValueChanged += _content.SetEnabled;
-            _content.SetEnabled(component.Override.Value);
+            component.Force.Subscribe(value => SetForce(properties, value));
+        }
+
+        private void SetForce(IProperty[] properties, bool force)
+        {
+            _content.SetEnabled(force);
+            foreach (var property in properties)
+            {
+                property.Force = force;
+            }
         }
     }
 }

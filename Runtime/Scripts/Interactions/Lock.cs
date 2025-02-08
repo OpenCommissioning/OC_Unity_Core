@@ -10,16 +10,16 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lock")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lock : MonoComponent, IDevice, IControlOverridable, ICustomInspector, IInteractable
+    public class Lock : MonoComponent, IDevice, IPropertyForce, ICustomInspector, IInteractable
     {
         public Link Link => _link;
-        public IProperty<bool> Override => _override;
+        public IProperty<bool> Force => _force;
         public IProperty<bool> LockSignal => _lock;
         public IPropertyReadOnly<bool> Closed => _closed;
         public IPropertyReadOnly<bool> Locked => _locked;
 
         [SerializeField]
-        protected Property<bool> _override = new (false);
+        protected Property<bool> _force = new (false);
         [SerializeField]
         private Property<bool> _lock = new (false);
         [SerializeField] 
@@ -110,7 +110,7 @@ namespace OC.Interactions
 
         private void LateUpdate()
         {
-            if (!_override && _link.IsConnected.Value) _lock.Value = _connector.Control.GetBit(0);
+            if (_link.IsConnected.Value) _lock.Value = _connector.Control.GetBit(0);
             UpdateButtons();
 
             if (_doors.Count > 0)

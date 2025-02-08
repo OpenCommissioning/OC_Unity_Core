@@ -10,14 +10,14 @@ namespace OC.Components
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BoxCollider))]
-    public class TagReader : Detector, IDevice, IMeasurement<ulong>, IControlOverridable, ICustomInspector, IInteractable
+    public class TagReader : Detector, IDevice, IMeasurement<ulong>, IPropertyForce, ICustomInspector, IInteractable
     {
         public Link Link => _link;
-        public IProperty<bool> Override => _override;
+        public IProperty<bool> Force => _force;
         public IPropertyReadOnly<ulong> Value => _value;
 
         [SerializeField]
-        protected Property<bool> _override = new (false);
+        protected Property<bool> _force = new (false);
         [SerializeField]
         protected Property<ulong> _value = new (0);
 
@@ -67,14 +67,13 @@ namespace OC.Components
             if (payloadBase is not Payload payload) return;
             OnPayloadEnterEvent?.Invoke(payload);
             if (!payload.TryGetComponent(out PayloadTag payloadTag)) return;
-            if (!_override.Value) _value.Value = payloadTag.Read();
+            _value.Value = payloadTag.Read();
         }
 
         protected override void OnPayloadExitAction(PayloadBase payloadBase)
         {
             if (payloadBase is not Payload payload) return;
             OnPayloadExitEvent?.Invoke(payload);
-            if (_override.Value) return;
             if (_holdValue) return;
             _value.Value = 0;
         }

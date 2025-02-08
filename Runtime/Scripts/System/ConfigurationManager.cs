@@ -16,7 +16,7 @@ namespace OC.Project
 
         private List<Client> _clients = new ();
         private List<IDevice> _devices = new ();
-        private List<IControlOverridable> _forceComponents = new ();
+        private List<IPropertyForce> _forceComponents = new ();
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void RuntimeInit()
@@ -37,7 +37,7 @@ namespace OC.Project
         {
             _clients = FindObjectsOfType<Client>().ToList();
             _devices = FindObjectsOfType<MonoBehaviour>().OfType<IDevice>().ToList();
-            _forceComponents = FindObjectsOfType<MonoBehaviour>().OfType<IControlOverridable>().ToList();
+            _forceComponents = FindObjectsOfType<MonoBehaviour>().OfType<IPropertyForce>().ToList();
         }
 
         [Button]
@@ -73,9 +73,9 @@ namespace OC.Project
 
         public void ResetForce()
         {
-            foreach (var item in _forceComponents.Where(item => item.Override.Value))
+            foreach (var item in _forceComponents.Where(item => item.Force.Value))
             {
-                item.Override.Value = false;
+                item.Force.Value = false;
                 Logging.Logger.Log(LogType.Log, $"FORCE mode disabled: {item.Link.Path}");
             }
         }
@@ -94,9 +94,9 @@ namespace OC.Project
             }
         }
 
-        private List<IControlOverridable> GetForcedComponents()
+        private List<IPropertyForce> GetForcedComponents()
         {
-            return _forceComponents.Where(item => item.Override.Value).ToList();
+            return _forceComponents.Where(item => item.Force.Value).ToList();
         }
     }
 }

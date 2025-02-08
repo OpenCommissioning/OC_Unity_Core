@@ -17,8 +17,8 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddOverrideOption(component);
             groupControl.Add(new ToggleButton("Signal").BindProperty(component.Signal).AlignedField());
+            groupControl.AddForceOption(component, new IProperty[]{component.Signal});
             
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new LampField("Value", Color.green).BindProperty(component.Value).AlignedField());

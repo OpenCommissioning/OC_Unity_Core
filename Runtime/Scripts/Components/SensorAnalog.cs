@@ -7,14 +7,14 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Sensor/Sensor Analog")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class SensorAnalog : MonoComponent, IDevice, IControlOverridable, ICustomInspector, IInteractable
+    public class SensorAnalog : MonoComponent, IDevice, IPropertyForce, ICustomInspector, IInteractable
     {
         public Link Link => _link;
-        public IProperty<bool> Override => _override;
+        public IProperty<bool> Force => _force;
         public IProperty<float> Value => _value;
         
         [SerializeField]
-        protected Property<bool> _override = new (false);
+        protected Property<bool> _force = new ();
         [SerializeField]
         protected Property<float> _value = new (0f);
 
@@ -81,7 +81,6 @@ namespace OC.Components
 
         private void OnDeviceValueChanged(float value)
         {
-            if (_override) return;
             _value.Value = value * _factor.Value;
         }
 

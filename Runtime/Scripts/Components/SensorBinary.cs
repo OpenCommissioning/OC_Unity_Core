@@ -10,16 +10,16 @@ namespace OC.Components
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BoxCollider))]
-    public class SensorBinary : Detector, IDevice, IMeasurement<bool>, ISensorBeam, IControlOverridable, ICustomInspector, IInteractable
+    public class SensorBinary : Detector, IDevice, IMeasurement<bool>, ISensorBeam, IPropertyForce, ICustomInspector, IInteractable
     {
         public Link Link => _link;
-        public IProperty<bool> Override => _override;
+        public IProperty<bool> Force => _force;
         public IPropertyReadOnly<bool> Value => _value;
         public IProperty<bool> State => _state;
         public IPropertyReadOnly<float> Length => _length;
         
         [SerializeField]
-        protected Property<bool> _override = new (false);
+        protected Property<bool> _force = new (false);
         [SerializeField]
         protected Property<bool> _value = new (false);
         [SerializeField]
@@ -79,7 +79,6 @@ namespace OC.Components
         protected override void OnCollisionChangedAction(bool value)
         {
             base.OnCollisionChangedAction(value);
-            if (_override) return;
             _state.Value = value;
         }
 
