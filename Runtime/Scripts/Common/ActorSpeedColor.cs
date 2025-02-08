@@ -27,15 +27,15 @@ namespace OC
         {
             GetPropertyBlock();
             if (_actor == null) return;
-            if (_actor is DriveSpeed) _actor.Value.ValueChanged += OnSpeedChanged;
-            if (_actor is DrivePosition drivePosition) drivePosition.Delta.ValueChanged += OnSpeedChanged;
+            if (_actor is DriveSpeed) _actor.Value.OnValueChanged += OnSpeedChanged;
+            if (_actor is DrivePosition drivePosition) drivePosition.Delta.OnValueChanged += OnSpeedChanged;
         }
 
         private void OnDisable()
         {
             if (_actor == null) return;
-            if (_actor is DriveSpeed) _actor.Value.ValueChanged -= OnSpeedChanged;
-            if (_actor is DrivePosition drivePosition) drivePosition.Delta.ValueChanged -= OnSpeedChanged;
+            if (_actor is DriveSpeed) _actor.Value.OnValueChanged -= OnSpeedChanged;
+            if (_actor is DrivePosition drivePosition) drivePosition.Delta.OnValueChanged -= OnSpeedChanged;
         }
         
         private void OnSpeedChanged(float value)

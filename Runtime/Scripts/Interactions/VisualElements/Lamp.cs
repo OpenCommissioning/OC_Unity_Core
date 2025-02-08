@@ -51,8 +51,8 @@ namespace OC.Interactions.UIElements
             Color = lamp.Color.Value;
             Value = lamp.Value.Value;
 
-            lamp.Value.ValueChanged += value => Value = value;
-            lamp.Color.ValueChanged += value => Color = value;
+            lamp.Value.OnValueChanged += value => Value = value;
+            lamp.Color.OnValueChanged += value => Color = value;
         }
         
         private void SetLampStyle(bool active)

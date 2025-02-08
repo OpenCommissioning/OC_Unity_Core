@@ -31,7 +31,7 @@ namespace OC.Components
         {
             _link.Initialize(this);
             _connectorData = new ConnectorDataFloat(_link);
-            _isActive.ValueChanged += value => OnActiveChanged?.Invoke(value);
+            _isActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
         }
 
         protected void Reset()

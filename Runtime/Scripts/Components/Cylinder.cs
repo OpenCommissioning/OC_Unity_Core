@@ -90,10 +90,10 @@ namespace OC.Components
             _link = Link;
             _link.Initialize(this);
             _connector = new Connector(_link);
-            _progress.ValueChanged += OnProgressChanged;
-            _isActive.ValueChanged += value => OnActiveChanged?.Invoke(value);
-            _onLimitMin.ValueChanged += value => OnLimitMinEvent?.Invoke(value);
-            _onLimitMax.ValueChanged += value => OnLimitMaxEvent?.Invoke(value);
+            _progress.OnValueChanged += OnProgressChanged;
+            _isActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
+            _onLimitMin.OnValueChanged += value => OnLimitMinEvent?.Invoke(value);
+            _onLimitMax.OnValueChanged += value => OnLimitMaxEvent?.Invoke(value);
             OnProgressChanged(_progress.Value);
         }
 

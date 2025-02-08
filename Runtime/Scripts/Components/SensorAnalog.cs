@@ -34,12 +34,12 @@ namespace OC.Components
 
         private void OnEnable()
         {
-            _value.ValueChanged += OnValueChanged;
+            _value.OnValueChanged += OnValueChanged;
         }
 
         private void OnDisable()
         {
-            _value.ValueChanged -= OnValueChanged;
+            _value.OnValueChanged -= OnValueChanged;
         }
         
         private void Start()
@@ -73,7 +73,7 @@ namespace OC.Components
             {
                 _isDeviceValid = true;
                 OnDeviceValueChanged(_measurementDevice.Value.Value);
-                _measurementDevice.Value.ValueChanged += OnDeviceValueChanged;
+                _measurementDevice.Value.OnValueChanged += OnDeviceValueChanged;
             }
            
             if (!_isDeviceValid) Logging.Logger.Log(LogType.Error, "Device reference isn't valid! IMeasurementDevice is required!", this);

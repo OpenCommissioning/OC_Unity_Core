@@ -42,14 +42,14 @@ namespace OC.Communication
         {
             BeforeFixedUpdateSystem.Register(this);
             AfterFixedUpdateSystem.Register(this);
-            _isConnected.ValueChanged += OnConnectionChanged;
+            _isConnected.OnValueChanged += OnConnectionChanged;
         }
 
         protected void OnDisable()
         {
             BeforeFixedUpdateSystem.Unregister(this);
             AfterFixedUpdateSystem.Unregister(this);
-            _isConnected.ValueChanged -= OnConnectionChanged;
+            _isConnected.OnValueChanged -= OnConnectionChanged;
         }
 
         protected void Start()

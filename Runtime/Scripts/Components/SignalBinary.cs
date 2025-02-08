@@ -33,14 +33,14 @@ namespace OC.Components
         
         private void OnEnable()
         {
-            _signal.ValueChanged += OnSignalChanged;
-            _value.ValueChanged += OnValueChanged;
+            _signal.OnValueChanged += OnSignalChanged;
+            _value.OnValueChanged += OnValueChanged;
         }
 
         private void OnDisable()
         {
-            _signal.ValueChanged -= OnSignalChanged;
-            _value.ValueChanged -= OnValueChanged;
+            _signal.OnValueChanged -= OnSignalChanged;
+            _value.OnValueChanged -= OnValueChanged;
         }
         
         private void Start()
@@ -76,7 +76,7 @@ namespace OC.Components
             {
                 _isMeasurementDeviceValid = true;
                 _measurementDevice = device;
-                _measurementDevice.Value.ValueChanged += OnDeviceValueChanged;
+                _measurementDevice.Value.OnValueChanged += OnDeviceValueChanged;
                 OnDeviceValueChanged(_measurementDevice.Value.Value);
             }
            

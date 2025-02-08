@@ -41,13 +41,13 @@ namespace OC.Components
         private new void OnEnable()
         {
             base.OnEnable();
-            _value.ValueChanged += OnValueChanged;
+            _value.OnValueChanged += OnValueChanged;
         }
 
         private new void OnDisable()
         {
             base.OnDisable();
-            _value.ValueChanged -= OnValueChanged;
+            _value.OnValueChanged -= OnValueChanged;
         }
 
         private void Start()

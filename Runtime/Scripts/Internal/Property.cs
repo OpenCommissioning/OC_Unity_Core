@@ -8,7 +8,7 @@ namespace OC
     [Serializable]
     public class Property<T> : IProperty<T>
     {
-        public event Action<T> ValueChanged;
+        public event Action<T> OnValueChanged;
 
         public Property() : this(default)
         {
@@ -49,7 +49,7 @@ namespace OC
         private void SetValue(T value)
         {
             SetWithoutNotify(value);
-            ValueChanged?.Invoke(value);
+            OnValueChanged?.Invoke(value);
         }
         
         public void ForceSetValue(T value)

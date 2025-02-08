@@ -6,7 +6,7 @@ namespace OC
     {
         public T Value { get; }
         
-        public event Action<T> ValueChanged;
+        public event Action<T> OnValueChanged;
         public void ForceSetValue(T value);
         public void OnValidate();
     }

@@ -45,15 +45,15 @@ namespace OC.Components
         private new void OnEnable()
         {
             base.OnEnable();
-            _state.ValueChanged += OnStateChanged;
-            _value.ValueChanged += OnValueChanged;
+            _state.OnValueChanged += OnStateChanged;
+            _value.OnValueChanged += OnValueChanged;
         }
 
         private new void OnDisable()
         {
             base.OnDisable();
-            _state.ValueChanged -= OnStateChanged;
-            _value.ValueChanged -= OnValueChanged;
+            _state.OnValueChanged -= OnStateChanged;
+            _value.OnValueChanged -= OnValueChanged;
         }
         
         private void Start()

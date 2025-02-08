@@ -31,14 +31,14 @@ namespace OC
         private void OnEnable()
         {
             _timeScale.Validator = TimeScaleValidator;
-            _timeScale.ValueChanged += TimeScaleChanged;
-            _pause.ValueChanged += PauseChanged;
+            _timeScale.OnValueChanged += TimeScaleChanged;
+            _pause.OnValueChanged += PauseChanged;
         }
 
         private void OnDisable()
         {
-            _timeScale.ValueChanged -= TimeScaleChanged;
-            _pause.ValueChanged -= PauseChanged;
+            _timeScale.OnValueChanged -= TimeScaleChanged;
+            _pause.OnValueChanged -= PauseChanged;
         }
 
         private void Start()

@@ -91,7 +91,7 @@ namespace OC.Editor
             var toggleButtonOverride = new ToggleButton("Override").BindProperty(component.Override);
             _options.Add(toggleButtonOverride);
             
-            component.Override.ValueChanged += _content.SetEnabled;
+            component.Override.OnValueChanged += _content.SetEnabled;
             _content.SetEnabled(component.Override.Value);
         }
     }

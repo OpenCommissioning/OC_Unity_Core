@@ -55,12 +55,12 @@ namespace OC.Components
             OnValidate();
             GetReferences();
             CreateSurface();
-            _size.ValueChanged += OnSizeChanged;
+            _size.OnValueChanged += OnSizeChanged;
         }
 
         protected void OnDisable()
         {
-            _size.ValueChanged -= OnSizeChanged;
+            _size.OnValueChanged -= OnSizeChanged;
         }
         
         protected void OnValidate()

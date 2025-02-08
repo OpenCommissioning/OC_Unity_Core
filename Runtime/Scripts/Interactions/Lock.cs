@@ -46,16 +46,16 @@ namespace OC.Interactions
 
         private void OnEnable()
         {
-            _lock.ValueChanged += LockCallback;
-            _closed.ValueChanged += ClosedCallback;
-            _locked.ValueChanged += LockedCallback;
+            _lock.OnValueChanged += LockCallback;
+            _closed.OnValueChanged += ClosedCallback;
+            _locked.OnValueChanged += LockedCallback;
         }
         
         private void OnDisable()
         {
-            _lock.ValueChanged -= LockCallback;
-            _closed.ValueChanged -= ClosedCallback;
-            _locked.ValueChanged -= LockedCallback;
+            _lock.OnValueChanged -= LockCallback;
+            _closed.OnValueChanged -= ClosedCallback;
+            _locked.OnValueChanged -= LockedCallback;
         }
         
         protected void Start()

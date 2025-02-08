@@ -66,12 +66,12 @@ namespace OC
         private void OnEnable()
         {
             GetPropertyBlock();
-            _state.ValueChanged += OnStateChanged;
+            _state.OnValueChanged += OnStateChanged;
         }
 
         private void OnDisable()
         {
-            _state.ValueChanged -= OnStateChanged;
+            _state.OnValueChanged -= OnStateChanged;
         }
 
         private void OnValidate()

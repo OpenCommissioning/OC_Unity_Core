@@ -28,7 +28,7 @@ namespace OC.Interactions
         protected new void OnEnable()
         {
             base.OnEnable();
-            _index.ValueChanged += OnIndexChangedAction;
+            _index.OnValueChanged += OnIndexChangedAction;
             OnValidate();
             OnIndexChangedAction(_index.Value);
         }
@@ -36,7 +36,7 @@ namespace OC.Interactions
         protected new void OnDisable()
         {
             base.OnDisable();
-            _index.ValueChanged -= OnIndexChangedAction;
+            _index.OnValueChanged -= OnIndexChangedAction;
         }
 
         private new void OnValidate()

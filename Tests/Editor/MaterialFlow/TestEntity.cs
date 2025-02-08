@@ -97,7 +97,7 @@ namespace OC.Tests.Editor.MaterialFlow
         {
             var counter = 0;
             _payload.ControlState.Value = actualControlState;
-            _payload.ControlState.ValueChanged += _ => counter++;
+            _payload.ControlState.OnValueChanged += _ => counter++;
             _payload.ControlState.Value = controlState;
             return counter > 0;
         }

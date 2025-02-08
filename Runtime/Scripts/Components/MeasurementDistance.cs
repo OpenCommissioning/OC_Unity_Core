@@ -33,14 +33,14 @@ namespace OC.Components
 
         private void OnEnable()
         {
-            _collision.ValueChanged += OnCollisionChanged;
-            _value.ValueChanged += OnValueChanged;
+            _collision.OnValueChanged += OnCollisionChanged;
+            _value.OnValueChanged += OnValueChanged;
         }
         
         private void OnDisable()
         {
-            _collision.ValueChanged -= OnCollisionChanged;
-            _value.ValueChanged -= OnValueChanged;
+            _collision.OnValueChanged -= OnCollisionChanged;
+            _value.OnValueChanged -= OnValueChanged;
         }
 
         private void Start()
