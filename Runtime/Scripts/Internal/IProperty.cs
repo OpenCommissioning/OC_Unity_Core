@@ -60,6 +60,13 @@ namespace OC
         public new T Value { get; set; }
         
         /// <summary>
+        /// Gets or sets a flag that determines whether the property should be updated forcefully.
+        /// When set to <c>true</c>, the property value can be overwritten regardless of potential conflicts with other code.
+        /// This is typically used in UI scenarios where a user needs to override the current value.
+        /// </summary>
+        public bool Force { get; set; }
+        
+        /// <summary>
         /// Sets the property value and triggers the change notification event.
         /// </summary>
         /// <param name="value">The new value to set.</param>

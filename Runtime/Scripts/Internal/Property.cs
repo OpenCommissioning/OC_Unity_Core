@@ -36,13 +36,16 @@ namespace OC
         /// </summary>
         public Func<T, T> Validator;
 
-        /// <summary>
-        /// Gets or sets the current value of the property. Setting the value applies the validator (if any) and notifies subscribers when changed.
-        /// </summary>
         public T Value
         {
             get => _value;
             set => TrySetValue(value);
+        }
+        
+        public bool Force
+        {
+            get => _force;
+            set => _force = value;
         }
 
         /// <summary>
@@ -50,6 +53,9 @@ namespace OC
         /// </summary>
         [SerializeField]
         private T _value;
+        
+        [SerializeField]
+        private bool _force;
         
         /// <summary>
         /// Stores the last value assigned to the property, used for change detection from inspector using OnValidate.
@@ -62,20 +68,22 @@ namespace OC
         private EqualityComparer<T> _comparer;
 
         /// <summary>
-        /// Attempts to set the property to a new value after applying validation and ensuring the new value is different.
-        /// If the value is different, it updates the property and notifies subscribers.
+        /// Attempts to set the property value to a new value. 
+        /// If the force flag (<c>_force</c>) is enabled, the method exits immediately, preventing automatic updates
+        /// from the <see cref="Value"/> property. Otherwise, it applies the optional <see cref="Validator"/> (if provided)
+        /// to the input value, compares the validated value with the current value using an equality comparer,
+        /// and, if the values differ, updates the property by invoking <see cref="SetValue(T)"/>.
         /// </summary>
-        /// <param name="value">The new value to set.</param>
-        /// <returns><c>true</c> if the value was changed; otherwise, <c>false</c>.</returns>
+        /// <param name="value">The new value to attempt to set.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool TrySetValue(T value)
+        private void TrySetValue(T value)
         {
+            if (_force) return;
             if (Validator is not null) value = Validator.Invoke(value);
             _comparer ??= EqualityComparer<T>.Default;
-            if (_comparer.Equals(_value, value)) return false;
+            if (_comparer.Equals(_value, value)) return;
 
             SetValue(value);
-            return true;
         }
         
         /// <summary>
