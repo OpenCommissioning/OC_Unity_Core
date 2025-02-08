@@ -12,9 +12,6 @@ namespace OC
     [Serializable]
     public class Property<T> : IProperty<T>
     {
-        /// <summary>
-        /// Occurs when the property value changes.
-        /// </summary>
         public event Action<T> OnValueChanged;
 
         /// <summary>
@@ -115,6 +112,17 @@ namespace OC
             if (_comparer.Equals(_value, _lastValue)) return;
             
             SetValue(_value);
+        }
+        
+        public void Subscribe(Action<T> action)
+        {
+            OnValueChanged += action;
+            action?.Invoke(_value);
+        }
+        
+        public void Unsubscribe(Action<T> action)
+        {
+            OnValueChanged -= action;
         }
 
         /// <summary>
