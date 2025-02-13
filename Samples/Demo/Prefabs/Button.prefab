@@ -250,6 +250,7 @@ MonoBehaviour:
     _enable: 1
     _isConnected:
       _value: 0
+      _force: 0
     _type: FB_Button
     _parent: {fileID: 0}
     _attributes: []
@@ -257,14 +258,18 @@ MonoBehaviour:
     _path: Button
   _pressed:
     _value: 0
+    _force: 0
   _feedback:
     _value: 0
+    _force: 0
   _localFeedback: 0
   _type: 0
   _visualStyle:
     _value: 0
+    _force: 0
   _color:
     _value: {r: 0, g: 1, b: 1, a: 1}
+    _force: 0
   _colorChangers: []
   OnClickEvent:
     m_PersistentCalls:
