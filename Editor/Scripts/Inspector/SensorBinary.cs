@@ -21,6 +21,12 @@ namespace OC.Editor.Inspector
             groupControl.AddOverrideOption(component);
             groupControl.Add(new ToggleButton("Collision").BindProperty(component.State).AlignedField());
             
+            var groupTransform = new PropertyGroup("Transform Control");
+            var saveButton = new UnityEngine.UIElements.Button { text = "Save Transform" };
+            saveButton.SetEnabled(Application.isPlaying);
+            saveButton.clicked += () => TransformRestorer.Instance.RecordTransform(component.gameObject);
+            groupTransform.Add(saveButton);
+            
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new LampField("Collision", Color.yellow).BindProperty(component.Collision).AlignedField());
             groupStatus.Add(new LampField("Value", Color.green).BindProperty(component.Value).AlignedField());
@@ -37,7 +43,8 @@ namespace OC.Editor.Inspector
             groupEvents.Add(new PropertyField{bindingPath = "OnCollisionEvent"});
             groupEvents.Add(new PropertyField{bindingPath = "OnPayloadEnterEvent"});
             groupEvents.Add(new PropertyField{bindingPath = "OnPayloadExitEvent"});
-
+            
+            container.Add(groupTransform);
             container.Add(groupControl);
             container.Add(groupStatus);
             container.Add(groupSettings);
