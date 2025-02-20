@@ -10,7 +10,7 @@ namespace OC.Components
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BoxCollider))]
-    public class SensorBinary : Detector, IDevice, IMeasurement<bool>, ISensorBeam, IControlOverridable, ICustomInspector, IInteractable
+    public class SensorBinary : Detector, IDevice, IMeasurement<bool>, ISensorBeam, IControlOverridable, ICustomInspector, IInteractable, ITransformRestorable
     {
         public Link Link => _link;
         public IProperty<bool> Override => _override;
