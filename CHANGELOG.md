@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.4...v1.1.5) (2025-02-25)
+
+
+### Bug Fixes
+
+* **GuidedPayload:** ConfigurableJoint configuration ([ff8aca5](https://github.com/OpenCommissioning/OC_Unity_Core/commit/ff8aca5f1562358a3a3e7e037da556791609a06a))
+
 ## [1.1.4](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.3...v1.1.4) (2025-02-07)
 
 
