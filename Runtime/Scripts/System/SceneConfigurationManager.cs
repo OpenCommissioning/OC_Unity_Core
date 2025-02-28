@@ -19,8 +19,15 @@ namespace OC.Project
             {
                 return;
             }
-            
-            SaveFile(path);
+
+            try
+            {
+                SaveFile(path);
+            }
+            catch (Exception exception)
+            {
+                Logging.Logger.Log(LogType.Error, $"{TAG} {exception}");
+            }
         }
         
         public static void Load()
@@ -34,16 +41,9 @@ namespace OC.Project
             var path = paths[0];
             if (string.IsNullOrEmpty(path)) return;
 
-            LoadFile(path);
-        }
-
-        public static void LoadFile(string path)
-        {
             try
             {
-                path = Path.ChangeExtension(path, "json");
-                new SceneConfiguration().Load(path).ApplyToActiveScene();
-                Logging.Logger.Log(LogType.Log, $"{TAG} Configuration loaded {path}");
+                LoadFile(path);
             }
             catch (Exception exception)
             {
@@ -51,23 +51,43 @@ namespace OC.Project
             }
         }
 
-        public static void SaveFile(string path)
+        private static void LoadFile(string path)
+        {
+            path = Path.ChangeExtension(path, "json");
+            new SceneConfiguration().Load(path).ApplyToActiveScene();
+            Logging.Logger.Log(LogType.Log, $"{TAG} Configuration loaded {path}");
+        }
+
+        private static void SaveFile(string path)
+        {
+            path = Path.ChangeExtension(path, "json");
+            new SceneConfiguration().Create(GetActiveSceneName()).Save(path);
+            Logging.Logger.Log(LogType.Log, $"{TAG} Configuration saved {path}");
+        }
+
+        public static void LoadFile()
         {
             try
             {
-                path = Path.ChangeExtension(path, "json");
-                new SceneConfiguration().Create(GetActiveSceneName()).Save(path);
-                Logging.Logger.Log(LogType.Log, $"{TAG} Configuration saved {path}");
+                LoadFile(GetDefaultFilePath());
+            }
+            catch (Exception exception)
+            {
+                //ignore
+            }
+        }
+
+        public static void SaveFile()
+        {
+            try
+            {
+                SaveFile(GetDefaultFilePath());
             }
             catch (Exception exception)
             {
                 Logging.Logger.Log(LogType.Error, $"{TAG} {exception}");
             }
         }
-
-        public static void LoadFile() => LoadFile(GetDefaultFilePath());
-
-        public static void SaveFile() => SaveFile(GetDefaultFilePath());
 
         private static string GetFileName() => $"{GetActiveSceneName()}_{CONFIG_FILE_NAME}";
 
