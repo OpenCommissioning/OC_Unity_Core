@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.5...v1.1.6) (2025-02-28)
+
+
+### Bug Fixes
+
+* Load/Save project config logging ([60ac62c](https://github.com/OpenCommissioning/OC_Unity_Core/commit/60ac62c11220fe3a221c81d8f668fd32d5cb8c50))
+
 ## [1.1.5](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.4...v1.1.5) (2025-02-25)
 
 
