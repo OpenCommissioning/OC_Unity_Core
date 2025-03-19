@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.6...v1.1.7) (2025-03-19)
+
+
+### Bug Fixes
+
+* **System:** Scene Configuration JSON Serialization ([a043a9e](https://github.com/OpenCommissioning/OC_Unity_Core/commit/a043a9e3acf6a10b61f8e7f56a026e1c5ea3e37a))
+
 ## [1.1.6](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.5...v1.1.6) (2025-02-28)
 
 
