@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using OC.Communication.TwinCAT;
 using OC.Data;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
 namespace OC.Project
@@ -34,7 +33,7 @@ namespace OC.Project
 
         public void Save(string path)
         {
-            var data = JsonConvert.SerializeObject(this, Formatting.Indented);
+            var data = JsonUtility.ToJson(this, true);
             File.WriteAllText(path, data);
         }
 
@@ -46,7 +45,7 @@ namespace OC.Project
             }
             
             using var stream = File.OpenRead(path);
-            var config = JsonConvert.DeserializeObject<SceneConfiguration>(new StreamReader(stream).ReadToEnd());
+            var config = JsonUtility.FromJson<SceneConfiguration>(new StreamReader(stream).ReadToEnd());
             Clients = config.Clients;
             Directories = config.Directories;
             return this;
