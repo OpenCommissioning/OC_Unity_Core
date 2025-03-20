@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.7...v1.1.8) (2025-03-20)
+
+
+### Bug Fixes
+
+* behaviour for unity 6 ([5d6831c](https://github.com/OpenCommissioning/OC_Unity_Core/commit/5d6831c78226c15f69f44ec5441271b886ade732))
+
 ## [1.1.7](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.6...v1.1.7) (2025-03-19)
 
 
