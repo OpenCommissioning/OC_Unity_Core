@@ -160,7 +160,11 @@ namespace OC.MaterialFlow
             _joint.connectedAnchor =  _transport.GetClosetPoint(_transform.position);
             _rigidbody.transform.rotation = Quaternion.LookRotation(normal, Vector3.up) * Quaternion.AngleAxis(_angleOffset, Vector3.up);
             _joint.axis = Quaternion.AngleAxis(_angleOffset, Vector3.up) * Vector3.forward;
+#if UNITY_6000_0_OR_NEWER
             if (!_rigidbody.isKinematic) _rigidbody.linearVelocity = normal * _transport.Value.Value;
+#else
+            if (!_rigidbody.isKinematic) _rigidbody.velocity = normal * _transport.Value.Value;
+#endif
         }
 
         private float GetOffsetAngle(Transport transport)
