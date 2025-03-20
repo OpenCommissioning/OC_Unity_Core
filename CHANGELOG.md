@@ -1,3 +1,10 @@
+## [1.1.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.8...v1.1.9) (2025-03-20)
+
+
+### Bug Fixes
+
+* rigidbody velocity for unity 6 ([57cefef](https://github.com/OpenCommissioning/OC_Unity_Core/commit/57cefef6ee1aba09a9b16b5f16c2815ac4ae6b63))
+
 ## [1.1.8](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.7...v1.1.8) (2025-03-20)
 
 
