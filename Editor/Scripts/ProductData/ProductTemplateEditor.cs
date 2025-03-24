@@ -62,6 +62,7 @@ namespace OC.Editor
             _listView.makeItem = MakeItem;
             _listView.bindItem = BindItem;
             _listView.itemsAdded += ListViewOnItemsAdded;
+            _listView.itemsRemoved += ListViewOnItemsRemoved;
 
             _buttonSave.clicked += Save;
             _buttonCreate.clicked += Create;
@@ -72,6 +73,11 @@ namespace OC.Editor
             rootVisualElement.TrackSerializedObjectValue(_serializedObject, CheckDirtyState);
         }
 
+        private void ListViewOnItemsRemoved(IEnumerable<int> obj)
+        {
+            SetDirty(true);
+        }
+        
         private void ListViewOnItemsAdded(IEnumerable<int> obj)
         {
             foreach (var index in obj)
@@ -81,6 +87,7 @@ namespace OC.Editor
                     Key = $"New key {index}"
                 };
             }
+            SetDirty(true);
         }
 
         private void Create()
@@ -107,6 +114,7 @@ namespace OC.Editor
                 _ignoreDirtyFlag = true;
 
                 _fileName = Path.GetFileName(path);
+                _textName.text = _fileName;
                 var entryData = ProductDataFactory.GetTemplateContent(path);
                 foreach (var data in entryData)
                 {
