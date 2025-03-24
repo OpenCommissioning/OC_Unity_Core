@@ -136,6 +136,8 @@ namespace OC
         {
             Texture2D roundedTexture = CreateRoundedRectTexture(64, 64, 8, backgroundColor);
             _roundedBoxStyle.normal.background = roundedTexture;
+            _roundedBoxStyle.border = new RectOffset(12, 12, 12, 12);
+            _roundedBoxStyle.padding = new RectOffset(10, 10, 10, 10);
             _roundedBoxStyle.alignment = TextAnchor.MiddleCenter;
             _roundedBoxStyle.normal.textColor = Color.white;
         }
