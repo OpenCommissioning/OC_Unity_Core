@@ -19,6 +19,7 @@ namespace OC.Editor
         private VisualElement _empty;
         private Button _buttonSave;
         private Button _buttonCreate;
+        private Button _buttonOpen;
         private Label _textName;
         private ListView _listView;
         private string _fileName;
@@ -46,12 +47,13 @@ namespace OC.Editor
             var toolbar = rootVisualElement.Q<ToolbarMenu>();
             toolbar.menu.AppendAction("Create",_ => Create(), _ => DropdownMenuAction.Status.Normal);
             toolbar.menu.AppendAction("Open",_ => Open(), _ => DropdownMenuAction.Status.Normal);
-            toolbar.menu.AppendAction("Save",_ => Save(), _ => DropdownMenuAction.Status.Normal);
-            toolbar.menu.AppendAction("Clear",_ => Clear(), _ => DropdownMenuAction.Status.Normal);
+            toolbar.menu.AppendAction("Save As",_ => Save(), _ => DropdownMenuAction.Status.Normal);
+            toolbar.menu.AppendAction("Close",_ => Clear(), _ => DropdownMenuAction.Status.Normal);
 
             _textName = rootVisualElement.Q<Label>("name");
             _buttonSave = rootVisualElement.Q<Button>("save");
             _buttonCreate = rootVisualElement.Q<Button>("create");
+            _buttonOpen = rootVisualElement.Q<Button>("open");
 
             VisualElement MakeItem() => new EntryDataElement();
             void BindItem(VisualElement e, int i) => (e as EntryDataElement)?.Bind(_entryData[i]);
@@ -62,16 +64,22 @@ namespace OC.Editor
             _listView.makeItem = MakeItem;
             _listView.bindItem = BindItem;
             _listView.itemsAdded += ListViewOnItemsAdded;
+            _listView.itemsRemoved += ListViewOnItemsRemoved;
 
             _buttonSave.clicked += Save;
             _buttonCreate.clicked += Create;
-
+            _buttonOpen.clicked += Open;
             EnableEmptyState(true);
             SetDirty(false);
             
             rootVisualElement.TrackSerializedObjectValue(_serializedObject, CheckDirtyState);
         }
 
+        private void ListViewOnItemsRemoved(IEnumerable<int> obj)
+        {
+            SetDirty(true);
+        }
+        
         private void ListViewOnItemsAdded(IEnumerable<int> obj)
         {
             foreach (var index in obj)
@@ -81,6 +89,7 @@ namespace OC.Editor
                     Key = $"New key {index}"
                 };
             }
+            SetDirty(true);
         }
 
         private void Create()
@@ -107,6 +116,7 @@ namespace OC.Editor
                 _ignoreDirtyFlag = true;
 
                 _fileName = Path.GetFileName(path);
+                _textName.text = _fileName;
                 var entryData = ProductDataFactory.GetTemplateContent(path);
                 foreach (var data in entryData)
                 {

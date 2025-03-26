@@ -5,12 +5,13 @@
     <ui:VisualElement name="file">
         <ui:Label text="File Name" display-tooltip-when-elided="true" name="name" style="font-size: 16px; -unity-text-align: middle-center; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;" />
         <ui:ListView show-foldout-header="true" name="list" show-border="true" show-add-remove-footer="true" show-bound-collection-size="false" horizontal-scrolling="false" virtualization-method="DynamicHeight" fixed-item-height="30" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;" />
-        <ui:Button text="Save" display-tooltip-when-elided="true" name="save" />
+        <ui:Button text="Save As" display-tooltip-when-elided="true" name="save" />
     </ui:VisualElement>
     <ui:VisualElement name="empty" style="flex-grow: 1;">
         <ui:VisualElement style="flex-direction: column; flex-grow: 1; align-items: center; justify-content: center;">
-            <ui:Label text="Product Data Template is not selected." display-tooltip-when-elided="true" style="align-items: center; justify-content: center; -unity-text-align: upper-center; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" />
+            <ui:Label text="Open existing or create new template file" display-tooltip-when-elided="true" style="align-items: center; justify-content: center; -unity-text-align: upper-center; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" />
             <ui:Button text="Create" display-tooltip-when-elided="true" name="create" />
+            <ui:Button text="Open" display-tooltip-when-elided="true" name="open" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
