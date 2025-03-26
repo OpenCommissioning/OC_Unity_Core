@@ -7,7 +7,7 @@ namespace OC.Components
     [SelectionBase]
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(1000)]
-    public class Axis : Actor, IInteractable
+    public class Axis : Actor, IInteractable, ICustomInspector
     {
         public Actor Actor
         {
@@ -91,7 +91,15 @@ namespace OC.Components
 
         private void LocalUpdate(float deltaTime)
         {
-            if (_isActorValid) Target.Value = _actor.Value.Value;
+            if (_override)
+            {
+                Target.Value = _target;
+            }
+            else if (_isActorValid)
+            {
+                Target.Value = _actor.Value.Value;
+            }
+            
             _value.Value = _target.Value * _factor;
 
             switch (_controlMode)
