@@ -21,7 +21,7 @@ namespace OC
         private Interaction _activeInteraction;
         private int[] _outlineRenderers = Array.Empty<int>();
         private const string ICON = "d_EventTrigger Icon";
-        private GUIStyle _roundedBoxStyle = new GUIStyle();
+        private readonly GUIStyle _roundedBoxStyle = new ();
         
         [Shortcut("Scene Interaction Tool", typeof(SceneView), KeyCode.I)]
         private static void SceneViewInteractionShortcut()
@@ -92,49 +92,40 @@ namespace OC
 
         private Texture2D CreateRoundedRectTexture(int width, int height, int radius, Color fillColor)
         {
-            Texture2D texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-            Color clear = new Color(0, 0, 0, 0);
-            Color[] pixels = new Color[width * height];
+            var texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
+            var clear = new Color(0, 0, 0, 0);
 
-            for (int y = 0; y < height; y++)
+            for (var y = 0; y < height; y++)
             {
-                for (int x = 0; x < width; x++)
+                for (var x = 0; x < width; x++)
                 {
-                    bool inside = true;
-
-                    if (x < radius && y < radius)
-                    {
-                        if (Vector2.Distance(new Vector2(x, y), new Vector2(radius, radius)) > radius)
-                            inside = false;
-                    }
-                    else if (x >= width - radius && y < radius)
-                    {
-                        if (Vector2.Distance(new Vector2(x, y), new Vector2(width - radius, radius)) > radius)
-                            inside = false;
-                    }
-                    else if (x < radius && y >= height - radius)
-                    {
-                        if (Vector2.Distance(new Vector2(x, y), new Vector2(radius, height - radius)) > radius)
-                            inside = false;
-                    }
-                    else if (x >= width - radius && y >= height - radius)
-                    {
-                        if (Vector2.Distance(new Vector2(x, y), new Vector2(width - radius, height - radius)) > radius)
-                            inside = false;
-                    }
+                    var pixelColor = clear;
                     
-                    pixels[y * width + x] = inside ? fillColor : clear;
+                    var insideMainRect = 
+                        (x >= radius && x < width - radius) || 
+                        (y >= radius && y < height - radius);
+
+                    var insideCorner =
+                        (x < radius && y < radius && Vector2.Distance(new Vector2(x, y), new Vector2(radius, radius)) <= radius) || // Bottom-left
+                        (x >= width - radius && y < radius && Vector2.Distance(new Vector2(x, y), new Vector2(width - radius - 1, radius)) <= radius) || // Bottom-right
+                        (x < radius && y >= height - radius && Vector2.Distance(new Vector2(x, y), new Vector2(radius, height - radius - 1)) <= radius) || // Top-left
+                        (x >= width - radius && y >= height - radius && Vector2.Distance(new Vector2(x, y), new Vector2(width - radius - 1, height - radius - 1)) <= radius); // Top-right
+
+                    if (insideMainRect || insideCorner)
+                    {
+                        pixelColor = fillColor;
+                    }
+
+                    texture.SetPixel(x, y, pixelColor);
                 }
             }
-
-            texture.SetPixels(pixels);
             texture.Apply();
             return texture;
         }
 
         private void InitRoundedBoxStyle(Color backgroundColor)
         {
-            Texture2D roundedTexture = CreateRoundedRectTexture(64, 64, 8, backgroundColor);
+            var roundedTexture = CreateRoundedRectTexture(64, 64, 8, backgroundColor);
             _roundedBoxStyle.normal.background = roundedTexture;
             _roundedBoxStyle.border = new RectOffset(12, 12, 12, 12);
             _roundedBoxStyle.padding = new RectOffset(10, 10, 10, 10);
@@ -154,15 +145,15 @@ namespace OC
                     InitRoundedBoxStyle(backgroundColor);
                 }
 
-                string notificationText = "Interaction Mode: Active";
-                GUIContent content = new GUIContent(notificationText);
-                Vector2 textSize = _roundedBoxStyle.CalcSize(content);
-                float horizontalMargin = 12f;
-                float verticalMargin = 12f;
-                Vector2 totalSize = new Vector2(textSize.x + horizontalMargin, textSize.y + verticalMargin);
-                float xPos = (sceneView.position.width - totalSize.x) * 0.5f;
-                float yPos = 10f;
-                Rect rect = new Rect(xPos, yPos, totalSize.x, totalSize.y);
+                var notificationText = "Interaction Mode: Active";
+                var content = new GUIContent(notificationText);
+                var textSize = _roundedBoxStyle.CalcSize(content);
+                var horizontalMargin = 12f;
+                var verticalMargin = 12f;
+                var totalSize = new Vector2(textSize.x + horizontalMargin, textSize.y + verticalMargin);
+                var xPos = (sceneView.position.width - totalSize.x) * 0.5f;
+                var yPos = 10f;
+                var rect = new Rect(xPos, yPos, totalSize.x, totalSize.y);
 
                 GUI.Box(rect, notificationText, _roundedBoxStyle);
             }
