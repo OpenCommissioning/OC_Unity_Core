@@ -162,6 +162,7 @@ namespace OC.MaterialFlow
             _joint.axis = Quaternion.AngleAxis(_angleOffset, Vector3.up) * Vector3.forward;
 #if UNITY_6000_0_OR_NEWER
             if (!_rigidbody.isKinematic) _rigidbody.linearVelocity = normal * _transport.Value.Value;
+            _rigidbody.angularVelocity = Vector3.zero;
 #else
             if (!_rigidbody.isKinematic) _rigidbody.velocity = normal * _transport.Value.Value;
 #endif
