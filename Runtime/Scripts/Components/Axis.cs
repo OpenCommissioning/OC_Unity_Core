@@ -21,6 +21,12 @@ namespace OC.Components
             get => _factor;
         }
         
+        public float Offset 
+        {
+            set => _offset = value;
+            get => _offset;
+        }
+        
         public AxisType Type
         {
             set
@@ -48,6 +54,8 @@ namespace OC.Components
         [Header("Settings")]
         [SerializeField]
         protected float _factor = 1f;
+        [SerializeField]
+        protected float _offset;
         [SerializeField] 
         protected AxisDirection _direction = AxisDirection.X;
         [SerializeField]
@@ -100,7 +108,7 @@ namespace OC.Components
                 Target.Value = _actor.Value.Value;
             }
             
-            _value.Value = _target.Value * _factor;
+            _value.Value = (_target.Value + _offset) * _factor;
 
             switch (_controlMode)
             {

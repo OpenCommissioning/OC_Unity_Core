@@ -32,6 +32,7 @@ namespace OC.Editor.Inspector
             
             var groupSettings = new PropertyGroup("Settings");
             groupSettings.Add(new FloatField("Factor"){bindingPath = "_factor"}.AlignedField());
+            groupSettings.Add(new FloatField("Offset"){bindingPath = "_offset"}.AlignedField());
             groupSettings.Add(new EnumField("Direction"){bindingPath = "_direction"}.AlignedField());
             groupSettings.Add(new EnumField("Type"){bindingPath = "_type"}.AlignedField());
             groupSettings.Add(new EnumField("Control Mode"){bindingPath = "_controlMode"}.AlignedField());
