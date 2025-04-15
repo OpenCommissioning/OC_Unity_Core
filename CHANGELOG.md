@@ -1,3 +1,22 @@
+# [1.2.0](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.9...v1.2.0) (2025-04-15)
+
+
+### Bug Fixes
+
+* add visual element for interaction mode ([8662e92](https://github.com/OpenCommissioning/OC_Unity_Core/commit/8662e92a0fafd27eaaf2890842cc029386e1a971))
+* adjust text margin ([602c07f](https://github.com/OpenCommissioning/OC_Unity_Core/commit/602c07f890b072d74e6043e1157759e4b3bd4538))
+* rect round edges ([bcb782b](https://github.com/OpenCommissioning/OC_Unity_Core/commit/bcb782b3a9399b238d62a57966668cfd3d2e8ba0))
+* rigidbody rotation on GuidedPayload ([39d5131](https://github.com/OpenCommissioning/OC_Unity_Core/commit/39d51315e9825e5aaa33f4aa335ae1230c589f22))
+* save button in product template editor ([06610bd](https://github.com/OpenCommissioning/OC_Unity_Core/commit/06610bd2ac964ec8fb41f3e89458d30e441cf1b3))
+
+
+### Features
+
+* **axis:** axis offset property ([fce3a3a](https://github.com/OpenCommissioning/OC_Unity_Core/commit/fce3a3a2086c52b1d465aba19c0cd841dc13ecbd))
+* custom inspector for Axis ([727e9fc](https://github.com/OpenCommissioning/OC_Unity_Core/commit/727e9fc22569b1e2866dc431fd773b71d846a6fd))
+* override target value in Axis ([0930bc0](https://github.com/OpenCommissioning/OC_Unity_Core/commit/0930bc0394e00db301c954909621a08e807c1c62))
+* UI improvements Product Data Template Editor ([a50059a](https://github.com/OpenCommissioning/OC_Unity_Core/commit/a50059a06003897f3360b575aa06dc7dfacfd439))
+
 ## [1.1.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.8...v1.1.9) (2025-03-20)
 
 
