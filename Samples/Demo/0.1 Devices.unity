@@ -385,6 +385,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 872032856}
   _factor: 1
+  _offset: 0
   _direction: 0
   _type: 1
   _controlMode: 1
@@ -2172,6 +2173,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 1575472970}
   _factor: 0.01
+  _offset: 0
   _direction: 0
   _type: 0
   _controlMode: 0
@@ -3546,6 +3548,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 166511645}
   _factor: 1
+  _offset: 0
   _direction: 0
   _type: 1
   _controlMode: 1
@@ -5965,6 +5968,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 1726639120}
   _factor: 0.001
+  _offset: 0
   _direction: 1
   _type: 0
   _controlMode: 0
@@ -10484,7 +10488,6 @@ MonoBehaviour:
   _isConnected:
     _value: 0
   _rootName: MAIN
-  _verbose: 0
   _link:
     _enable: 0
     _isConnected:
@@ -10498,9 +10501,13 @@ MonoBehaviour:
     Control: 0
     Status: 0
     TimeScale: 0
-  _autoConnect: 1
-  _netId: Local
-  _port: 851
+  _config:
+    _name: Client
+    _reconnect: 1
+    _netId: Local
+    _port: 351
+    _clearBuffer: 1
+    _verbose: 0
 --- !u!1 &2008748801
 GameObject:
   m_ObjectHideFlags: 0
@@ -10554,6 +10561,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 1207663284}
   _factor: 0.001
+  _offset: 0
   _direction: 1
   _type: 0
   _controlMode: 0
@@ -11465,6 +11473,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 209732355}
   _factor: 0.001
+  _offset: 0
   _direction: 1
   _type: 0
   _controlMode: 0
