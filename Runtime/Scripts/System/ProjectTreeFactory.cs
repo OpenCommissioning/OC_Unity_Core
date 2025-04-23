@@ -105,7 +105,7 @@ namespace OC
             
             if (!link.IsPathOriginal())
             {
-                var path = link.GetPath(true);
+                var path = link.GetHierarchyPath(true);
                 device.Add(new XElement("OriginalPath", path));
             }
 
