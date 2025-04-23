@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.0...v1.2.1) (2025-04-23)
+
+
+### Bug Fixes
+
+* **Client:** Ads Variable name validation ([51e18c8](https://github.com/OpenCommissioning/OC_Unity_Core/commit/51e18c833e1bc7ddc1fb6ad700ef9c057dba3d6a))
+* **Client:** Initial port config ([3f3eafe](https://github.com/OpenCommissioning/OC_Unity_Core/commit/3f3eafe58a56bd3e21230e6508cc02ad4f1c0827))
+
 # [1.2.0](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.1.9...v1.2.0) (2025-04-15)
 
 
