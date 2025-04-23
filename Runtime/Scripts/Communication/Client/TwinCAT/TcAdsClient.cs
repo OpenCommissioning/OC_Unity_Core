@@ -1,7 +1,6 @@
 using System;
 using System.Xml.Linq;
 using UnityEngine;
-using AdsClient = TwinCAT.Ads.TcAdsClient;
 
 namespace OC.Communication.TwinCAT
 {
