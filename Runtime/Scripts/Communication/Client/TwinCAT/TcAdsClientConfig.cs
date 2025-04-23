@@ -62,7 +62,7 @@ namespace OC.Communication.TwinCAT
             Name = "Client",
             Reconnect = true,
             NetId = "Local",
-            Port = 351,
+            Port = 851,
             ClearBuffer = true,
             Verbose = false
         };
