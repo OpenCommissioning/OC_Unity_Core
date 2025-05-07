@@ -1,5 +1,4 @@
 using System.Collections;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -90,8 +89,7 @@ namespace OC.Interactions
             yield return transform.Interpolate(_initPosition, _initRotation, _duration, MotionUtils.TransformSpace.Local);
             _closed.Value = true;
         }
-
-        [Button]
+        
         public void Click()
         {
             if (!Application.isPlaying) return;

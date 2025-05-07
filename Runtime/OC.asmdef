@@ -3,9 +3,8 @@
     "rootNamespace": "OC",
     "references": [
         "Unity.TextMeshPro",
-        "NaughtyAttributes.Core",
-        "NaughtyAttributes.Editor",
-        "UniTask"
+        "UniTask",
+        "TriInspector"
     ],
     "includePlatforms": [
         "Editor",

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using NaughtyAttributes;
 using OC.Communication;
 using OC.Components;
 using UnityEngine;
@@ -39,8 +38,7 @@ namespace OC.Project
             _devices = FindObjectsOfType<MonoBehaviour>().OfType<IDevice>().ToList();
             _forceComponents = FindObjectsOfType<MonoBehaviour>().OfType<IControlOverridable>().ToList();
         }
-
-        [Button]
+        
         public void SaveConfig()
         {
             SceneConfigurationManager.SaveFile();

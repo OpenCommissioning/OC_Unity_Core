@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.Cylinder), true), CanEditMultipleObjects]
+    //[CustomEditor(typeof(Components.Cylinder), true), CanEditMultipleObjects]
     public class Cylinder : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

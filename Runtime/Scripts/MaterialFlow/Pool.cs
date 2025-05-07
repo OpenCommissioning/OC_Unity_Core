@@ -1,5 +1,4 @@
 using UnityEngine;
-using NaughtyAttributes;
 
 namespace OC.MaterialFlow
 {    
@@ -18,13 +17,12 @@ namespace OC.MaterialFlow
             if (_poolManager.Root == null) _poolManager.Root = transform;
         }
 
-        [Button]
+        
         public void DestroyAll()
         {
             _poolManager?.DestroyAll();
         }
         
-        [Button]
         public void Repair()
         {
             _poolManager?.Repair();

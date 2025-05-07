@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,10 +27,8 @@ namespace OC.Components
         private float _displacement;
         [SerializeField]
         protected Property<float> _value = new (0);
-
-        [Foldout("Events")]
+        
         public UnityEvent<float> OnDisplacementChange;
-        [Foldout("Events")]
         public UnityEvent<float> OnDisplacementTChange;
 
         private float _initMagnitude;

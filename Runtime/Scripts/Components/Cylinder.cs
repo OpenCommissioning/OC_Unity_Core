@@ -1,5 +1,6 @@
 using System;
 using OC.Communication;
+using TriInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,6 +29,8 @@ namespace OC.Components
         public IPropertyReadOnly<bool> IsActive => _isActive;
         public IPropertyReadOnly<bool> OnLimitMin => _onLimitMin;
         public IPropertyReadOnly<bool> OnLimitMax => _onLimitMax;
+
+        [Title("Status")]
         
         [SerializeField]
         protected Property<float> _progress = new (0);
@@ -47,6 +50,8 @@ namespace OC.Components
         public IProperty<float> TimeToMin => _timeToMin;
         public IProperty<float> TimeToMax => _timeToMax;
 
+        
+        [Header("Settings")]
         [SerializeField]
         protected Property<Vector2> _limits = new (new Vector2(0, 100));
         [SerializeField]

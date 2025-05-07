@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using NaughtyAttributes;
 using UnityEngine;
 
 namespace OC
@@ -19,8 +18,7 @@ namespace OC
             StopAllCoroutines();
             StartCoroutine(SnapToLocalNull(child));
         }
-
-        [Button]
+        
         public void SnapChildren()
         {
             StopAllCoroutines();

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using NaughtyAttributes;
 using OC.Data;
 
 namespace OC.MaterialFlow
@@ -40,7 +39,6 @@ namespace OC.MaterialFlow
         private List<Payload> _payloadList = new ();
         [SerializeField] 
         private bool _verbose;
-        [ReadOnly]
         [SerializeField] 
         private int _count;
 

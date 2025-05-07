@@ -1,5 +1,4 @@
 using System;
-using NaughtyAttributes;
 using OC.Communication;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,8 +10,7 @@ namespace OC.Components
     {
         public Link Link => _link;
         public ConnectorDataByte ConnectorData => _connectorData;
-
-        [ReadOnly]
+       
         [SerializeField] 
         private byte _value;
 

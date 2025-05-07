@@ -1,5 +1,4 @@
 using System;
-using NaughtyAttributes;
 using OC.Data;
 using UnityEngine;
 
@@ -39,10 +38,8 @@ namespace OC.MaterialFlow
         private ulong _uniqueId;
         [SerializeField]
         private int _groupId;
-        [ReadOnly]
         [SerializeField]
         private bool _isRegistered;
-        [ReadOnly]
         [SerializeField] 
         private ulong _parentUniqueId;
 

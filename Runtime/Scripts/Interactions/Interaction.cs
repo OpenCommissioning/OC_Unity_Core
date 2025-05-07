@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -125,8 +124,7 @@ namespace OC.Interactions
             if (_debug) Debug.Log("Event: OnPointerUp", this);
             if (_mode.HasFlag(InteractionMode.Click)) OnPointerUpEvent?.Invoke();
         }
-
-        [Button]
+        
         public void BoundColliderSize()
         {
             var bounds = Utils.GetLocalBoundsForChildrenMeshes(gameObject);
