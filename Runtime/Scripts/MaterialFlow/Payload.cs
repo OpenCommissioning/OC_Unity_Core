@@ -8,7 +8,6 @@ namespace OC.MaterialFlow
     [SelectionBase]
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(BoxCollider))]
     public class Payload : PayloadBase, IInteractable
     {
         public IProperty<ControlState> ControlState => _controlState;
@@ -53,6 +52,7 @@ namespace OC.MaterialFlow
         {
             _rigidbody = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
+            if (_collider == null) Debug.LogError($"Collider not found on {gameObject}", this);
         }
         
         private void OnEnable()
@@ -85,6 +85,14 @@ namespace OC.MaterialFlow
             UnregistrateInParent();
         }
 
+        private void Reset()
+        {
+            if (GetComponent<Collider>() == null)
+            {
+                gameObject.AddComponent<BoxCollider>();
+            }
+        }
+
         public void Registrate(ulong uniqueId = 0)
         {
             _isRegistered = true;
@@ -97,7 +105,7 @@ namespace OC.MaterialFlow
             _uniqueId = uniqueId;
         }
 
-        public void ApplyDiscription(PayloadDescription description)
+        public void ApplyDescription(PayloadDescription description)
         {
             Unregistrate(description.UniqueId);
             name = description.Name;
@@ -107,6 +115,12 @@ namespace OC.MaterialFlow
             _groupId = description.GroupId;
             _typeId = description.TypeId;
             _parentUniqueId = description.ParentUniqueId;
+        }
+        
+        [ContextMenu("Bound Box Collider Size", false, 100)]
+        public void BoundBoxColliderSize()
+        {
+            Utils.TryBoundBoxColliderSize(gameObject, out _);
         }
 
         private void OnControlStateChanged(ControlState state)
