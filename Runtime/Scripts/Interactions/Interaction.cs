@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -64,7 +63,7 @@ namespace OC.Interactions
 
         private void Reset()
         {
-            BoundColliderSize();
+            BoundBoxColliderSize();
             gameObject.layer = (int)DefaultLayers.Interactions;
         }
 
@@ -126,15 +125,13 @@ namespace OC.Interactions
             if (_mode.HasFlag(InteractionMode.Click)) OnPointerUpEvent?.Invoke();
         }
 
-        [Button]
-        public void BoundColliderSize()
+        [ContextMenu("Bound Box Collider Size", false, 100)]
+        public void BoundBoxColliderSize()
         {
-            var bounds = Utils.GetLocalBoundsForChildrenMeshes(gameObject);
-
-            var boxCollider = GetComponent<BoxCollider>();
-            boxCollider.isTrigger = true;
-            boxCollider.center = bounds.center;
-            boxCollider.size = bounds.size;
+            if (Utils.TryBoundBoxColliderSize(gameObject, out var boxCollider))
+            {
+                boxCollider.isTrigger = true;
+            }
         }
     }
 }
