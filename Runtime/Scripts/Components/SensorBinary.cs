@@ -76,6 +76,15 @@ namespace OC.Components
             _length.OnValidate();
         }
 
+        [ContextMenu("Bound Box Collider Size", false, 100)]
+        public new void BoundBoxColliderSize()
+        {
+            if (Utils.TryBoundBoxColliderSize(gameObject, out _))
+            {
+                _useBoxCollider = true;
+            }
+        }
+
         protected override void OnCollisionChangedAction(bool value)
         {
             base.OnCollisionChangedAction(value);

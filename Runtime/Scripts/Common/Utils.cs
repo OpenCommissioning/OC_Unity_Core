@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,30 +99,61 @@ namespace OC
                 Object.Destroy(obj);
             }
         }
-        
-        public static Bounds GetLocalBoundsForChildrenMeshes(GameObject go)
+
+        /// <summary>
+        /// Adjusts the GameObject’s BoxCollider to bounding box for all child meshes.
+        /// </summary>
+        /// <param name="gameObject">Target GameObject.</param>
+        /// <param name="boxCollider">The BoxCollider if found and updated; null otherwise.</param>
+        /// <returns>True if the collider was found and updated; false on error.</returns>
+        public static bool TryBoundBoxColliderSize(GameObject gameObject, out BoxCollider boxCollider)
         {
-            var referenceTransform = go.transform;
-            var b = new Bounds(Vector3.zero, Vector3.zero);
-            RecurseEncapsulate(referenceTransform, ref b);
-            return b;
-                       
-            void RecurseEncapsulate(Transform child, ref Bounds bounds)
+            try
             {
-                var mesh = child.GetComponent<MeshFilter>();
-                if (mesh)
+                if (gameObject == null) throw new NullReferenceException("GameObject is null");
+                boxCollider = gameObject.GetComponent<BoxCollider>();
+                if (boxCollider == null)
                 {
-                    var lsBounds = mesh.sharedMesh.bounds;
-                    var wsMin = child.TransformPoint(lsBounds.center - lsBounds.extents);
-                    var wsMax = child.TransformPoint(lsBounds.center + lsBounds.extents);
-                    bounds.Encapsulate(referenceTransform.InverseTransformPoint(wsMin));
-                    bounds.Encapsulate(referenceTransform.InverseTransformPoint(wsMax));
+                    throw new NullReferenceException("BoxCollider is null");
                 }
-                foreach (Transform grandChild in child.transform)
-                {
-                    RecurseEncapsulate(grandChild, ref bounds);
-                }
+#if UNITY_EDITOR
+                UnityEditor.Undo.RecordObject(boxCollider, "Set Box Collider Bound Size");
+#endif               
+                var bounds = GetLocalBoundsForChildrenMeshes(gameObject);
+                boxCollider.center = bounds.center;
+                boxCollider.size = bounds.size;
+                
+#if UNITY_EDITOR
+                
+                UnityEditor.EditorUtility.SetDirty(gameObject);
+#endif
+                return true;
             }
+            catch (Exception exception)
+            {
+                Debug.LogError($"TryBoundBoxColliderSize: {exception}", gameObject);
+                boxCollider = null;
+                return false;
+            }
+        }
+        
+        /// <summary>
+        /// Computes the local-space axis-aligned Bounds that encapsulate all MeshFilter meshes in the given GameObject’s hierarchy.
+        /// </summary>
+        /// <param name="gameObject">Target GameObject.</param>
+        /// <returns>Bounds in the GameObject’s local space covering all child meshes.</returns>
+        public static Bounds GetLocalBoundsForChildrenMeshes(GameObject gameObject)
+        {
+            var transform = gameObject.transform;
+            var localBounds = new Bounds(Vector3.zero, Vector3.zero);
+            var filters = gameObject.GetComponentsInChildren<MeshFilter>();
+            foreach (var meshFilter in filters)
+            {
+                var matrix = transform.localToWorldMatrix.inverse * meshFilter.transform.localToWorldMatrix;
+                var axisAlignedBounds = GeometryUtility.CalculateBounds(meshFilter.sharedMesh.vertices, matrix);
+                localBounds.Encapsulate(axisAlignedBounds);
+            }
+            return localBounds;
         }
     }
 }
