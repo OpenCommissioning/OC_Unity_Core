@@ -1,3 +1,11 @@
+## [1.2.2](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.1...v1.2.2) (2025-05-23)
+
+
+### Bug Fixes
+
+* Box Collider Bounding Box context menu function ([03219ec](https://github.com/OpenCommissioning/OC_Unity_Core/commit/03219ec6550f0b5385b07d8896a621a8ab64003a))
+* Pool Manager Typos ([222a151](https://github.com/OpenCommissioning/OC_Unity_Core/commit/222a151383599bb152d4d445cbcf6ff03baf6716))
+
 ## [1.2.1](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.0...v1.2.1) (2025-04-23)
 
 
