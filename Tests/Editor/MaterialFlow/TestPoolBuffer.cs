@@ -26,7 +26,7 @@ namespace OC.Tests.Editor.MaterialFlow
                 UniqueId = uniqueId
             };
 
-            entity.ApplyDiscription(discription);
+            entity.ApplyDescription(discription);
 
             if (parent != null) gameObject.transform.parent = parent.transform;
             return entity;

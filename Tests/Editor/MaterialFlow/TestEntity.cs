@@ -56,7 +56,7 @@ namespace OC.Tests.Editor.MaterialFlow
                 PhysicState = (int)physicState
             };
 
-            _payload.ApplyDiscription(discription);
+            _payload.ApplyDescription(discription);
             
             Assert.AreEqual(name, _payload.name, "Name is wrong");
             Assert.AreEqual(entityType, _payload.Category, "Type is wrong");
@@ -80,7 +80,7 @@ namespace OC.Tests.Editor.MaterialFlow
                 UniqueId = uniqueId
             };
 
-            _payload.ApplyDiscription(discription);
+            _payload.ApplyDescription(discription);
             
             Assert.AreEqual(typeId, _payload.TypeId, "TypeId is wrong");
             Assert.AreEqual(groupId, _payload.GroupId, "GroupId is wrong");

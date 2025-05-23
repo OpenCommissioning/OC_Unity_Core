@@ -111,7 +111,7 @@ namespace OC.MaterialFlow
             var payload = Instantiate(description.Transform.GetPosition(), description.Transform.rotation, description.TypeId, description.UniqueId);
             if (payload is null) return null;
             
-            payload.ApplyDiscription(description);
+            payload.ApplyDescription(description);
             
             var parent = FindPayload(description.ParentUniqueId);
             if (parent is not null)

@@ -783,7 +783,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_Drive
@@ -934,7 +934,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_SensorAnalog
@@ -1086,7 +1086,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_Cylinder
@@ -1846,7 +1846,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_SensorBinary
@@ -3071,7 +3071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _override:
-    _value: 1
+    _value: 0
   _target:
     _value: 0
   _value:
@@ -3402,7 +3402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _override:
-    _value: 1
+    _value: 0
   _target:
     _value: 0
   _value:
@@ -4038,7 +4038,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_Drive
@@ -5543,7 +5543,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_SensorBinary
@@ -6047,7 +6047,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_SensorBinary
@@ -6472,7 +6472,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_Cylinder
@@ -6873,7 +6873,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_SensorAnalog
@@ -8139,7 +8139,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_Lock
@@ -8389,7 +8389,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_Drive
@@ -8611,7 +8611,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_SensorAnalog
@@ -9156,7 +9156,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_Cylinder
@@ -11161,7 +11161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_Lamp
@@ -11808,7 +11808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _link:
-    _enable: 1
+    _enable: 0
     _isConnected:
       _value: 0
     _type: FB_Switch
