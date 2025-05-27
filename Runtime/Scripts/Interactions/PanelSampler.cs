@@ -10,7 +10,7 @@ namespace OC.Interactions
 {
     [AddComponentMenu("Open Commissioning/Interactions/Panel Sampler")]
     [DefaultExecutionOrder(10)]
-    public class PanelSampler : MonoComponent, IDevice, ICustomInspector, IIndustrialPanel
+    public class PanelSampler : MonoComponent, IIndustrialPanel, ICustomInspector
     {
         public Link Link => _link;
         public List<Device> Components => _components;

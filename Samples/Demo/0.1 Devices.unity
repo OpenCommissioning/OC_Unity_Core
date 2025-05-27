@@ -783,7 +783,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_Drive
@@ -934,7 +934,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_SensorAnalog
@@ -1086,14 +1086,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_Cylinder
     _parent: {fileID: 0}
     _attributes: []
-    _name: Cylinder_11
-    _path: MAIN.Devices.Cylinders.Cylinder_11
+    _name: Cylinder_1
+    _path: MAIN.Devices.Cylinders.Cylinder_1
   _connector:
     Control: 0
     Status: 0
@@ -1846,7 +1846,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_SensorBinary
@@ -3133,6 +3133,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4295175703667471693, guid: 2dce1cbfed1d5814aad206859d609758,
         type: 3}
+      propertyPath: _link._name
+      value: Toggle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295175703667471693, guid: 2dce1cbfed1d5814aad206859d609758,
+        type: 3}
+      propertyPath: _link._path
+      value: MAIN.Devices.Interactions.Toggle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295175703667471693, guid: 2dce1cbfed1d5814aad206859d609758,
+        type: 3}
       propertyPath: _localFeedback
       value: 1
       objectReference: {fileID: 0}
@@ -4038,7 +4048,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_Drive
@@ -5543,7 +5553,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_SensorBinary
@@ -6047,7 +6057,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_SensorBinary
@@ -6472,7 +6482,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_Cylinder
@@ -6873,7 +6883,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_SensorAnalog
@@ -8139,7 +8149,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_Lock
@@ -8389,7 +8399,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_Drive
@@ -8611,7 +8621,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_SensorAnalog
@@ -9156,7 +9166,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_Cylinder
@@ -11161,7 +11171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_Lamp
@@ -11546,6 +11556,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4295175703667471693, guid: 2dce1cbfed1d5814aad206859d609758,
         type: 3}
+      propertyPath: _link._path
+      value: MAIN.Devices.Interactions.Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295175703667471693, guid: 2dce1cbfed1d5814aad206859d609758,
+        type: 3}
       propertyPath: _localFeedback
       value: 1
       objectReference: {fileID: 0}
@@ -11808,7 +11823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _link:
-    _enable: 0
+    _enable: 1
     _isConnected:
       _value: 0
     _type: FB_Switch

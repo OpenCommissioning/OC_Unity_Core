@@ -6,7 +6,7 @@ namespace OC.VisualElements
     public static class BaseFieldExtension
     {
         private const string USS = "StyleSheet/oc-inspector";
-        private const string INSPETOR_LABEL_CLASS = "inspector-label";
+        private const string INSPECTOR_LABEL_CLASS = "inspector-label";
         
         public static BaseField<T> BindProperty<T>(this BaseField<T> field, IProperty<T> property)
         {
@@ -30,6 +30,7 @@ namespace OC.VisualElements
 
         public static void UnbindProperty<T>(this BaseField<T> field)
         {
+            if (field.userData == null) return;
             ((Property<T>)field.userData).ValueChanged -= OnPropertyValueChange(field);
             field.UnregisterValueChangedCallback(OnFieldValueChange);
             field.userData = null;
