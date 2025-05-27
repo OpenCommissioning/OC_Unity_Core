@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using OC.Communication;
 using OC.Interactions;
-using OC.Project;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace OC.Editor.IndustrialPanel
@@ -42,10 +42,12 @@ namespace OC.Editor.IndustrialPanel
         private bool _isContentVertical;
 
         private const string EDITOR_PREFS_SPLIT_VIEW_ORIENTATION = "IndustrialPanel_SplitViewOrientation";
+        private const string EDITOR_PREFS_LAST_SELECTION = "IndustrialPanel_LastSelection";
 
         private TwoPaneSplitView _splitView;
+        private TreeView _treeView;
         private VisualElement _hierarchyContainer;
-        private ScrollView _contentContiner;
+        private ScrollView _contentContainer;
         private VisualElement _hierarchyEmpty;
         private VisualElement _contentEmpty;
         private ToolbarBreadcrumbs _toolbarBreadcrumbs;
@@ -58,7 +60,7 @@ namespace OC.Editor.IndustrialPanel
             window.titleContent = new GUIContent("Industrial Panel");
         }
 
-        public void CreateGUI()
+        private void CreateGUI()
         {
             var root = rootVisualElement;
             var toolbar = new Toolbar();
@@ -122,18 +124,21 @@ namespace OC.Editor.IndustrialPanel
             _contentEmpty.Add(new Label("Scene isn't started"));
 
             _hierarchyContainer = new VisualElement();
-            _contentContiner = new ScrollView(ScrollViewMode.VerticalAndHorizontal);
+            _contentContainer = new ScrollView(ScrollViewMode.VerticalAndHorizontal);
             
             hierarchySplitContainer.Add(hierarchyLabel);
             hierarchySplitContainer.Add(_hierarchyEmpty);
             hierarchySplitContainer.Add(_hierarchyContainer);
             
             contentSplitContainer.Add(_contentEmpty);
-            contentSplitContainer.Add(_contentContiner);
+            contentSplitContainer.Add(_contentContainer);
             
             _splitView = new TwoPaneSplitView(0, 200, TwoPaneSplitViewOrientation.Horizontal);
             _splitView.Add(hierarchySplitContainer);
             _splitView.Add(contentSplitContainer);
+            
+            _treeView = CreateTreeView();
+            _hierarchyContainer.Add(_treeView);
             
             root.Add(_splitView);
 
@@ -143,8 +148,10 @@ namespace OC.Editor.IndustrialPanel
             }
 
             _applicationViewMode = Application.isPlaying ? ApplicationView.PlayView : ApplicationView.EditorView;
-
-            Rebuild();
+            
+            SetSplitViewOrientation(_splitViewOrientation);
+            SetApplicationViewMode(_applicationViewMode);
+            RefreshHierarchy();
         }
 
         private void OnEnable()
@@ -156,6 +163,7 @@ namespace OC.Editor.IndustrialPanel
         private void OnDisable()
         {
             EditorPrefs.SetInt(EDITOR_PREFS_SPLIT_VIEW_ORIENTATION, (int)_splitViewOrientation);
+            EditorPrefs.SetInt(EDITOR_PREFS_LAST_SELECTION, _treeView.selectedIndex);
         }
 
         private void OnDestroy()
@@ -167,12 +175,6 @@ namespace OC.Editor.IndustrialPanel
         {
             ApplicationViewMode = state == PlayModeStateChange.EnteredPlayMode ? ApplicationView.PlayView : ApplicationView.EditorView;
         }
-
-        private void Rebuild()
-        {
-            SetSplitViewOrientation(_splitViewOrientation);
-            SetApplicationViewMode(_applicationViewMode);
-        }
         
         private void SetApplicationViewMode(ApplicationView mode)
         {
@@ -182,13 +184,13 @@ namespace OC.Editor.IndustrialPanel
                     _hierarchyEmpty.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
                     _contentEmpty.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
                     _hierarchyContainer.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
-                    _contentContiner.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
+                    _contentContainer.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
                     break;
                 case ApplicationView.PlayView:
                     _hierarchyEmpty.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
                     _contentEmpty.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
                     _hierarchyContainer.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
-                    _contentContiner.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
+                    _contentContainer.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
@@ -199,13 +201,22 @@ namespace OC.Editor.IndustrialPanel
         
         private void RefreshHierarchy()
         {
-            _hierarchyContainer.Clear();
-            _contentContiner.Clear();
-
             if (_applicationViewMode != ApplicationView.PlayView) return;
+            var treeViewData = HierarchyFactory.CreateTreeViewData<IIndustrialPanel>(SceneManager.GetActiveScene(), GetHierarchyLevels);
+            _treeView.SetRootItems(treeViewData);
+            _treeView.Rebuild();
             
-            var panels = IndustrialPanelManager.Instance.IndustrialPanels;
-            _hierarchyContainer.Add(CreateTreeHierarchy(panels));
+            if (EditorPrefs.HasKey(EDITOR_PREFS_LAST_SELECTION))
+            {
+                _treeView.SetSelectionById(EditorPrefs.GetInt(EDITOR_PREFS_LAST_SELECTION));
+            }
+        }
+        
+        private string[] GetHierarchyLevels(IIndustrialPanel component)
+        {
+            component.Link.Initialize(component.Component);
+            var path = component.Link.GetHierarchyPath();
+            return path.Split('.');
         }
 
         private void SetSplitViewOrientation(TwoPaneSplitViewOrientation orientation)
@@ -214,41 +225,33 @@ namespace OC.Editor.IndustrialPanel
             {
                 case TwoPaneSplitViewOrientation.Horizontal:
                     _splitView.orientation = TwoPaneSplitViewOrientation.Horizontal;
-                    _contentContiner.contentContainer.style.flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Row);
+                    _contentContainer.contentContainer.style.flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Row);
                     break;
                 case TwoPaneSplitViewOrientation.Vertical:
                     _splitView.orientation = TwoPaneSplitViewOrientation.Vertical;
-                    _contentContiner.contentContainer.style.flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Column);
+                    _contentContainer.contentContainer.style.flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Column);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(orientation), orientation, null);
             }
         }
 
-        private VisualElement CreateTreeHierarchy(IReadOnlyList<IIndustrialPanel> panels)
+        private TreeView CreateTreeView()
         {
-            var treeView = new TreeView();
-            var treeViewData = GetTreeData(panels);
-
-            VisualElement MakeItems() => new Label();
-
-            void BindItem(VisualElement e, int i)
+            var treeView = new TreeView()
             {
-                var item = treeView.GetItemDataForIndex<TreeViewItem<IIndustrialPanel>>(i);
-                if (e is Label label) label.text = item.Name;
-            }
-
-            treeView.SetRootItems(treeViewData);
+                selectionType = SelectionType.Single,
+                horizontalScrollingEnabled = true,
+                fixedItemHeight = 18,
+                autoExpand = true,
+                reorderable = false
+            };
+            
             treeView.makeItem = MakeItems;
             treeView.bindItem = BindItem;
-            treeView.selectionType = SelectionType.Single;
-            treeView.Rebuild();
+            treeView.selectionChanged += TreeViewOnSelectionChanged;
+            treeView.itemsChosen += TreeViewOnItemChosen;
             
-            treeView.selectionChanged += TreeViewOnselectionChanged;
-
-            treeView.horizontalScrollingEnabled = true;
-            treeView.fixedItemHeight = 16;
-
             try
             {
                 treeView.SetSelectionById(_lastSelectedId);
@@ -259,96 +262,48 @@ namespace OC.Editor.IndustrialPanel
             }
 
             return treeView;
-        }
 
-        private void TreeViewOnselectionChanged(IEnumerable<object> obj)
-        {
-            foreach (var item in obj)
+            VisualElement MakeItems() => new Label();
+
+            void BindItem(VisualElement e, int i)
             {
-                var treeItem = item is TreeViewItem<IIndustrialPanel> viewItem ? viewItem : default;
-                if (!treeItem.HasContent) continue;
-                _lastSelectedId = treeItem.Id;
-                CreateContent(treeItem.Content);
-                RefreshBreadcrumbs(treeItem.Path);
+                var item = treeView.GetItemDataForIndex<HierarchyItem>(i);
+                if (e is Label label) label.text = item.Name;
             }
         }
 
-        private void CreateContent(List<IIndustrialPanel> panels)
+        private void TreeViewOnSelectionChanged(IEnumerable<object> obj)
         {
-            _contentContiner.Clear();
-            foreach (var panel in panels)
+            foreach (var element in obj)
             {
-                _contentContiner.Add(panel.Create());
+                if (element is not HierarchyItem hierarchy) return;
+                if (hierarchy.Component == null) return;
+                if (hierarchy.Component is not IIndustrialPanel panel) return;
+                Selection.SetActiveObjectWithContext(panel.Component, panel.Component);
+                SetContent(panel);
             }
         }
 
-        private void RefreshBreadcrumbs(string path)
+        private void TreeViewOnItemChosen(IEnumerable<object> obj)
+        {
+            SceneView.lastActiveSceneView.FrameSelected();
+        }
+
+        private void SetContent(IIndustrialPanel panel)
+        {
+            _contentContainer.Clear();
+            _contentContainer.Add(panel.Create());
+            RefreshBreadcrumbs(panel);
+        }
+
+        private void RefreshBreadcrumbs(IIndustrialPanel panel)
         {
             _toolbarBreadcrumbs.Clear();
-            var split = path.Split(".");
+            var split = GetHierarchyLevels(panel);
             foreach (var item in split)
             {
                 _toolbarBreadcrumbs.PushItem(item);
             }
-        }
-
-        private List<TreeViewItemData<TreeViewItem<IIndustrialPanel>>> GetTreeData(IReadOnlyList<IIndustrialPanel> panels)
-        {
-            var count = 0;
-            var root = new TreeViewItem<IIndustrialPanel>("root", "root", count);
-
-            foreach (var panel in panels)
-            {
-                var split = panel.Link.Path.Split(".");
-                split[0] += $" ({panel.Link.Client.name})";
-                
-                var current = root;
-                
-                for (var i = 0; i < split.Length-1; i++)
-                {
-                    TreeViewItem<IIndustrialPanel> item;
-                    var index = current.Children.FindIndex(x => x.Name == split[i]);
-                    if (index < 0)
-                    {
-                        count++;
-                        item = new TreeViewItem<IIndustrialPanel>(split[i], string.Join('.', split.Take(i+1)), count);
-                        current.AddChild(item);
-                        count++;
-                    }
-                    else
-                    {
-                        item = current.Children[index];
-                    }
-
-                    current = item;
-                }
-                
-                current.Content.Add(panel);
-            }
-            
-            var result = new List<TreeViewItemData<TreeViewItem<IIndustrialPanel>>>(count);
-
-            foreach (var child in root.Children)
-            {
-                result.Add(GetViewItem(child));
-            }
-
-            return result;
-        }
-
-        private TreeViewItemData<TreeViewItem<IIndustrialPanel>> GetViewItem(TreeViewItem<IIndustrialPanel> item)
-        {
-            var children = new List<TreeViewItemData<TreeViewItem<IIndustrialPanel>>>();
-            
-            if (item.HasChildren)
-            {
-                foreach (var child in item.Children)
-                {
-                    children.Add(GetViewItem(child));
-                }
-            }
-
-            return new TreeViewItemData<TreeViewItem<IIndustrialPanel>>(item.Id, item, children);
         }
 
         public enum ApplicationView

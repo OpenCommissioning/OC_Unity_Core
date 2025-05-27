@@ -11,9 +11,8 @@ namespace OC.Project
         public static IndustrialPanelManager Instance { get; private set; }
 
         public List<IIndustrialPanel> IndustrialPanels => _industrialPanels;
-        
 
-        private List<IIndustrialPanel> _industrialPanels = new List<IIndustrialPanel>();
+        private List<IIndustrialPanel> _industrialPanels = new ();
         
         
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]

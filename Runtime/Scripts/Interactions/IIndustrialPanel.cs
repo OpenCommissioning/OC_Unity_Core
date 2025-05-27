@@ -3,9 +3,8 @@ using UnityEngine.UIElements;
 
 namespace OC.Interactions
 {
-    public interface IIndustrialPanel
+    public interface IIndustrialPanel : IDevice
     {
-        public Link Link { get; }
         public VisualElement Create();
     }
 }
