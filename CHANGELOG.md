@@ -1,3 +1,11 @@
+## [1.2.3](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.2...v1.2.3) (2025-05-27)
+
+
+### Bug Fixes
+
+* hierarchy factory ([808226d](https://github.com/OpenCommissioning/OC_Unity_Core/commit/808226dac8cab1acf749a2819c35fc5f6595647e))
+* project inspector ([9fd5e3f](https://github.com/OpenCommissioning/OC_Unity_Core/commit/9fd5e3f5ffbb4c897357e5e6188c52f0446e31e4))
+
 ## [1.2.2](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.1...v1.2.2) (2025-05-23)
 
 
