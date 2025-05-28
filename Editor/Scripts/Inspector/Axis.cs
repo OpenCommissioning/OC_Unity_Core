@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.Axis), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.Axis), false), CanEditMultipleObjects]
     public class Axis : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()
@@ -16,19 +16,11 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            var overrideToggle = new ToggleButton("Override").BindProperty(component.Override);
-            var targetElement = new FloatField("Target") { isReadOnly = false }.BindProperty(component.Target).AlignedField();
-            
-            groupControl.AddOptions(overrideToggle);
             groupControl.Add(new ObjectField("Actor"){bindingPath = "_actor", objectType = typeof(Components.Actor)}.AlignedField());
-            groupControl.Add(targetElement);
+            groupControl.Add(new FloatField("Target") { isReadOnly = false }.BindProperty(component.Target).AlignedField());
 
             var groupStatus = new PropertyGroup("Status");
-            var valueElement = new FloatField("Value") { isReadOnly = true }.BindProperty(component.Value).AlignedField();
-            groupStatus.Add(valueElement);
-
-            component.Override.ValueChanged += targetElement.SetEnabled;
-            targetElement.SetEnabled(component.Override.Value);
+            groupStatus.Add(new FloatField("Value") { isReadOnly = true }.BindProperty(component.Value).AlignedField());
             
             var groupSettings = new PropertyGroup("Settings");
             groupSettings.Add(new FloatField("Factor"){bindingPath = "_factor"}.AlignedField());
