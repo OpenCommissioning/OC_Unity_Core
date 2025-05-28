@@ -41,12 +41,12 @@ namespace OC.MaterialFlow
             _transform = GetComponent<Transform>();
             _rigidbody = GetComponent<Rigidbody>();
             _payload = GetComponent<Payload>();
-            _payload.ControlState.ValueChanged += ControlStateChaged;
+            _payload.ControlState.OnValueChanged += ControlStateChaged;
         }
 
         private void OnDisable()
         {
-            _payload.ControlState.ValueChanged -= ControlStateChaged;
+            _payload.ControlState.OnValueChanged -= ControlStateChaged;
         }
 
         private void FixedUpdate()

@@ -9,7 +9,7 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lamp")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lamp : Device, ICustomInspector, IControlOverridable
+    public class Lamp : Device, ICustomInspector
     {
         public bool Signal
         {
@@ -36,12 +36,12 @@ namespace OC.Interactions
         private new void Start()
         {
             base.Start();
-            _value.ValueChanged += OnValueChangedAction;
+            _value.OnValueChanged += OnOnValueChangedAction;
         }
 
         private void OnDestroy()
         {
-            _value.ValueChanged -= OnValueChangedAction;
+            _value.OnValueChanged -= OnOnValueChangedAction;
         }
         
         protected override void Reset()
@@ -66,7 +66,7 @@ namespace OC.Interactions
             }
         }
 
-        private void OnValueChangedAction(bool value)
+        private void OnOnValueChangedAction(bool value)
         {
             OnValueChanged?.Invoke(value);
 

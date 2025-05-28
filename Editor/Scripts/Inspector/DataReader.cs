@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.DataReader), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.DataReader), false), CanEditMultipleObjects]
     public class DataReader : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

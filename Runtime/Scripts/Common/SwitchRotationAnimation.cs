@@ -39,14 +39,14 @@ namespace OC
             _initRotation = transform.localRotation;
             if (_switch != null)
             {
-                _switch.Angle.ValueChanged += StartAnimation;
+                _switch.Angle.OnValueChanged += StartAnimation;
                 SetAngle(_switch.Angle.Value);
             }
         }
         
         private void OnDisable()
         {
-            if (_switch != null) _switch.Angle.ValueChanged -= StartAnimation;
+            if (_switch != null) _switch.Angle.OnValueChanged -= StartAnimation;
         }
 
         private void StartAnimation(float value)

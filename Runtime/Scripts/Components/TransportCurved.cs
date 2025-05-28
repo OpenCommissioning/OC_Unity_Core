@@ -29,17 +29,17 @@ namespace OC.Components
         protected new void OnEnable()
         {
             base.OnEnable();
-            _angle.ValueChanged += OnShapeChanged;
-            _radius.ValueChanged += OnShapeChanged;
-            _smoothness.ValueChanged += OnShapeChanged;
+            _angle.OnValueChanged += OnShapeChanged;
+            _radius.OnValueChanged += OnShapeChanged;
+            _smoothness.OnValueChanged += OnShapeChanged;
         }
         
         protected new void OnDisable()
         {
             base.OnDisable();
-            _angle.ValueChanged -= OnShapeChanged;
-            _radius.ValueChanged -= OnShapeChanged;
-            _smoothness.ValueChanged -= OnShapeChanged;
+            _angle.OnValueChanged -= OnShapeChanged;
+            _radius.OnValueChanged -= OnShapeChanged;
+            _smoothness.OnValueChanged -= OnShapeChanged;
         }
 
         protected new void OnValidate()

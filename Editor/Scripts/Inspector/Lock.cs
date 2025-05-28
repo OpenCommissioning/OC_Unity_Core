@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Interactions.Lock), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Interactions.Lock), false), CanEditMultipleObjects]
     public class Lock : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()
@@ -17,7 +17,7 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
             
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddOverrideOption(component);
+            groupControl.AddLinkOverride(serializedObject);
             groupControl.Add(new ToggleButton("Lock").BindProperty(component.LockSignal)); 
 
             var groupStatus = new PropertyGroup("Status");

@@ -9,26 +9,8 @@ namespace OC.Components
     public class DriveSimple : DriveSpeed
     {
         public IProperty<float> Speed => _speed;
-
-        public Property<bool> Forward
-        {
-            get => _forward;
-            set
-            {
-                _forward = value;
-                if (_forward) _backward.Value = false;
-            }
-        }
-        
-        public Property<bool> Backward
-        {
-            get => _backward;
-            set
-            {
-                _backward = value;
-                if (_backward) _forward.Value = false;
-            }
-        }
+        public IProperty<bool> Forward => _forward;
+        public IProperty<bool> Backward => _backward;
 
         public bool JogForward
         {

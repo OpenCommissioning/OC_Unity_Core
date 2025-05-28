@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Interactions.Button), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Interactions.Button), false), CanEditMultipleObjects]
     public class Button : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

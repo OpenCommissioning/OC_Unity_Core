@@ -10,7 +10,7 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lock")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lock : MonoComponent, IDevice, IControlOverridable, ICustomInspector, IInteractable
+    public class Lock : MonoComponent, IDevice, ICustomInspector, IInteractable
     {
         public Link Link => _link;
         public IProperty<bool> Override => _override;
@@ -46,16 +46,16 @@ namespace OC.Interactions
 
         private void OnEnable()
         {
-            _lock.ValueChanged += LockCallback;
-            _closed.ValueChanged += ClosedCallback;
-            _locked.ValueChanged += LockedCallback;
+            _lock.OnValueChanged += LockCallback;
+            _closed.OnValueChanged += ClosedCallback;
+            _locked.OnValueChanged += LockedCallback;
         }
         
         private void OnDisable()
         {
-            _lock.ValueChanged -= LockCallback;
-            _closed.ValueChanged -= ClosedCallback;
-            _locked.ValueChanged -= LockedCallback;
+            _lock.OnValueChanged -= LockCallback;
+            _closed.OnValueChanged -= ClosedCallback;
+            _locked.OnValueChanged -= LockedCallback;
         }
         
         protected void Start()
@@ -110,7 +110,7 @@ namespace OC.Interactions
 
         private void LateUpdate()
         {
-            if (!_override && _link.IsConnected.Value) _lock.Value = _connector.Control.GetBit(0);
+            if (_link.IsActive) _lock.Value = _connector.Control.GetBit(0);
             UpdateButtons();
 
             if (_doors.Count > 0)

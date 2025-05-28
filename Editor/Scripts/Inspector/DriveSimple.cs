@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.DriveSimple), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.DriveSimple), false), CanEditMultipleObjects]
     public class DriveSimple : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()
@@ -17,8 +17,7 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddOverrideOption(component);
-            groupControl.Add(new FloatField("Target").BindProperty(component.Target).AlignedField());
+            groupControl.AddLinkOverride(serializedObject);
             var hStack = new StackHorizontal();
             hStack.Add(new ToggleButton("Backward").BindProperty(component.Backward));
             hStack.Add(new ToggleButton("Forward").BindProperty(component.Forward));

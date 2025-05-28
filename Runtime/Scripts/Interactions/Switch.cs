@@ -21,12 +21,12 @@ namespace OC.Interactions
 
         protected void OnEnable()
         {
-            _index.ValueChanged += IndexChanged;
+            _index.OnValueChanged += IndexChanged;
         }
         
         protected void OnDisable()
         {
-            _index.ValueChanged -= IndexChanged;
+            _index.OnValueChanged -= IndexChanged;
         }
         
         protected override void Reset()

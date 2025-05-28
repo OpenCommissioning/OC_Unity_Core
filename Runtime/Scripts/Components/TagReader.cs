@@ -10,7 +10,7 @@ namespace OC.Components
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BoxCollider))]
-    public class TagReader : Detector, IDevice, IMeasurement<ulong>, IControlOverridable, ICustomInspector, IInteractable
+    public class TagReader : Detector, IDevice, IMeasurement<ulong>, ICustomInspector, IInteractable
     {
         public Link Link => _link;
         public IProperty<bool> Override => _override;
@@ -41,13 +41,13 @@ namespace OC.Components
         private new void OnEnable()
         {
             base.OnEnable();
-            _value.ValueChanged += OnValueChanged;
+            _value.OnValueChanged += OnValueChanged;
         }
 
         private new void OnDisable()
         {
             base.OnDisable();
-            _value.ValueChanged -= OnValueChanged;
+            _value.OnValueChanged -= OnValueChanged;
         }
 
         private void Start()

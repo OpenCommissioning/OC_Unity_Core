@@ -30,7 +30,7 @@ namespace OC.Interactions
         [SerializeField] 
         private ButtonType _type = ButtonType.Click;
         [SerializeField] 
-        private Property<UIStyle> _visualStyle = UIStyle.Default;
+        private Property<UIStyle> _visualStyle = new(UIStyle.Default);
         [SerializeField]
         protected Property<Color> _color = new (UnityEngine.Color.cyan);
         [SerializeField] 
@@ -45,14 +45,14 @@ namespace OC.Interactions
         private new void Start()
         {
             base.Start();
-            _pressed.ValueChanged += PressedOnValueChanged;
-            _feedback.ValueChanged += FeedbackOnValueChanged;
+            _pressed.OnValueChanged += PressedOnOnValueChanged;
+            _feedback.OnValueChanged += FeedbackOnOnValueChanged;
         }
 
         protected void OnDestroy()
         {
-            _pressed.ValueChanged -= PressedOnValueChanged;
-            _feedback.ValueChanged -= FeedbackOnValueChanged;
+            _pressed.OnValueChanged -= PressedOnOnValueChanged;
+            _feedback.OnValueChanged -= FeedbackOnOnValueChanged;
         }
 
         private void OnValidate()
@@ -113,7 +113,7 @@ namespace OC.Interactions
             if (!_localFeedback) _feedback.Value = Connector.Control.GetBit(0);
         }
 
-        private void PressedOnValueChanged(bool value)
+        private void PressedOnOnValueChanged(bool value)
         {
             Connector.Status.SetBit(0, value);
             OnPressedChanged?.Invoke(value);
@@ -121,7 +121,7 @@ namespace OC.Interactions
             if (_localFeedback) _feedback.Value = value;
         }
         
-        private void FeedbackOnValueChanged(bool value)
+        private void FeedbackOnOnValueChanged(bool value)
         {
             OnFeedbackChanged?.Invoke(value);
             

@@ -25,15 +25,15 @@ namespace OC.Components
             if (!_isSensorValid) return;
             OnStateChanged(_sensor.State.Value);
             OnLengthChanged(_sensor.Length.Value);
-            _sensor.State.ValueChanged += OnStateChanged;
-            _sensor.Length.ValueChanged += OnLengthChanged;
+            _sensor.State.OnValueChanged += OnStateChanged;
+            _sensor.Length.OnValueChanged += OnLengthChanged;
         }
         
         private void OnDisable()
         {
             if (!_isSensorValid) return;
-            _sensor.State.ValueChanged -= OnStateChanged;
-            _sensor.Length.ValueChanged -= OnLengthChanged;
+            _sensor.State.OnValueChanged -= OnStateChanged;
+            _sensor.Length.OnValueChanged -= OnLengthChanged;
         }
 
         private void OnStateChanged(bool value)

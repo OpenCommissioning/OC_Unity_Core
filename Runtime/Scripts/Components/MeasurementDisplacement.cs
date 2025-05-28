@@ -34,7 +34,7 @@ namespace OC.Components
         private void Start()
         {
             _initMagnitude = Vector3.Distance(_reference.transform.position, _target.transform.position);
-            _value.ValueChanged += OnValueChanged;
+            _value.OnValueChanged += OnValueChanged;
         }
 
         private void OnValueChanged(float value)

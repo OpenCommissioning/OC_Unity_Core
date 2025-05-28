@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Interactions.SwitchRotary), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Interactions.SwitchRotary), false), CanEditMultipleObjects]
     public class SwitchRotary : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

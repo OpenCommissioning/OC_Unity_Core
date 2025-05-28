@@ -14,8 +14,8 @@ namespace OC.Communication
         protected override void CreateVariableDescription()
         {
             base.CreateVariableDescription();
-            _variablesDiscription.Add(new ClientVariableDescription { Name = _link.Path + ".ControlData", Direction = ClientVariableDirection.Input });
-            _variablesDiscription.Add(new ClientVariableDescription { Name = _link.Path + ".StatusData", Direction = ClientVariableDirection.Output });
+            _variablesDescription.Add(new ClientVariableDescription { Name = _link.Path + ".ControlData", Direction = ClientVariableDirection.Input });
+            _variablesDescription.Add(new ClientVariableDescription { Name = _link.Path + ".StatusData", Direction = ClientVariableDirection.Output });
         }
 
         public override void Read()

@@ -10,7 +10,7 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Actor/Drive")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public abstract class Drive : Actor, IDeviceMetadata, IControlOverridable, ICustomInspector, IInteractable
+    public abstract class Drive : Actor, IDeviceMetadata, ICustomInspector, IInteractable
     {
         public Link Link => _link;
         public int MetadataAssetLength => 1;
@@ -31,7 +31,7 @@ namespace OC.Components
         {
             _link.Initialize(this);
             _connectorData = new ConnectorDataFloat(_link);
-            _isActive.ValueChanged += value => OnActiveChanged?.Invoke(value);
+            _isActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
         }
 
         protected void Reset()
@@ -41,7 +41,7 @@ namespace OC.Components
         
         private void FixedUpdate()
         {
-            if (!Override.Value && _link.IsConnected) GetLinkData();
+            if (_link.IsActive) GetLinkData();
             Operation(Time.fixedDeltaTime);
             SetLinkData();
         }
@@ -66,14 +66,14 @@ namespace OC.Components
             
             Target.Value = value;
             StopAllCoroutines();
-            StartCoroutine(InitilizeCoroutine(value));
+            StartCoroutine(InitializeCoroutine(value));
             Logging.Logger.Log(LogType.Log, "Device state initialized from metadata", this);
         }
         
-        private IEnumerator InitilizeCoroutine(float value)
+        private IEnumerator InitializeCoroutine(float value)
         {
             _value.Value = value;
-            if (!_link.IsConnected)
+            if (!_link.IsActive)
             {
                 Logging.Logger.Log(LogType.Warning, "Device initialization sequence is cancelled! Simulation unit communication isn't active!", this);
                 yield break;

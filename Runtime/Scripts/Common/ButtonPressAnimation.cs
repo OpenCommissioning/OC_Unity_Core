@@ -37,14 +37,14 @@ namespace OC
             Initialize();
             if (_button != null)
             {
-                _button.Pressed.ValueChanged += SetState;
+                _button.Pressed.OnValueChanged += SetState;
                 SetState(_button.Pressed.Value);
             }
         }
 
         private void OnDisable()
         {
-            if (_button != null) _button.Pressed.ValueChanged -= SetState;
+            if (_button != null) _button.Pressed.OnValueChanged -= SetState;
         }
 
         private void OnValidate()

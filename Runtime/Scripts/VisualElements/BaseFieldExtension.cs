@@ -12,7 +12,7 @@ namespace OC.VisualElements
         {
             if (field.userData != null) field.UnbindProperty();
             field.value = property.Value;
-            property.ValueChanged += OnPropertyValueChange(field);
+            property.OnValueChanged += OnPropertyValueChange(field);
             field.RegisterValueChangedCallback(OnFieldValueChange);
             field.userData = property;
             return field;
@@ -23,7 +23,7 @@ namespace OC.VisualElements
             if (field.userData != null) field.UnbindProperty();
 
             field.value = property.Value;
-            property.ValueChanged += OnPropertyValueChange(field);
+            property.OnValueChanged += OnPropertyValueChange(field);
             field.userData = property;
             return field;
         }
@@ -31,14 +31,17 @@ namespace OC.VisualElements
         public static void UnbindProperty<T>(this BaseField<T> field)
         {
             if (field.userData == null) return;
-            ((Property<T>)field.userData).ValueChanged -= OnPropertyValueChange(field);
+            ((Property<T>)field.userData).OnValueChanged -= OnPropertyValueChange(field);
             field.UnregisterValueChangedCallback(OnFieldValueChange);
             field.userData = null;
         }
 
         private static void OnFieldValueChange<T>(ChangeEvent<T> evt)
         {
-            if ((evt.target as BaseField<T>)?.userData is Property<T> property) property.Value = evt.newValue;
+            if ((evt.target as BaseField<T>)?.userData is Property<T> property)
+            {
+                property.Value = evt.newValue;
+            }
         }
 
         private static Action<T> OnPropertyValueChange<T>(BaseField<T> field)

@@ -248,7 +248,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _link:
     _enable: 1
-    _isConnected:
+    _override:
+      _value: 0
+    _connected:
       _value: 0
     _type: FB_Button
     _parent: {fileID: 0}

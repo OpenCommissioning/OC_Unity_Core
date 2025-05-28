@@ -28,14 +28,14 @@ namespace OC.MaterialFlow
         {
             _collisionDetector.Filter = _collisionFilter;
             _collisionDetector.GroupId = _groupId;
-            _collisionDetector.Collision.ValueChanged += OnCollisionChangedAction;
+            _collisionDetector.Collision.OnValueChanged += OnCollisionChangedAction;
             _collisionDetector.PayloadEnterAction += OnPayloadEnterAction;
             _collisionDetector.PayloadExitAction += OnPayloadExitAction;
         }
         
         protected void OnDisable()
         {
-            _collisionDetector.Collision.ValueChanged -= OnCollisionChangedAction;
+            _collisionDetector.Collision.OnValueChanged -= OnCollisionChangedAction;
             _collisionDetector.PayloadEnterAction -= OnPayloadEnterAction;
             _collisionDetector.PayloadExitAction -= OnPayloadExitAction;
         }

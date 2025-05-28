@@ -109,10 +109,10 @@ namespace OC.Interactions.UIElements
             Down += button.Press;
             Up += button.Release;
 
-            button.Pressed.ValueChanged += value => Value = value;
-            button.Feedback.ValueChanged += value => Feedback = value;
-            button.Color.ValueChanged += value => Color = value;
-            button.VisualStyle.ValueChanged += value => VisualStyle = value;
+            button.Pressed.OnValueChanged += value => Value = value;
+            button.Feedback.OnValueChanged += value => Feedback = value;
+            button.Color.OnValueChanged += value => Color = value;
+            button.VisualStyle.OnValueChanged += value => VisualStyle = value;
         }
 
         private void SetValueWithoutNotify(bool value)

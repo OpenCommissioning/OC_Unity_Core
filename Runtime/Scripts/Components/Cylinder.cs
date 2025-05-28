@@ -8,7 +8,7 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Actor/Cylinder")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Cylinder : Actor, IDevice, IControlOverridable, ICustomInspector, IInteractable
+    public class Cylinder : Actor, IDevice, ICustomInspector, IInteractable
     {
         public Link Link => _link ?? CreateLink();
 
@@ -90,10 +90,10 @@ namespace OC.Components
             _link = Link;
             _link.Initialize(this);
             _connector = new Connector(_link);
-            _progress.ValueChanged += OnProgressChanged;
-            _isActive.ValueChanged += value => OnActiveChanged?.Invoke(value);
-            _onLimitMin.ValueChanged += value => OnLimitMinEvent?.Invoke(value);
-            _onLimitMax.ValueChanged += value => OnLimitMaxEvent?.Invoke(value);
+            _progress.OnValueChanged += OnProgressChanged;
+            _isActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
+            _onLimitMin.OnValueChanged += value => OnLimitMinEvent?.Invoke(value);
+            _onLimitMax.OnValueChanged += value => OnLimitMaxEvent?.Invoke(value);
             OnProgressChanged(_progress.Value);
         }
 
@@ -101,7 +101,6 @@ namespace OC.Components
         {
             _minus.OnValidate();
             _plus.OnValidate();
-            _override.OnValidate();
         }
 
         private void Reset()
@@ -111,7 +110,7 @@ namespace OC.Components
 
         private void FixedUpdate()
         {
-            if (!_override && _link.IsConnected.Value) GetLinkData();
+            if (_link.IsActive) GetLinkData();
             Operation(Time.fixedDeltaTime);
             SetLinkData();
         }

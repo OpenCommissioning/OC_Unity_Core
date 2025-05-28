@@ -50,15 +50,15 @@ namespace OC.MaterialFlow
         private new void OnEnable()
         {
             base.OnEnable();
-            _isActive.ValueChanged += OnIsActiveChanged;
-            _isPicked.ValueChanged += OnIsPickedChanged;
+            _isActive.OnValueChanged += OnIsActiveChanged;
+            _isPicked.OnValueChanged += OnIsPickedChanged;
         }
 
         private new void OnDisable()
         {
             base.OnDisable();
-            _isActive.ValueChanged += OnIsActiveChanged;
-            _isPicked.ValueChanged += OnIsPickedChanged;
+            _isActive.OnValueChanged += OnIsActiveChanged;
+            _isPicked.OnValueChanged += OnIsPickedChanged;
         }
 
         private void Start()

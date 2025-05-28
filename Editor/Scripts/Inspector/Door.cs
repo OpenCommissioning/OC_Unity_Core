@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Interactions.Door), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Interactions.Door), false), CanEditMultipleObjects]
     public class Door : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

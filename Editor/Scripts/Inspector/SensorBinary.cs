@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.SensorBinary), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.SensorBinary), false), CanEditMultipleObjects]
     public class SensorBinary : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()
@@ -18,7 +18,7 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddOverrideOption(component);
+            groupControl.AddLinkOverride(serializedObject);
             groupControl.Add(new ToggleButton("Collision").BindProperty(component.State).AlignedField());
             
             var groupStatus = new PropertyGroup("Status");

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NaughtyAttributes;
 using OC.Communication;
-using OC.Components;
 using UnityEngine;
 
 namespace OC.Project
@@ -16,7 +15,6 @@ namespace OC.Project
 
         private List<Client> _clients = new ();
         private List<IDevice> _devices = new ();
-        private List<IControlOverridable> _forceComponents = new ();
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void RuntimeInit()
@@ -37,7 +35,6 @@ namespace OC.Project
         {
             _clients = FindObjectsOfType<Client>().ToList();
             _devices = FindObjectsOfType<MonoBehaviour>().OfType<IDevice>().ToList();
-            _forceComponents = FindObjectsOfType<MonoBehaviour>().OfType<IControlOverridable>().ToList();
         }
 
         [Button]
@@ -54,7 +51,7 @@ namespace OC.Project
             }
         }
         
-        public void DisconectClients()
+        public void DisconnectClients()
         {
             foreach (var client in _clients)
             {
@@ -73,30 +70,19 @@ namespace OC.Project
 
         public void ResetForce()
         {
-            foreach (var item in _forceComponents.Where(item => item.Override.Value))
+            foreach (var item in _devices.Where(item => item.Link.Override.Value))
             {
-                item.Override.Value = false;
-                Logging.Logger.Log(LogType.Log, $"FORCE mode disabled: {item.Link.Path}");
+                item.Link.Override.Value = false;
+                Logging.Logger.Log(LogType.Log, $"Link Override is DISABLED: {item.Link.Path}");
             }
         }
 
         public void PrintForce()
         {
-            var items = GetForcedComponents();
-            if (items == null)
+            foreach (var item in _devices.Where(item => item.Link.Override.Value))
             {
-                Logging.Logger.Log(LogType.Log, $"There are no forced objects");
-                return;
+                Logging.Logger.Log(LogType.Log, $"Link Override is ACTIVE: {item.Link.Path}");
             }
-            foreach (var item in items)
-            {
-                Logging.Logger.Log(LogType.Log, $"FORCED: {item.Link.Path}");
-            }
-        }
-
-        private List<IControlOverridable> GetForcedComponents()
-        {
-            return _forceComponents.Where(item => item.Override.Value).ToList();
         }
     }
 }

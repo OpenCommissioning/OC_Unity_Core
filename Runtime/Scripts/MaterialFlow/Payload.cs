@@ -60,8 +60,8 @@ namespace OC.MaterialFlow
             Pool.Instance.PoolManager.Registrate(this);
             RegistrateInParent();
             
-            _controlState.ValueChanged += OnControlStateChanged;
-            _physicState.ValueChanged += OnPhysicStateChanged;
+            _controlState.OnValueChanged += OnControlStateChanged;
+            _physicState.OnValueChanged += OnPhysicStateChanged;
             
             OnPhysicStateChanged(_physicState);
         }
@@ -73,8 +73,8 @@ namespace OC.MaterialFlow
             Pool.Instance.PoolManager.Unregistrate(this);
             UnregistrateInParent();
             
-            _controlState.ValueChanged -= OnControlStateChanged;
-            _physicState.ValueChanged -= OnPhysicStateChanged;
+            _controlState.OnValueChanged -= OnControlStateChanged;
+            _physicState.OnValueChanged -= OnPhysicStateChanged;
         }
 
         private new void OnDestroy()

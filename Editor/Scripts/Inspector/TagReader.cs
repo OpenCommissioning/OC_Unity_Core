@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.TagReader), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.TagReader), false), CanEditMultipleObjects]
     public class TagReader : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()
@@ -17,7 +17,7 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddOverrideOption(component);
+            groupControl.AddLinkOverride(serializedObject);
             groupControl.Add(new UnsignedLongField("Value").BindProperty(component.Value).AlignedField());
             
             var groupStatus = new PropertyGroup("Status");

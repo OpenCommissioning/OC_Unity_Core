@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(MaterialFlow.Sink), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(MaterialFlow.Sink), false), CanEditMultipleObjects]
     public class Sink : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

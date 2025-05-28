@@ -22,14 +22,21 @@ namespace OC.Communication
             get => _type;
             set => _type = value;
         }
-        public Property<bool> IsConnected => _isConnected;
+
+        public bool IsActive => _connected.Value && !_override.Value;
+        
+        public Property<bool> Connected => _connected;
+        public Property<bool> Override => _override;
         public Component Component => _component;
         public List<LinkAttribute> Attributes => _attributes;
 
         [SerializeField]
         private bool _enable = true;
         [SerializeField]
-        private Property<bool> _isConnected = new (false);
+        private Property<bool> _override = new (false);
+        [SerializeField]
+        private Property<bool> _connected = new (false);
+        
         [SerializeField]
         private string _type;
         [SerializeField]
@@ -88,7 +95,7 @@ namespace OC.Communication
             
             if (!_enable)
             {
-                _isConnected.Value = false;
+                _connected.Value = false;
                 return;
             }
 
@@ -97,17 +104,17 @@ namespace OC.Communication
                 connector.Connect(client);
             }
             
-            _isConnected.Value = _connectors.All(connector => connector.IsConnected);
+            _connected.Value = _connectors.All(connector => connector.IsConnected);
         }
         
         public void Disconnect()
         {
-            _isConnected.Value = false;
+            _connected.Value = false;
         }
         
         public void Read()
         {
-            if (!_isConnected.Value) return;
+            if (!_connected.Value) return;
             if (!_enable) return;
 
             // ReSharper disable once ForCanBeConvertedToForeach
@@ -119,7 +126,7 @@ namespace OC.Communication
         
         public void Write()
         {
-            if (!_isConnected.Value) return;
+            if (!_connected.Value) return;
             if (!_enable) return;
 
             // ReSharper disable once ForCanBeConvertedToForeach

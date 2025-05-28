@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.DrivePosition), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.DrivePosition), false), CanEditMultipleObjects]
     public class DrivePosition : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()
@@ -17,9 +17,9 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddOverrideOption(component);
+            groupControl.AddLinkOverride(serializedObject);
             groupControl.Add(new FloatField("Target").BindProperty(component.Target).AlignedField());
-
+            
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new LampField("Is Active", Color.green).BindProperty(component.IsActive).AlignedField());
             groupStatus.Add(new FloatField("Value"){isReadOnly = true}.BindProperty(component.Value).AlignedField());

@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.Cylinder), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.Cylinder), false), CanEditMultipleObjects]
     public class Cylinder : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()
@@ -16,7 +16,7 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddOverrideOption(component);
+            groupControl.AddLinkOverride(serializedObject);
             var hStack = new StackHorizontal();
             hStack.Add(new PushButton("Minus").BindProperty(component.Minus));
             hStack.Add(new PushButton("Plus").BindProperty(component.Plus));

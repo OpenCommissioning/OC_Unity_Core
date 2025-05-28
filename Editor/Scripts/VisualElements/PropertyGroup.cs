@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using OC.VisualElements;
-using OC.Components;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -36,7 +35,7 @@ namespace OC.Editor
         private readonly Label _labelElement;
         private readonly VisualElement _options;
         private readonly VisualElement _content;
-        private readonly ToggleButton _toggleButtonOverride; 
+        private LinkOverrideController _linkOverrideController; 
         
         private const string USS = "StyleSheet/oc-inspector";
         private const string USS_CLASS_NAME = "property-group";
@@ -81,18 +80,15 @@ namespace OC.Editor
             _content.Add(visualElement);
         }
         
-        public void AddOptions(VisualElement visualElement)
+        public void AddHeaderElement(VisualElement visualElement)
         {
             _options.Add(visualElement);
         } 
 
-        public void AddOverrideOption(IControlOverridable component)
+        public void AddLinkOverride(SerializedObject serializedObject)
         {
-            var toggleButtonOverride = new ToggleButton("Override").BindProperty(component.Override);
-            _options.Add(toggleButtonOverride);
-            
-            component.Override.ValueChanged += _content.SetEnabled;
-            _content.SetEnabled(component.Override.Value);
+            var linkOverrideController = new LinkOverrideController(serializedObject, _content);
+            _options.Add(linkOverrideController);
         }
     }
 }

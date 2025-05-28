@@ -64,14 +64,12 @@ namespace OC.Components
         protected AxisControlMode _controlMode = AxisControlMode.Position;
         [SerializeField] 
         protected UpdateLoop _updateLoop = UpdateLoop.Update;
-
-        private bool _isActorValid;
+        
         private TransformMover _transformMover;
 
         private void Start()
         {
             _transformMover = new TransformMover(transform, _direction, _type, AxisControlMode.Position);
-            if (_actor != null) _isActorValid = true;
         }
         
         private void OnValidate()
@@ -99,15 +97,7 @@ namespace OC.Components
 
         private void LocalUpdate(float deltaTime)
         {
-            if (_override)
-            {
-                Target.Value = _target;
-            }
-            else if (_isActorValid)
-            {
-                Target.Value = _actor.Value.Value;
-            }
-            
+            if (_actor) _target.Value = _actor.Value.Value;
             _value.Value = (_target.Value + _offset) * _factor;
 
             switch (_controlMode)

@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(MaterialFlow.TypeChanger), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(MaterialFlow.TypeChanger), false), CanEditMultipleObjects]
     public class TypeChanger : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()
