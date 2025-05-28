@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using OC.Components;
 using UnityEngine;
 #if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
 #endif
 
 namespace OC.MaterialFlow
@@ -143,7 +143,11 @@ namespace OC.MaterialFlow
             _joint.yMotion = ConfigurableJointMotion.Locked;
             _joint.zMotion = ConfigurableJointMotion.Locked;
             _joint.angularXMotion = ConfigurableJointMotion.Locked;
+#if UNITY_6000_0_OR_NEWER
+            _joint.angularYMotion = ConfigurableJointMotion.Free;
+#else
             _joint.angularYMotion = ConfigurableJointMotion.Locked;
+#endif
             _joint.angularZMotion = ConfigurableJointMotion.Locked;
         }
 
@@ -156,7 +160,12 @@ namespace OC.MaterialFlow
             _joint.connectedAnchor =  _transport.GetClosetPoint(_transform.position);
             _rigidbody.transform.rotation = Quaternion.LookRotation(normal, Vector3.up) * Quaternion.AngleAxis(_angleOffset, Vector3.up);
             _joint.axis = Quaternion.AngleAxis(_angleOffset, Vector3.up) * Vector3.forward;
-            _rigidbody.velocity = normal * _transport.Value.Value;
+#if UNITY_6000_0_OR_NEWER
+            if (!_rigidbody.isKinematic) _rigidbody.linearVelocity = normal * _transport.Value.Value;
+            _rigidbody.angularVelocity = Vector3.zero;
+#else
+            if (!_rigidbody.isKinematic) _rigidbody.velocity = normal * _transport.Value.Value;
+#endif
         }
 
         private float GetOffsetAngle(Transport transport)

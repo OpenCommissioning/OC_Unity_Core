@@ -75,8 +75,8 @@ namespace OC.Communication
         public void Initialize(Component component)
         {
             _component = component;
-            _name = this.GetName();
-            _path = this.GetPath();
+            _name = this.GetHierarchyName();
+            _path = this.GetHierarchyPath();
             _client = this.GetClient();
             _connectors = new List<Connector>();
         }

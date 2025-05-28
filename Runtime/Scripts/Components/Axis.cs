@@ -7,7 +7,7 @@ namespace OC.Components
     [SelectionBase]
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(1000)]
-    public class Axis : Actor, IInteractable
+    public class Axis : Actor, IInteractable, ICustomInspector
     {
         public Actor Actor
         {
@@ -19,6 +19,12 @@ namespace OC.Components
         {
             set => _factor = value;
             get => _factor;
+        }
+        
+        public float Offset 
+        {
+            set => _offset = value;
+            get => _offset;
         }
         
         public AxisType Type
@@ -48,6 +54,8 @@ namespace OC.Components
         [Header("Settings")]
         [SerializeField]
         protected float _factor = 1f;
+        [SerializeField]
+        protected float _offset;
         [SerializeField] 
         protected AxisDirection _direction = AxisDirection.X;
         [SerializeField]
@@ -91,8 +99,16 @@ namespace OC.Components
 
         private void LocalUpdate(float deltaTime)
         {
-            if (_isActorValid) Target.Value = _actor.Value.Value;
-            _value.Value = _target.Value * _factor;
+            if (_override)
+            {
+                Target.Value = _target;
+            }
+            else if (_isActorValid)
+            {
+                Target.Value = _actor.Value.Value;
+            }
+            
+            _value.Value = (_target.Value + _offset) * _factor;
 
             switch (_controlMode)
             {

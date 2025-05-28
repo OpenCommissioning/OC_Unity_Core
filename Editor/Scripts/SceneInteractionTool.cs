@@ -21,6 +21,7 @@ namespace OC
         private Interaction _activeInteraction;
         private int[] _outlineRenderers = Array.Empty<int>();
         private const string ICON = "d_EventTrigger Icon";
+        private readonly GUIStyle _roundedBoxStyle = new ();
         
         [Shortcut("Scene Interaction Tool", typeof(SceneView), KeyCode.I)]
         private static void SceneViewInteractionShortcut()
@@ -38,11 +39,13 @@ namespace OC
         public override void OnActivated()
         {
             SceneView.lastActiveSceneView.ShowNotification(new GUIContent("Scene Interaction Activated"), .1f);
+            SceneView.duringSceneGui += OnSceneGUI;
         }
         
         public override void OnWillBeDeactivated()
         {
             SceneView.lastActiveSceneView.ShowNotification(new GUIContent("Scene Interaction Deactivated"), .1f);
+            SceneView.duringSceneGui -= OnSceneGUI;
             ResetHit();
         }
 
@@ -85,6 +88,76 @@ namespace OC
                 }
                 currentEvent.Use();
             }
+        }
+
+        private Texture2D CreateRoundedRectTexture(int width, int height, int radius, Color fillColor)
+        {
+            var texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
+            var clear = new Color(0, 0, 0, 0);
+
+            for (var y = 0; y < height; y++)
+            {
+                for (var x = 0; x < width; x++)
+                {
+                    var pixelColor = clear;
+                    
+                    var insideMainRect = 
+                        (x >= radius && x < width - radius) || 
+                        (y >= radius && y < height - radius);
+
+                    var insideCorner =
+                        (x < radius && y < radius && Vector2.Distance(new Vector2(x, y), new Vector2(radius, radius)) <= radius) || // Bottom-left
+                        (x >= width - radius && y < radius && Vector2.Distance(new Vector2(x, y), new Vector2(width - radius - 1, radius)) <= radius) || // Bottom-right
+                        (x < radius && y >= height - radius && Vector2.Distance(new Vector2(x, y), new Vector2(radius, height - radius - 1)) <= radius) || // Top-left
+                        (x >= width - radius && y >= height - radius && Vector2.Distance(new Vector2(x, y), new Vector2(width - radius - 1, height - radius - 1)) <= radius); // Top-right
+
+                    if (insideMainRect || insideCorner)
+                    {
+                        pixelColor = fillColor;
+                    }
+
+                    texture.SetPixel(x, y, pixelColor);
+                }
+            }
+            texture.Apply();
+            return texture;
+        }
+
+        private void InitRoundedBoxStyle(Color backgroundColor)
+        {
+            var roundedTexture = CreateRoundedRectTexture(64, 64, 8, backgroundColor);
+            _roundedBoxStyle.normal.background = roundedTexture;
+            _roundedBoxStyle.border = new RectOffset(12, 12, 12, 12);
+            _roundedBoxStyle.padding = new RectOffset(10, 10, 10, 10);
+            _roundedBoxStyle.alignment = TextAnchor.MiddleCenter;
+            _roundedBoxStyle.normal.textColor = Color.white;
+        }
+
+        private void OnSceneGUI(SceneView sceneView) 
+        {
+            Handles.BeginGUI();
+
+            if (Event.current.type == EventType.Repaint)
+            {
+                if (_roundedBoxStyle.normal.background == null)
+                {
+                    Color backgroundColor = new Color(0.2f, 0.2f, 0.2f, .5f);
+                    InitRoundedBoxStyle(backgroundColor);
+                }
+
+                var notificationText = "Interaction Mode: Active";
+                var content = new GUIContent(notificationText);
+                var textSize = _roundedBoxStyle.CalcSize(content);
+                var horizontalMargin = 12f;
+                var verticalMargin = 12f;
+                var totalSize = new Vector2(textSize.x + horizontalMargin, textSize.y + verticalMargin);
+                var xPos = (sceneView.position.width - totalSize.x) * 0.5f;
+                var yPos = 10f;
+                var rect = new Rect(xPos, yPos, totalSize.x, totalSize.y);
+
+                GUI.Box(rect, notificationText, _roundedBoxStyle);
+            }
+            Handles.EndGUI();
         }
         
         private void RayCast(Event currentEvent)
