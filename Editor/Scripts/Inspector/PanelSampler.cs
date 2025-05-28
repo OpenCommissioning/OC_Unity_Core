@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Interactions.PanelSampler), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Interactions.PanelSampler), false), CanEditMultipleObjects]
     public class PanelSampler : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

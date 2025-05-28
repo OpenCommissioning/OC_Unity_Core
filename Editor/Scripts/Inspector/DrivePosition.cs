@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.DrivePosition), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.DrivePosition), false), CanEditMultipleObjects]
     public class DrivePosition : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

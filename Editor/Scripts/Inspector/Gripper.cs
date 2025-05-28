@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(MaterialFlow.Gripper), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(MaterialFlow.Gripper), false), CanEditMultipleObjects]
     public class Gripper : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.TransportLinear), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.TransportLinear), false), CanEditMultipleObjects]
     public class TransportLinear : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

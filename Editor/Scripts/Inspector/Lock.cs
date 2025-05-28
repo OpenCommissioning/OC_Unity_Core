@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Interactions.Lock), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Interactions.Lock), false), CanEditMultipleObjects]
     public class Lock : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

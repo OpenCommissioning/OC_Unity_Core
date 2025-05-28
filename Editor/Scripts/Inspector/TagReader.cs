@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.TagReader), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.TagReader), false), CanEditMultipleObjects]
     public class TagReader : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

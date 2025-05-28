@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace OC.Editor
 {
-    [CustomEditor(typeof(TcAdsClient),true)]
+    [CustomEditor(typeof(TcAdsClient),false)]
     public class TcAdsClientInspector : UnityEditor.Editor
     {
         public override void OnInspectorGUI()

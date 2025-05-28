@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.DriveSimple), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.DriveSimple), false), CanEditMultipleObjects]
     public class DriveSimple : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

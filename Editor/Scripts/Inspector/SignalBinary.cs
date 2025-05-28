@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.SignalBinary), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.SignalBinary), false), CanEditMultipleObjects]
     public class SignalBinary : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

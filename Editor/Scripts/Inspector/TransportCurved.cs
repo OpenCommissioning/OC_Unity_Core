@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.TransportCurved), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.TransportCurved), false), CanEditMultipleObjects]
     public class TransportCurved : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

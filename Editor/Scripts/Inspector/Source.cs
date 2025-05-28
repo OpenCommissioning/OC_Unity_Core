@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(MaterialFlow.Source), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(MaterialFlow.Source), false), CanEditMultipleObjects]
     public class Source : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

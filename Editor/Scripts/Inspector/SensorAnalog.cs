@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.SensorAnalog), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.SensorAnalog), false), CanEditMultipleObjects]
     public class SensorAnalog : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()

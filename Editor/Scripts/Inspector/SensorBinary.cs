@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor.Inspector
 {
-    [CustomEditor(typeof(Components.SensorBinary), true), CanEditMultipleObjects]
+    [CustomEditor(typeof(Components.SensorBinary), false), CanEditMultipleObjects]
     public class SensorBinary : UnityEditor.Editor
     {
         public override VisualElement CreateInspectorGUI()
