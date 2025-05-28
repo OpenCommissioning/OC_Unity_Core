@@ -1,3 +1,10 @@
+## [1.2.6](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.5...v1.2.6) (2025-05-28)
+
+
+### Bug Fixes
+
+* **Drive:** Drive State Color ([c133736](https://github.com/OpenCommissioning/OC_Unity_Core/commit/c1337366481ae67deca3dc4a102c3cea0b0dcbfb))
+
 ## [1.2.5](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.4...v1.2.5) (2025-05-28)
 
 
