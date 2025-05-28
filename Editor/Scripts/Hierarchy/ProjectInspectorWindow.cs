@@ -150,8 +150,8 @@ namespace OC.Editor
                 
                 toggle.style.display = DisplayStyle.Flex;
                 
-                toggle.SetValueWithoutNotify(device.Link.IsConnected.Value);
-                toggle.BindProperty(device.Link.IsConnected);
+                toggle.SetValueWithoutNotify(device.Link.Connected.Value);
+                toggle.BindProperty(device.Link.Connected);
             }
             
             void UnbindCellLink(VisualElement visualElement, int i)

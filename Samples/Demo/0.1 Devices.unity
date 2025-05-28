@@ -176,6 +176,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 872032856}
   _factor: 1
+  _offset: 0
   _direction: 0
   _type: 1
   _controlMode: 1
@@ -1294,6 +1295,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 1575472970}
   _factor: 0.01
+  _offset: 0
   _direction: 0
   _type: 0
   _controlMode: 0
@@ -2078,6 +2080,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 166511645}
   _factor: 1
+  _offset: 0
   _direction: 0
   _type: 1
   _controlMode: 1
@@ -3578,6 +3581,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 1726639120}
   _factor: 0.001
+  _offset: 0
   _direction: 1
   _type: 0
   _controlMode: 0
@@ -6276,6 +6280,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 1207663284}
   _factor: 0.001
+  _offset: 0
   _direction: 1
   _type: 0
   _controlMode: 0
@@ -6590,6 +6595,7 @@ MonoBehaviour:
     _value: 0
   _actor: {fileID: 209732355}
   _factor: 0.001
+  _offset: 0
   _direction: 1
   _type: 0
   _controlMode: 0
