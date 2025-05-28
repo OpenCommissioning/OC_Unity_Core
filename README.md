@@ -1033,6 +1033,13 @@ In this example, groups based on the   [`Hierarchy`](#defining-the-device-hierar
 components in the project tree are created in the configuration file that contain
 the devices located within the child objects of these groups.
 
+## Useful Functions
+### Auto Box Collider Size
+Calculates and adjusts a GameObject's `Box Collider` to tightly enclose all child `MeshRenderer` meshes.
+In the Unity Editor, select the Material Flow component in the Inspector and open its context menu:
+You can call this function from the Material Flow component’s context menu in the Inspector.
+
+![BoundBoxColliderSize_Inspector.png](Documentation/Images/BoundBoxColliderSize_Inspector.png)
 
 # Contributing
 

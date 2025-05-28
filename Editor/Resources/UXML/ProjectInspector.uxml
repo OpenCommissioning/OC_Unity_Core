@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <uie:Toolbar>
+        <uie:ToolbarSearchField name="toolbarSearchField" />
+        <uie:ToolbarButton text="Refresh" parse-escape-sequences="true" display-tooltip-when-elided="true" name="toolbarButtonRefresh" />
+    </uie:Toolbar>
+    <ui:VisualElement name="content" style="flex-grow: 1;" />
+    <uie:Toolbar style="flex-direction: row-reverse;">
+        <uie:ToolbarButton text="Reset" parse-escape-sequences="true" display-tooltip-when-elided="true" name="toolbarButtonReset" />
+    </uie:Toolbar>
+</ui:UXML>

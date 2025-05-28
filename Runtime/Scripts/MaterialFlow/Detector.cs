@@ -84,5 +84,11 @@ namespace OC.MaterialFlow
             "Static",
             "Storage"
         };
+        
+        [ContextMenu("Bound Box Collider Size", false, 100)]
+        public void BoundBoxColliderSize()
+        {
+            Utils.TryBoundBoxColliderSize(gameObject, out _);
+        }
     }
 }

@@ -285,7 +285,7 @@ namespace OC.Tests.Editor.MaterialFlow
                 Type = (int)type,
                 GroupId = groupId
             };
-            entity.ApplyDiscription(discription);
+            entity.ApplyDescription(discription);
             return entity;
         }
         
