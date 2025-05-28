@@ -7,17 +7,17 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Signal Binary")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class SignalBinary : MonoComponent, IDevice, IMeasurement<bool>, IPropertyForce, ICustomInspector, IInteractable
+    public class SignalBinary : MonoComponent, IDevice, IMeasurement<bool>, ICustomInspector, IInteractable
     {
         public Link Link => _link;
-        public IProperty<bool> Force => _force;
+        public IProperty<bool> Override => _override;
         public IPropertyReadOnly<bool> Value => _value;
         public IProperty<bool> Signal => _signal;
         
         public UnityEvent<bool> OnValueChangedEvent;
-
+        
         [SerializeField]
-        protected Property<bool> _force = new (false);
+        protected Property<bool> _override = new (false);
         [SerializeField]
         protected Property<bool> _value = new (false);
         [SerializeField]
@@ -85,7 +85,7 @@ namespace OC.Components
         
         private void OnDeviceValueChanged(bool value)
         {
-            if (_force) return;
+            if (_override) return;
             _signal.Value = value;
         }
     }

@@ -17,8 +17,8 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
+            groupControl.AddLinkOverride(component);
             groupControl.Add(new UnsignedLongField("Value").BindProperty(component.Value).AlignedField());
-            groupControl.AddForceOption(component, new IProperty[]{component.Value});
             
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new LampField("Collision", Color.yellow).BindProperty(component.Collision).AlignedField());

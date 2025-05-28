@@ -30,7 +30,7 @@ namespace OC.Interactions
         [SerializeField] 
         private ButtonType _type = ButtonType.Click;
         [SerializeField] 
-        private Property<UIStyle> _visualStyle = UIStyle.Default;
+        private Property<UIStyle> _visualStyle = new(UIStyle.Default);
         [SerializeField]
         protected Property<Color> _color = new (UnityEngine.Color.cyan);
         [SerializeField] 

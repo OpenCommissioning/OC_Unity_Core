@@ -17,12 +17,11 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.Add(new FloatField("Target").BindProperty(component.Target).AlignedField());
+            groupControl.AddLinkOverride(component);
             var hStack = new StackHorizontal();
             hStack.Add(new ToggleButton("Backward").BindProperty(component.Backward));
             hStack.Add(new ToggleButton("Forward").BindProperty(component.Forward));
             groupControl.Add(hStack);
-            groupControl.AddForceOption(component, new IProperty[]{component.Backward, component.Forward});
 
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new LampField("Is Active", Color.green).BindProperty(component.IsActive).AlignedField());

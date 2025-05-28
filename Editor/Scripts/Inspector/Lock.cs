@@ -17,8 +17,8 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
             
             var groupControl = new PropertyGroup("Control");
+            groupControl.AddLinkOverride(component);
             groupControl.Add(new ToggleButton("Lock").BindProperty(component.LockSignal)); 
-            groupControl.AddForceOption(component, new IProperty[]{component.LockSignal});
 
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new LampField("Lock", Color.green).BindProperty(component.LockSignal).AlignedField());

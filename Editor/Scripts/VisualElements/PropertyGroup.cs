@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using OC.Communication;
 using OC.VisualElements;
-using OC.Components;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -36,8 +37,7 @@ namespace OC.Editor
         private readonly Label _labelElement;
         private readonly VisualElement _options;
         private readonly VisualElement _content;
-        private readonly ToggleButton _toggleButtonOverride;
-        private List<IProperty> _properties;
+        private OverrideController _overrideController; 
         
         private const string USS = "StyleSheet/oc-inspector";
         private const string USS_CLASS_NAME = "property-group";
@@ -82,26 +82,15 @@ namespace OC.Editor
             _content.Add(visualElement);
         }
         
-        public void AddOptions(VisualElement visualElement)
+        public void AddHeaderElement(VisualElement visualElement)
         {
             _options.Add(visualElement);
-        }
+        } 
 
-        public void AddForceOption(IPropertyForce component, IProperty[] properties)
+        public void AddLinkOverride(IDevice link)
         {
-            var toggleButtonForce = new ToggleButton("Force").BindProperty(component.Force);
-            _options.Add(toggleButtonForce);
-            
-            component.Force.Subscribe(value => SetForce(properties, value));
-        }
-
-        private void SetForce(IProperty[] properties, bool force)
-        {
-            _content.SetEnabled(force);
-            foreach (var property in properties)
-            {
-                property.Force = force;
-            }
+            _overrideController = new OverrideController(link, _content);
+            _options.Add(_overrideController);
         }
     }
 }

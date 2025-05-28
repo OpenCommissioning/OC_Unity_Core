@@ -43,7 +43,7 @@ namespace OC.Components
 
         private void Update()
         {
-            if (!_link.IsConnected) return;
+            if (!_link.IsActive) return;
             if (_connectorData.ControlData == _value) return;
             
             _value = _connectorData.ControlData;

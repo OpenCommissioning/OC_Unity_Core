@@ -9,7 +9,7 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lamp")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lamp : Device, ICustomInspector, IPropertyForce
+    public class Lamp : Device, ICustomInspector
     {
         public bool Signal
         {
@@ -18,12 +18,12 @@ namespace OC.Interactions
         }
         
         public override int AllocatedBitLength => 1;
-        public IProperty<bool> Force => _force;
+        public IProperty<bool> Override => _override;
         public IProperty<bool> Value => _value;
         public IPropertyReadOnly<Color> Color => _color;
 
         [SerializeField] 
-        protected Property<bool> _force = new(false);
+        protected Property<bool> _override = new(false);
         [SerializeField] 
         private Property<bool> _value = new(false);
         [SerializeField] 
@@ -51,7 +51,7 @@ namespace OC.Interactions
 
         private void LateUpdate()
         {
-            _value.Value = Connector.Control.GetBit(0);
+            if (!_override) _value.Value = Connector.Control.GetBit(0);
         }
 
         private void OnValidate()

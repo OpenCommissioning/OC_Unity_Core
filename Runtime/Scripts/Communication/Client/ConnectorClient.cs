@@ -14,7 +14,7 @@ namespace OC.Communication
         protected override void CreateVariableDescription()
         {
             base.CreateVariableDescription();
-            _variablesDiscription.Add(new ClientVariableDescription { Name = _link.Path + ".TimeScaling", Direction = ClientVariableDirection.Output });
+            _variablesDescription.Add(new ClientVariableDescription { Name = _link.Path + ".TimeScaling", Direction = ClientVariableDirection.Output });
         }
         
         public override void Read()

@@ -12,7 +12,7 @@ namespace OC.Communication
 
         protected readonly Link _link;
         protected List<ClientVariable> _variables = new();
-        protected List<ClientVariableDescription> _variablesDiscription = new();
+        protected List<ClientVariableDescription> _variablesDescription = new();
 
         public Connector(Link link)
         {
@@ -23,17 +23,17 @@ namespace OC.Communication
         public void Connect(Client client)
         {
             IsConnected = false;
-            _variablesDiscription = new List<ClientVariableDescription>();
+            _variablesDescription = new List<ClientVariableDescription>();
             CreateVariableDescription();
             
             _variables = new List<ClientVariable>();
-            IsConnected = client.TryGetVariables(_variablesDiscription, _link, out _variables);
+            IsConnected = client.TryGetVariables(_variablesDescription, _link, out _variables);
         }
 
         protected virtual void CreateVariableDescription()
         {
-            _variablesDiscription.Add(new ClientVariableDescription { Name = _link.Path + ".Control", Direction = ClientVariableDirection.Input });
-            _variablesDiscription.Add(new ClientVariableDescription { Name = _link.Path + ".Status", Direction = ClientVariableDirection.Output });
+            _variablesDescription.Add(new ClientVariableDescription { Name = _link.Path + ".Control", Direction = ClientVariableDirection.Input });
+            _variablesDescription.Add(new ClientVariableDescription { Name = _link.Path + ".Status", Direction = ClientVariableDirection.Output });
         }
 
         public virtual void Read()

@@ -12,7 +12,7 @@ namespace OC.Editor
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             var container = new PropertyGroup("Communication");
-            container.AddOptions(new LampField{bindingPath = "_isConnected._value", LampShape = LampField.InspectorLampShape.Round});
+            container.AddHeaderElement(new LampField{bindingPath = "_isConnected._value", LampShape = LampField.InspectorLampShape.Round});
             container.Add(new Toggle("Is Enabled"){bindingPath = "_enable"}.AlignedField());
             container.Add(new TextField("Path"){bindingPath = "_path", isReadOnly = true}.AlignedField());
             container.Add(new TextField("Type"){bindingPath = "_type"}.AlignedField());

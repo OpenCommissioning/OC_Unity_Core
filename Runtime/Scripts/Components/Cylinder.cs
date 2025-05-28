@@ -8,11 +8,9 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Actor/Cylinder")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Cylinder : Actor, IDevice, IPropertyForce, ICustomInspector, IInteractable
+    public class Cylinder : Actor, IDevice, ICustomInspector, IInteractable
     {
         public Link Link => _link ?? CreateLink();
-
-        public IProperty<bool> Force => _force;
 
         #region Control
         public IProperty<bool> Minus => _minus;
@@ -73,17 +71,15 @@ namespace OC.Components
         public bool JogMinus
         {
             set => _minus.Value = value;
-            get => _minus.Value;
+            get => _minus;
         }
         
         public bool JogPlus
         {
             set => _plus.Value = value;
-            get => _plus.Value;
+            get => _plus;
         }
 
-        [SerializeField]
-        private Property<bool> _force = new ();
         [SerializeField]
         protected Link _link;
         [SerializeField]
@@ -114,9 +110,9 @@ namespace OC.Components
 
         private void FixedUpdate()
         {
-            if (_link.IsConnected) GetLinkData();
+            if (_link.IsActive) GetLinkData();
             Operation(Time.fixedDeltaTime);
-            if (_link.IsConnected) SetLinkData();
+            SetLinkData();
         }
 
         private void GetLinkData()
@@ -127,8 +123,8 @@ namespace OC.Components
 
         private void SetLinkData()
         {
-            _connector.Status.SetBit(0, _onLimitMin.Value);
-            _connector.Status.SetBit(1, _onLimitMax.Value);
+            _connector.Status.SetBit(0, _onLimitMin);
+            _connector.Status.SetBit(1, _onLimitMax);
         }
 
         private void Operation(float deltaTime)
@@ -136,13 +132,13 @@ namespace OC.Components
             switch (_type.Value)
             {
                 case CylinderType.DoubleActing:
-                    if (_minus.Value ^ _plus.Value) IntegrateProgress(deltaTime, _plus.Value ? _timeToMax.Value : -_timeToMin.Value);
+                    if (_minus.Value ^ _plus.Value) IntegrateProgress(deltaTime, _plus.Value ? _timeToMax : -_timeToMin);
                     break;
                 case CylinderType.SingleActingNegative:
-                    IntegrateProgress(deltaTime, _plus.Value ? _timeToMax.Value : -_timeToMin.Value);
+                    IntegrateProgress(deltaTime, _plus.Value ? _timeToMax : -_timeToMin);
                     break;
                 case CylinderType.SingleActingPositive:
-                    IntegrateProgress(deltaTime, _minus.Value ? -_timeToMin.Value : _timeToMax.Value);
+                    IntegrateProgress(deltaTime, _minus.Value ? -_timeToMin : _timeToMax);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -6,7 +6,7 @@ namespace OC.Components
     {
         public IProperty<float> Target => _target;
         public IPropertyReadOnly<float> Value => _value;
-
+        
         [SerializeField]
         protected Property<float> _target = new (0);
         [SerializeField]

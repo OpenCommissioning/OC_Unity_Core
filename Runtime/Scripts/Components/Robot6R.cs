@@ -44,7 +44,7 @@ namespace OC.Components
 
         private void FixedUpdate()
         {
-            if (_link.IsConnected) _connector.JointTarget.CopyTo(_value, 0);
+            if (_link.IsActive) _connector.JointTarget.CopyTo(_value, 0);
 
             for (var i = 0; i < _value.Length; i++)
             {
