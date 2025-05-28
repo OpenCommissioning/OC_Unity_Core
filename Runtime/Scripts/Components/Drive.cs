@@ -15,10 +15,8 @@ namespace OC.Components
         public Link Link => _link;
         public int MetadataAssetLength => 1;
 
-        public IProperty<bool> IsActive => _isActive;
-
-        [SerializeField]
-        protected Property<bool> _isActive = new (false);
+        public IPropertyReadOnly<bool> IsActive => _stateObserver.IsActive;
+        public IPropertyReadOnly<DriveState> State => _stateObserver.State;
 
         public UnityEvent<bool> OnActiveChanged;
 
@@ -26,12 +24,15 @@ namespace OC.Components
         protected Link _link;
         [SerializeField]
         protected ConnectorDataFloat _connectorData;
+        [HideInInspector]
+        [SerializeField]
+        protected DriveStateObserver _stateObserver = new ();
         
         private void Start()
         {
             _link.Initialize(this);
             _connectorData = new ConnectorDataFloat(_link);
-            _isActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
+            _stateObserver.IsActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
         }
 
         protected void Reset()
@@ -83,6 +84,13 @@ namespace OC.Components
             _connectorData.StatusData = value;
             yield return new WaitForSeconds(1);
             _connectorData.Status.SetBit(7, false);
+        }
+        
+        public enum DriveState
+        {
+            Idle,
+            IsRunningNegative,
+            IsRunningPositive
         }
     }
 }
