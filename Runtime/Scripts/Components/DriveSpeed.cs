@@ -21,13 +21,13 @@ namespace OC.Components
         protected override void Operation(float deltaTime)
         {
             _value.Value = Mathf.MoveTowards(_value.Value, _target, _acceleration * deltaTime);
-            _isActive.Value = Mathf.Abs(_value) > Utils.TOLERANCE_HALF;
+            _stateObserver.SetDelta(_value.Value);
         }
 
         protected override void SetLinkData()
         {
             _connectorData.StatusData = _value.Value;
-            _connectorData.Status.SetBit(6, _isActive);
+            _connectorData.Status.SetBit(6, _stateObserver.IsActive.Value);
         }
     }
 }
