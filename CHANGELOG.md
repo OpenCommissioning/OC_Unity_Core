@@ -1,3 +1,23 @@
+## [1.2.4](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.3...v1.2.4) (2025-05-28)
+
+
+### Bug Fixes
+
+* axis actor validation ([46b9bc9](https://github.com/OpenCommissioning/OC_Unity_Core/commit/46b9bc9cb03cef11bce6d7ee747955a8ed27a66f))
+* **Editor:** Inspector child class property ([5e73cfb](https://github.com/OpenCommissioning/OC_Unity_Core/commit/5e73cfbc12148b4417cdb5574a19c48ba05b1c6f))
+* Link Override ([3c37d86](https://github.com/OpenCommissioning/OC_Unity_Core/commit/3c37d86ca47d3e6ae0f788ca7012e651afb21a55))
+* link override inspector property ([90bfcad](https://github.com/OpenCommissioning/OC_Unity_Core/commit/90bfcad1142cb5cfa43530d068ad24a9db5dc817))
+* reactive property ([2769268](https://github.com/OpenCommissioning/OC_Unity_Core/commit/27692684e1e546d1cf15596c2accf6eeb4ff8caa))
+* reactive property extension ([2c7966f](https://github.com/OpenCommissioning/OC_Unity_Core/commit/2c7966f05f9bd2adc331bf85300b0d24d428421b))
+* **reactive:** add force flag ([d75273c](https://github.com/OpenCommissioning/OC_Unity_Core/commit/d75273c04c4b43e6e854b4ad7f64d5bfce8792a2))
+* **reactive:** add XML description of the interface or member ([7388bb1](https://github.com/OpenCommissioning/OC_Unity_Core/commit/7388bb1e5bec119b75e9ae19b5ae46ab955d91a2))
+* **reactive:** Add XML documentation summary blocks to Property<T> class ([b1296aa](https://github.com/OpenCommissioning/OC_Unity_Core/commit/b1296aac557bddf736698afd593f23d28efec46c))
+* **reactive:** rename OnValueChanged ([b6836c1](https://github.com/OpenCommissioning/OC_Unity_Core/commit/b6836c1dd0d471931301042c0e9f27d9bc81e8c8))
+* **refactor:** force property in components ([b10e321](https://github.com/OpenCommissioning/OC_Unity_Core/commit/b10e3219abc79064174e611f9bbd5e91fda509bf))
+* **refactor:** force property in components ([f10fbe5](https://github.com/OpenCommissioning/OC_Unity_Core/commit/f10fbe569629bf816579e420c5b64bfde0f6d150))
+* robot inspector header ([8ff0a17](https://github.com/OpenCommissioning/OC_Unity_Core/commit/8ff0a170777d696e393d2eb09a4c9caf10fc893b))
+* **Samples:** scene cleanup ([81fef0d](https://github.com/OpenCommissioning/OC_Unity_Core/commit/81fef0d48cb652c8f99d067677c8e3016490b588))
+
 ## [1.2.3](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.2...v1.2.3) (2025-05-27)
 
 
