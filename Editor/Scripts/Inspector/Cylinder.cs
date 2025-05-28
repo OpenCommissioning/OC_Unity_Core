@@ -16,7 +16,7 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddLinkOverride(component);
+            groupControl.AddLinkOverride(serializedObject);
             var hStack = new StackHorizontal();
             hStack.Add(new PushButton("Minus").BindProperty(component.Minus));
             hStack.Add(new PushButton("Plus").BindProperty(component.Plus));

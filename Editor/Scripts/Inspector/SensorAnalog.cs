@@ -16,7 +16,7 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddLinkOverride(component);
+            groupControl.AddLinkOverride(serializedObject);
             groupControl.Add(new FloatField("Value").BindProperty(component.Value).AlignedField());
             
             var groupStatus = new PropertyGroup("Status");

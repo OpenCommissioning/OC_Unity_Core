@@ -39,7 +39,7 @@ namespace OC.VisualElements
         {
             if ((evt.target as BaseField<T>)?.userData is Property<T> property)
             {
-                property.SetValue(evt.newValue);
+                property.Value = evt.newValue;
             }
         }
 

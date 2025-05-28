@@ -14,6 +14,7 @@ namespace OC.Editor
             var container = new PropertyGroup("Communication");
             container.AddHeaderElement(new LampField{bindingPath = "_isConnected._value", LampShape = LampField.InspectorLampShape.Round});
             container.Add(new Toggle("Is Enabled"){bindingPath = "_enable"}.AlignedField());
+            container.Add(new Toggle("Override") {bindingPath = "_override._value"}.AlignedField());
             container.Add(new TextField("Path"){bindingPath = "_path", isReadOnly = true}.AlignedField());
             container.Add(new TextField("Type"){bindingPath = "_type"}.AlignedField());
             container.Add(new ObjectField("Parent"){bindingPath = "_parent", objectType = typeof(Hierarchy)}.AlignedField());

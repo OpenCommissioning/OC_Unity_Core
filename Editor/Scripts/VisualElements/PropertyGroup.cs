@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using OC.Communication;
-using OC.VisualElements;
-using UnityEditor.UIElements;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -37,7 +35,7 @@ namespace OC.Editor
         private readonly Label _labelElement;
         private readonly VisualElement _options;
         private readonly VisualElement _content;
-        private OverrideController _overrideController; 
+        private LinkOverrideController _linkOverrideController; 
         
         private const string USS = "StyleSheet/oc-inspector";
         private const string USS_CLASS_NAME = "property-group";
@@ -87,10 +85,10 @@ namespace OC.Editor
             _options.Add(visualElement);
         } 
 
-        public void AddLinkOverride(IDevice link)
+        public void AddLinkOverride(SerializedObject serializedObject)
         {
-            _overrideController = new OverrideController(link, _content);
-            _options.Add(_overrideController);
+            var linkOverrideController = new LinkOverrideController(serializedObject, _content);
+            _options.Add(linkOverrideController);
         }
     }
 }

@@ -220,7 +220,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -234,10 +233,8 @@ MonoBehaviour:
       m_Calls: []
   _override:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _holdValue: 0
   OnValueChangedEvent:
     m_PersistentCalls:
@@ -246,10 +243,8 @@ MonoBehaviour:
     _enable: 0
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Reader
     _parent: {fileID: 0}
     _attributes: []
@@ -386,10 +381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 872032856}
   _factor: 1
   _direction: 0
@@ -779,13 +772,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _isActive:
     _value: 0
-    _override: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -793,10 +783,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Drive
     _parent: {fileID: 0}
     _attributes: []
@@ -809,7 +797,6 @@ MonoBehaviour:
     StatusData: 0
   _acceleration:
     _value: 100
-    _override: 0
 --- !u!1001 &174028449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -937,14 +924,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _override:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _valueSource: {fileID: 186187013}
   _factor:
     _value: 1
-    _override: 0
   OnValueChangedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -952,10 +936,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_SensorAnalog
     _parent: {fileID: 0}
     _attributes: []
@@ -975,10 +957,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _length: 1
   _layerMask:
     serializedVersion: 2
@@ -1049,40 +1029,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _minus:
     _value: 0
-    _override: 0
   _plus:
     _value: 0
-    _override: 0
   _progress:
     _value: 0
-    _override: 0
   _isActive:
     _value: 0
-    _override: 0
   _onLimitMin:
     _value: 0
-    _override: 0
   _onLimitMax:
     _value: 0
-    _override: 0
   _limits:
     _value: {x: 0, y: 100}
-    _override: 0
   _type:
     _value: 0
-    _override: 0
   _timeToMin:
     _value: 0.5
-    _override: 0
   _timeToMax:
     _value: 0.5
-    _override: 0
   _profile:
     serializedVersion: 2
     m_Curve:
@@ -1119,11 +1087,9 @@ MonoBehaviour:
   _link:
     _enable: 1
     _override:
-      _value: 1
-      _override: 0
+      _value: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Cylinder
     _parent: {fileID: 0}
     _attributes: []
@@ -1287,7 +1253,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -1301,13 +1266,10 @@ MonoBehaviour:
       m_Calls: []
   _auto:
     _value: 0
-    _override: 0
   _typeId:
     _value: 0
-    _override: 0
   _uniqueId:
     _value: 0
-    _override: 0
   _sourceId: 0
   OnPayloadCreated:
     m_PersistentCalls:
@@ -1439,10 +1401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 739716454}
   _width: 0.1
   _height: 0.05
@@ -1860,7 +1820,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -1874,16 +1833,12 @@ MonoBehaviour:
       m_Calls: []
   _override:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _state:
     _value: 0
-    _override: 0
   _length:
     _value: 1
-    _override: 0
   _invert: 0
   _useBoxCollider: 0
   OnValueChangedEvent:
@@ -1893,10 +1848,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_SensorBinary
     _parent: {fileID: 0}
     _attributes: []
@@ -2012,10 +1965,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 739716454}
   _width: 0.1
   _height: 0.05
@@ -2026,13 +1977,10 @@ MonoBehaviour:
   _gizmos: 1
   _angle:
     _value: -90
-    _override: 0
   _radius:
     _value: 0.1
-    _override: 0
   _smoothness:
     _value: 0.01
-    _override: 0
 --- !u!54 &459509956
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2129,7 +2077,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -2143,13 +2090,10 @@ MonoBehaviour:
       m_Calls: []
   _auto:
     _value: 0
-    _override: 0
   _typeId:
     _value: 0
-    _override: 0
   _uniqueId:
     _value: 0
-    _override: 0
   _sourceId: 0
   OnPayloadCreated:
     m_PersistentCalls:
@@ -2222,10 +2166,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 1575472970}
   _factor: 0.01
   _direction: 0
@@ -2437,10 +2379,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 777691503}
   _width: 0.1
   _height: 0.05
@@ -2451,13 +2391,10 @@ MonoBehaviour:
   _gizmos: 1
   _angle:
     _value: -90
-    _override: 0
   _radius:
     _value: 0.1
-    _override: 0
   _smoothness:
     _value: 0.01
-    _override: 0
 --- !u!54 &553343230
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3129,13 +3066,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _isActive:
     _value: 0
-    _override: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3143,10 +3077,8 @@ MonoBehaviour:
     _enable: 0
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_LinkDrive
     _parent: {fileID: 0}
     _attributes: []
@@ -3159,16 +3091,12 @@ MonoBehaviour:
     StatusData: 0
   _acceleration:
     _value: 100
-    _override: 0
   _speed:
     _value: 200
-    _override: 0
   _forward:
     _value: 1
-    _override: 0
   _backward:
     _value: 0
-    _override: 0
 --- !u!4 &739716455
 Transform:
   m_ObjectHideFlags: 0
@@ -3469,13 +3397,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _isActive:
     _value: 0
-    _override: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3483,10 +3408,8 @@ MonoBehaviour:
     _enable: 0
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_LinkDrive
     _parent: {fileID: 0}
     _attributes: []
@@ -3499,16 +3422,12 @@ MonoBehaviour:
     StatusData: 0
   _acceleration:
     _value: 100
-    _override: 0
   _speed:
     _value: 200
-    _override: 0
   _forward:
     _value: 1
-    _override: 0
   _backward:
     _value: 0
-    _override: 0
 --- !u!1 &783447759
 GameObject:
   m_ObjectHideFlags: 0
@@ -3617,10 +3536,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 166511645}
   _factor: 1
   _direction: 0
@@ -3675,10 +3592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 777691503}
   _width: 0.1
   _height: 0.05
@@ -3689,13 +3604,10 @@ MonoBehaviour:
   _gizmos: 1
   _angle:
     _value: -90
-    _override: 0
   _radius:
     _value: 0.1
-    _override: 0
   _smoothness:
     _value: 0.01
-    _override: 0
 --- !u!54 &811756517
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3825,10 +3737,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 777691503}
   _width: 0.1
   _height: 0.05
@@ -3839,13 +3749,10 @@ MonoBehaviour:
   _gizmos: 1
   _angle:
     _value: -90
-    _override: 0
   _radius:
     _value: 0.1
-    _override: 0
   _smoothness:
     _value: 0.01
-    _override: 0
 --- !u!54 &843429332
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4108,13 +4015,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 1
   _value:
     _value: 0
-    _override: 0
   _isActive:
     _value: 0
-    _override: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4122,10 +4026,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Drive
     _parent: {fileID: 0}
     _attributes: []
@@ -4138,16 +4040,12 @@ MonoBehaviour:
     StatusData: 0
   _acceleration:
     _value: 100
-    _override: 0
   _speed:
     _value: 100
-    _override: 0
   _forward:
     _value: 0
-    _override: 1
   _backward:
     _value: 0
-    _override: 1
 --- !u!1 &876952437
 GameObject:
   m_ObjectHideFlags: 0
@@ -4630,10 +4528,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 777691503}
   _width: 0.1
   _height: 0.05
@@ -5039,13 +4935,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lock:
     _value: 0
-    _override: 0
   _closed:
     _value: 1
-    _override: 0
   _locked:
     _value: 0
-    _override: 0
   _target: {fileID: 1022863323}
   _duration: 0.5
   OnOpenEvent:
@@ -5392,10 +5285,8 @@ MonoBehaviour:
   _category: 0
   _controlState:
     _value: 0
-    _override: 0
   _physicState:
     _value: 0
-    _override: 0
   _typeId: 0
   _uniqueId: 0
   _groupId: 0
@@ -5497,10 +5388,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 777691503}
   _width: 0.1
   _height: 0.05
@@ -5511,13 +5400,10 @@ MonoBehaviour:
   _gizmos: 1
   _angle:
     _value: -90
-    _override: 0
   _radius:
     _value: 0.1
-    _override: 0
   _smoothness:
     _value: 0.01
-    _override: 0
 --- !u!54 &1055328710
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5615,7 +5501,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -5629,16 +5514,12 @@ MonoBehaviour:
       m_Calls: []
   _override:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _state:
     _value: 0
-    _override: 0
   _length:
     _value: 1
-    _override: 0
   _invert: 0
   _useBoxCollider: 0
   OnValueChangedEvent:
@@ -5648,10 +5529,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_SensorBinary
     _parent: {fileID: 0}
     _attributes: []
@@ -5955,10 +5834,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 739716454}
   _width: 0.1
   _height: 0.05
@@ -5969,13 +5846,10 @@ MonoBehaviour:
   _gizmos: 1
   _angle:
     _value: -90
-    _override: 0
   _radius:
     _value: 0.1
-    _override: 0
   _smoothness:
     _value: 0.01
-    _override: 0
 --- !u!54 &1138958401
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6071,10 +5945,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 1726639120}
   _factor: 0.001
   _direction: 1
@@ -6130,7 +6002,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -6144,16 +6015,12 @@ MonoBehaviour:
       m_Calls: []
   _override:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _state:
     _value: 0
-    _override: 0
   _length:
     _value: 1
-    _override: 0
   _invert: 0
   _useBoxCollider: 0
   OnValueChangedEvent:
@@ -6163,10 +6030,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_SensorBinary
     _parent: {fileID: 0}
     _attributes: []
@@ -6449,7 +6314,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -6463,7 +6327,6 @@ MonoBehaviour:
       m_Calls: []
   _auto:
     _value: 1
-    _override: 0
 --- !u!65 &1200839366
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6533,40 +6396,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _minus:
     _value: 0
-    _override: 0
   _plus:
     _value: 0
-    _override: 0
   _progress:
     _value: 0
-    _override: 0
   _isActive:
     _value: 0
-    _override: 0
   _onLimitMin:
     _value: 0
-    _override: 0
   _onLimitMax:
     _value: 0
-    _override: 0
   _limits:
     _value: {x: 0, y: 100}
-    _override: 0
   _type:
     _value: 2
-    _override: 0
   _timeToMin:
     _value: 0.5
-    _override: 0
   _timeToMax:
     _value: 0.5
-    _override: 0
   _profile:
     serializedVersion: 2
     m_Curve:
@@ -6604,10 +6455,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Cylinder
     _parent: {fileID: 0}
     _attributes: []
@@ -6797,7 +6646,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -6811,13 +6659,10 @@ MonoBehaviour:
       m_Calls: []
   _targetData:
     _value: 
-    _override: 0
   _rawData:
     _value: 
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _key: Color
   _autoRead: 0
   _cyclic: 0
@@ -7001,14 +6846,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _override:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _valueSource: {fileID: 1271094949}
   _factor:
     _value: 1
-    _override: 0
   OnValueChangedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -7016,10 +6858,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_SensorAnalog
     _parent: {fileID: 0}
     _attributes: []
@@ -7042,7 +6882,6 @@ MonoBehaviour:
   _direction: 2
   _value:
     _value: 0
-    _override: 0
 --- !u!1 &1322743986
 GameObject:
   m_ObjectHideFlags: 0
@@ -7310,7 +7149,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -7324,10 +7162,8 @@ MonoBehaviour:
       m_Calls: []
   _actualTypeId:
     _value: -1
-    _override: 0
   _targetTypeId:
     _value: 0
-    _override: 0
 --- !u!65 &1377438382
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7637,10 +7473,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 777691503}
   _width: 0.1
   _height: 0.05
@@ -7745,10 +7579,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 739716454}
   _width: 0.1
   _height: 0.05
@@ -8156,10 +7988,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 739716454}
   _width: 0.1
   _height: 0.05
@@ -8170,13 +8000,10 @@ MonoBehaviour:
   _gizmos: 1
   _angle:
     _value: -90
-    _override: 0
   _radius:
     _value: 0.1
-    _override: 0
   _smoothness:
     _value: 0.01
-    _override: 0
 --- !u!54 &1532911028
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8271,16 +8098,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _override:
     _value: 0
-    _override: 0
   _lock:
     _value: 0
-    _override: 0
   _closed:
     _value: 0
-    _override: 0
   _locked:
     _value: 0
-    _override: 0
   _doors:
   - {fileID: 1035215636}
   _buttons: []
@@ -8297,10 +8120,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Lock
     _parent: {fileID: 0}
     _attributes: []
@@ -8538,13 +8359,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _isActive:
     _value: 0
-    _override: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -8552,10 +8370,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Drive
     _parent: {fileID: 0}
     _attributes: []
@@ -8568,10 +8384,8 @@ MonoBehaviour:
     StatusData: 0
   _speed:
     _value: 100
-    _override: 0
   _delta:
     _value: 0
-    _override: 0
 --- !u!1 &1585958997
 GameObject:
   m_ObjectHideFlags: 0
@@ -8653,10 +8467,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 739716454}
   _width: 0.1
   _height: 0.05
@@ -8667,13 +8479,10 @@ MonoBehaviour:
   _gizmos: 1
   _angle:
     _value: -90
-    _override: 0
   _radius:
     _value: 0.1
-    _override: 0
   _smoothness:
     _value: 0.01
-    _override: 0
 --- !u!54 &1629764387
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8771,14 +8580,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _override:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _valueSource: {fileID: 1674164523}
   _factor:
     _value: 1
-    _override: 0
   OnValueChangedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -8786,10 +8592,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_SensorAnalog
     _parent: {fileID: 0}
     _attributes: []
@@ -8815,7 +8619,6 @@ MonoBehaviour:
   _displacement: 0
   _value:
     _value: 0
-    _override: 0
   OnDisplacementChange:
     m_PersistentCalls:
       m_Calls: []
@@ -9275,40 +9078,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _minus:
     _value: 0
-    _override: 0
   _plus:
     _value: 0
-    _override: 0
   _progress:
     _value: 0
-    _override: 0
   _isActive:
     _value: 0
-    _override: 0
   _onLimitMin:
     _value: 0
-    _override: 0
   _onLimitMax:
     _value: 0
-    _override: 0
   _limits:
     _value: {x: 0, y: 100}
-    _override: 0
   _type:
     _value: 1
-    _override: 0
   _timeToMin:
     _value: 0.5
-    _override: 0
   _timeToMax:
     _value: 0.5
-    _override: 0
   _profile:
     serializedVersion: 2
     m_Curve:
@@ -9345,11 +9136,9 @@ MonoBehaviour:
   _link:
     _enable: 1
     _override:
-      _value: 0
-      _override: 0
+      _value: 1
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Cylinder
     _parent: {fileID: 0}
     _attributes: []
@@ -9591,10 +9380,8 @@ MonoBehaviour:
   _category: 0
   _controlState:
     _value: 0
-    _override: 0
   _physicState:
     _value: 0
-    _override: 0
   _typeId: 0
   _uniqueId: 0
   _groupId: 0
@@ -10135,7 +9922,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collision:
     _value: 0
-    _override: 0
   _groupId: 0
   _collisionFilter: -1
   OnCollisionEvent:
@@ -10149,10 +9935,8 @@ MonoBehaviour:
       m_Calls: []
   _isActive:
     _value: 0
-    _override: 0
   _isPicked:
     _value: 0
-    _override: 0
   _pickType: 0
   _dynamicSize: 0
   _additionalColliderSize: {x: 0, y: 0, z: 0}
@@ -10265,10 +10049,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 777691503}
   _width: 0.1
   _height: 0.05
@@ -10683,16 +10465,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isConnected:
     _value: 0
-    _override: 0
   _rootName: MAIN
   _link:
     _enable: 0
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: 
     _parent: {fileID: 0}
     _attributes: []
@@ -10756,10 +10535,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 1207663284}
   _factor: 0.001
   _direction: 1
@@ -10814,10 +10591,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 777691503}
   _width: 0.1
   _height: 0.05
@@ -11091,10 +10866,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 739716454}
   _width: 0.1
   _height: 0.05
@@ -11255,10 +11028,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 739716454}
   _width: 0.1
   _height: 0.05
@@ -11364,10 +11135,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Lamp
     _parent: {fileID: 0}
     _attributes: []
@@ -11375,13 +11144,10 @@ MonoBehaviour:
     _path: MAIN.Devices.Interactions.Lamp
   _override:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _color:
     _value: {r: 0, g: 1, b: 1, a: 1}
-    _override: 0
   _colorChangers: []
   OnValueChanged:
     m_PersistentCalls:
@@ -11580,10 +11346,8 @@ MonoBehaviour:
   _category: 0
   _controlState:
     _value: 0
-    _override: 0
   _physicState:
     _value: 0
-    _override: 0
   _typeId: 0
   _uniqueId: 0
   _groupId: 0
@@ -11676,10 +11440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target:
     _value: 0
-    _override: 0
   _value:
     _value: 0
-    _override: 0
   _actor: {fileID: 209732355}
   _factor: 0.001
   _direction: 1
@@ -12019,10 +11781,8 @@ MonoBehaviour:
     _enable: 1
     _override:
       _value: 0
-      _override: 0
     _connected:
       _value: 0
-      _override: 0
     _type: FB_Switch
     _parent: {fileID: 0}
     _attributes: []
@@ -12030,14 +11790,12 @@ MonoBehaviour:
     _path: MAIN.Devices.Interactions.Switch
   _index:
     _value: 0
-    _override: 0
   _stateCount: 2
   OnIndexChanged:
     m_PersistentCalls:
       m_Calls: []
   _angle:
     _value: -45
-    _override: 0
   _range: {x: -45, y: 45}
   _offset: 0
   OnRotationChanged:
