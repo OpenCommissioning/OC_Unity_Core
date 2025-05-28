@@ -14,7 +14,7 @@ namespace OC.MaterialFlow
 
         [SerializeField]
         // ReSharper disable once NotAccessedField.Local
-        private Property<int> _actualTypeId = -1 ;
+        private Property<int> _actualTypeId = new(-1) ;
         [SerializeField]
         private Property<int> _targetTypeId;  
 
@@ -39,7 +39,7 @@ namespace OC.MaterialFlow
         {
             if (payloadBase is not Payload payload) return;
             _payload = payload;
-            _actualTypeId = _payload.TypeId;
+            _actualTypeId.Value = _payload.TypeId;
         }
         
         private void OnPayloadExit(PayloadBase payloadBase)
@@ -47,7 +47,7 @@ namespace OC.MaterialFlow
             if (payloadBase is not Payload payload) return;
             if (_payload != payload) return;
             _payload = null;
-            _actualTypeId = -1;
+            _actualTypeId.Value = -1;
         }
 
         public void Replace()

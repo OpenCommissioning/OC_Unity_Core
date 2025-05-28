@@ -41,21 +41,12 @@ namespace OC
             get => _value;
             set => TrySetValue(value);
         }
-        
-        public bool Force
-        {
-            get => _force;
-            set => _force = value;
-        }
 
         /// <summary>
         /// The backing field for the property value. This field is serialized for Unity Inspector support.
         /// </summary>
         [SerializeField]
         private T _value;
-        
-        [SerializeField]
-        private bool _force;
         
         /// <summary>
         /// Stores the last value assigned to the property, used for change detection from inspector using OnValidate.
@@ -78,7 +69,6 @@ namespace OC
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void TrySetValue(T value)
         {
-            if (_force) return;
             if (Validator is not null) value = Validator.Invoke(value);
             _comparer ??= EqualityComparer<T>.Default;
             if (_comparer.Equals(_value, value)) return;
@@ -91,7 +81,7 @@ namespace OC
         /// </summary>
         /// <param name="value">The new value to set.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetValue(T value)
+        private void SetValue(T value)
         {
             SetValueWithoutNotify(value);
             OnValueChanged?.Invoke(value);
@@ -131,16 +121,6 @@ namespace OC
         public void Unsubscribe(Action<T> action)
         {
             OnValueChanged -= action;
-        }
-
-        /// <summary>
-        /// Defines an implicit conversion from a value of type <typeparamref name="T"/> to a <see cref="Property{T}"/>.
-        /// This allows direct assignment of a value to a property.
-        /// </summary>
-        /// <param name="value">The value to wrap in a <see cref="Property{T}"/>.</param>
-        public static implicit operator Property<T>(T value)
-        {
-            return new Property<T>(value);
         }
 
         /// <summary>

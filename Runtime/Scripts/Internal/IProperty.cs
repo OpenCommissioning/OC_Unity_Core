@@ -7,18 +7,7 @@ namespace OC
     /// </summary>
     public interface IProperty
     {
-        /// <summary>
-        /// Validates the property's value.
-        /// Typically called in the Unity Editor to ensure the value meets required conditions.
-        /// </summary>
-        public void OnValidate();
         
-        /// <summary>
-        /// Gets or sets a flag that determines whether the property should be updated forcefully.
-        /// When set to <c>true</c>, the property value can be overwritten regardless of potential conflicts with other code.
-        /// This is typically used in UI scenarios where a user needs to override the current value.
-        /// </summary>
-        public bool Force { get; set; }
     }
     
     /// <summary>
@@ -31,7 +20,13 @@ namespace OC
         /// Gets the current value of the property.
         /// </summary>
         public T Value { get; }
-
+        
+        /// <summary>
+        /// Validates the property's value.
+        /// Typically called in the Unity Editor to ensure the value meets required conditions.
+        /// </summary>
+        public void OnValidate();
+        
         /// <summary>
         /// Subscribes an action to be invoked when the property value changes.
         /// </summary>
@@ -63,12 +58,6 @@ namespace OC
         /// Setting the value may trigger change notifications.
         /// </summary>
         public new T Value { get; set; }
-
-        /// <summary>
-        /// Sets the property value and triggers the change notification event.
-        /// </summary>
-        /// <param name="value">The new value to set.</param>
-        public void SetValue(T value);
         
         /// <summary>
         /// Sets the property value without triggering the change notification event.
