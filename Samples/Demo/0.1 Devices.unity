@@ -548,8 +548,6 @@ MonoBehaviour:
     _value: 0
   _value:
     _value: 0
-  _isActive:
-    _value: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -569,6 +567,12 @@ MonoBehaviour:
     Status: 0
     ControlData: 0
     StatusData: 0
+  _stateObserver:
+    _state:
+      _value: 0
+    _isActive:
+      _value: 0
+    _delay: 0
   _acceleration:
     _value: 100
 --- !u!1 &186187010
@@ -2301,8 +2305,6 @@ MonoBehaviour:
     _value: 0
   _value:
     _value: 0
-  _isActive:
-    _value: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2322,6 +2324,12 @@ MonoBehaviour:
     Status: 0
     ControlData: 0
     StatusData: 0
+  _stateObserver:
+    _state:
+      _value: 0
+    _isActive:
+      _value: 0
+    _delay: 0
   _acceleration:
     _value: 100
   _speed:
@@ -4981,8 +4989,6 @@ MonoBehaviour:
     _value: 0
   _value:
     _value: 0
-  _isActive:
-    _value: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5002,10 +5008,14 @@ MonoBehaviour:
     Status: 0
     ControlData: 0
     StatusData: 0
+  _stateObserver:
+    _state:
+      _value: 0
+    _isActive:
+      _value: 0
+    _delay: 0
   _speed:
     _value: 100
-  _delta:
-    _value: 0
 --- !u!1 &1585958997
 GameObject:
   m_ObjectHideFlags: 0
