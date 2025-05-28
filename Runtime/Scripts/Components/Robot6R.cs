@@ -14,7 +14,7 @@ namespace OC.Components
         [SerializeField] 
         private float[] _target = new float[12];
         
-        [Header("SceneConfigurationManager")]
+        [Header("Settings")]
         [SerializeField] 
         private float[] _factor = new float[12];
         [SerializeField] 
