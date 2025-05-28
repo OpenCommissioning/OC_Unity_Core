@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.4...v1.2.5) (2025-05-28)
+
+
+### Bug Fixes
+
+* **Editor:** project inspector ([8fdfcc7](https://github.com/OpenCommissioning/OC_Unity_Core/commit/8fdfcc7e924a3cf26a944be184672b49a06077b8))
+
 ## [1.2.4](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.3...v1.2.4) (2025-05-28)
 
 
