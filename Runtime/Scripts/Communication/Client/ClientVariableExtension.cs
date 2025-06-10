@@ -1,11 +1,26 @@
-using System.Text.RegularExpressions;
-using UnityEngine;
-
 namespace OC.Communication
 {
     public static class ClientVariableExtension
     {
-        private static readonly Regex InvalidChars = new ("[^A-Za-z0-9_]", RegexOptions.Compiled);
+        /// <summary>
+        /// Returns a path with each segment wrapped in backticks if it contains invalid characters.
+        /// </summary>
+        public static string GetCompatiblePath(this string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return string.Empty;
+            
+            var parts = path.Split('.');
+            
+            for (var i = 0; i < parts.Length; i++)
+            {
+                if (!IsVariableNameValid(parts[i]))
+                {
+                    parts[i] = $"`{parts[i]}`";
+                }
+            }
+            
+            return string.Join(".", parts);
+        }
         
         /// <summary>
         /// Returns true if:
@@ -25,27 +40,6 @@ namespace OC.Communication
             }
             
             return true;
-        }
-
-        /// <summary>
-        /// Replace spaces and hyphens with underscore
-        /// Remove any other invalid characters  
-        /// Ensure it starts with a letter by prefixing 'A' if needed  
-        /// </summary>
-        public static string CorrectVariableName(string input)
-        {
-            if (string.IsNullOrEmpty(input)) return input;
-            
-            var withUnderscores = Regex.Replace(input, @"[\s-]+", "_");
-            var cleaned = InvalidChars.Replace(withUnderscores, "");
-
-            if (char.IsLetter(cleaned[0])) return cleaned;
-            
-            var name = "A" + cleaned;
-            
-            cleaned = name;
-
-            return cleaned;
         }
     }
 }

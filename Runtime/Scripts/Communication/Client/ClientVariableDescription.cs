@@ -2,7 +2,7 @@ namespace OC.Communication
 {
     public struct ClientVariableDescription
     {
-        public string Name;
+        public string Path;
         public ClientVariableDirection Direction;
     }
 }

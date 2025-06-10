@@ -92,16 +92,16 @@ namespace OC.Communication
         public abstract void Connect();
         public abstract void Disconnect();
 
-        private bool TryFindVariable(ClientVariableDescription discription, Object target, out ClientVariable variable)
+        private bool TryFindVariable(ClientVariableDescription description, Object target, out ClientVariable variable)
         {
             try
             {
-                var adsVariable = discription.Direction == ClientVariableDirection.Input ? 
-                    Buffer.InputVariables.Find(x => x.Name == discription.Name) :
-                    Buffer.OutputVariables.Find(x => x.Name == discription.Name);
+                var clientVariable = description.Direction == ClientVariableDirection.Input ? 
+                    Buffer.InputVariables.Find(x => x.Name == description.Path) :
+                    Buffer.OutputVariables.Find(x => x.Name == description.Path);
 
-                variable = adsVariable ?? throw new Exception($"{discription.Name} can't be found in client!");
-                if (variable.Reserved) throw new Exception($"{discription.Name} already reserved!");
+                variable = clientVariable ?? throw new Exception($"{description.Path} can't be found in client!");
+                if (variable.Reserved) throw new Exception($"{description.Path} already reserved!");
                 variable.Reserved = true;
                 return true;
             }

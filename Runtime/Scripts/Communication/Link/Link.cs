@@ -15,6 +15,12 @@ namespace OC.Communication
         }
         public string Name => _name;
         public string Path => _path;
+        
+        /// <summary>
+        /// Gets the compatible or formatted version of the original path, where 
+        /// each segment contains only valid characters or is properly escaped.
+        /// </summary>
+        public string CompatiblePath => _compatiblePath;
         public Hierarchy Parent => _parent;
         public Client Client => _client;
         public string Type 
@@ -48,6 +54,8 @@ namespace OC.Communication
         private string _name;
         [HideInInspector, SerializeField]
         private string _path;
+        [HideInInspector, SerializeField]
+        private string _compatiblePath;
 
         private Component _component;
         private Client _client;
@@ -77,6 +85,7 @@ namespace OC.Communication
             _component = component;
             _name = this.GetHierarchyName();
             _path = this.GetHierarchyPath();
+            _compatiblePath = _path.GetCompatiblePath();
             _client = this.GetClient();
             _connectors = new List<Connector>();
         }

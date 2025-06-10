@@ -11,7 +11,7 @@ namespace OC.Communication
         private readonly int _length;
         private readonly int _offset;
 
-        public ClientVariable(byte[] buffer, string name, int length, int offset)
+        public ClientVariable(string name, byte[] buffer, int length, int offset)
         {
             Name = name;
             _buffer = buffer;

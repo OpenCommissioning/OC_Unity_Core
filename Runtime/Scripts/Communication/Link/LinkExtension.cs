@@ -1,7 +1,4 @@
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace OC.Communication
 {
@@ -16,20 +13,7 @@ namespace OC.Communication
         /// <returns>The (original) name of the GameObject. Note that the GameObject’s name is modified in-editor if it was invalid.</returns>
         public static string GetName(this Link link)
         {
-            var name = link.Component.gameObject.name;
-
-            if (!ClientVariableExtension.IsVariableNameValid(name))
-            {
-                var oldName = name;
-                name = ClientVariableExtension.CorrectVariableName(name);
-#if UNITY_EDITOR
-                Debug.LogWarning($"Link component name {oldName} is invalid! The name is modified to {name}", link.Component);
-                link.Component.gameObject.name = name;
-                EditorUtility.SetDirty(link.Component);
-#endif
-            }
-
-            return name;
+            return link.Component.gameObject.name;
         }
         
         /// <summary>

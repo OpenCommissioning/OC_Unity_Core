@@ -97,8 +97,8 @@ namespace OC.Communication.TwinCAT
             _inputBuffer = new byte[_inputSymbols.Sum(item => item.ByteSize)];
             _outputBuffer = new byte[_outputSymbols.Sum(item => item.ByteSize)];
 
-            CreateVairables(_inputBuffer, _inputSymbols, _inputVariables);
-            CreateVairables(_outputBuffer, _outputSymbols, _outputVariables);
+            CreateVariables(_inputBuffer, _inputSymbols, _inputVariables);
+            CreateVariables(_outputBuffer, _outputSymbols, _outputVariables);
 
             _isConnected = true;
             Logging.Logger.Log(LogType.Log, $"TcAds Task Client {_inputBuffer.Length} byte inputs - {_outputBuffer.Length} byte outputs.");
@@ -115,7 +115,7 @@ namespace OC.Communication.TwinCAT
             _outputSymbols.Sort((x,y) => x.IndexOffset.CompareTo(y.IndexOffset));
         }
 
-        private void CreateVairables(byte[] buffer, List<IAdsSymbol> symbols, List<ClientVariable> variables)
+        private void CreateVariables(byte[] buffer, List<IAdsSymbol> symbols, List<ClientVariable> variables)
         {
             var offset = 0;
             
@@ -126,7 +126,7 @@ namespace OC.Communication.TwinCAT
                 var name = string.Join(".", split.ToArray());
                 var length = symbol.Size;
                 
-                variables.Add(new ClientVariable(buffer, name, length, offset));
+                variables.Add(new ClientVariable(name, buffer, length, offset));
                 offset += length;
             }
         }

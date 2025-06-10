@@ -32,8 +32,8 @@ namespace OC.Communication
 
         protected virtual void CreateVariableDescription()
         {
-            _variablesDescription.Add(new ClientVariableDescription { Name = _link.Path + ".Control", Direction = ClientVariableDirection.Input });
-            _variablesDescription.Add(new ClientVariableDescription { Name = _link.Path + ".Status", Direction = ClientVariableDirection.Output });
+            _variablesDescription.Add(new ClientVariableDescription { Path = _link.CompatiblePath + ".Control", Direction = ClientVariableDirection.Input });
+            _variablesDescription.Add(new ClientVariableDescription { Path = _link.CompatiblePath + ".Status", Direction = ClientVariableDirection.Output });
         }
 
         public virtual void Read()

@@ -257,6 +257,7 @@ MonoBehaviour:
     _attributes: []
     _name: Button
     _path: Button
+    _compatiblePath: 
   _pressed:
     _value: 0
   _feedback:

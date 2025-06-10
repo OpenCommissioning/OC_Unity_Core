@@ -17,18 +17,14 @@ namespace OC.Editor.Tests.Client
         {
             return ClientVariableExtension.IsVariableNameValid(name);
         }
-        
+
         [Test]
-        [TestCase("Machine&3", ExpectedResult = "Machine3")]
-        [TestCase("_FG01", ExpectedResult = "A_FG01")]
-        [TestCase("0001", ExpectedResult = "A0001")]
-        [TestCase("FG 01", ExpectedResult = "FG_01")]
-        [TestCase("FG-01", ExpectedResult = "FG_01")]
-        [TestCase("FG01", ExpectedResult = "FG01")]
-        [TestCase("FG_01", ExpectedResult = "FG_01")]
-        public string CorrectVariableName(string input)
+        [TestCase("MAIN.ST01.FG01.Cylinder_1", ExpectedResult = "MAIN.ST01.FG01.Cylinder_1")]
+        [TestCase("MAIN.++ST01.FG01.Cylinder_1", ExpectedResult = "MAIN.`++ST01`.FG01.Cylinder_1")]
+        [TestCase("MAIN.++ST01.+&FG01.--Cylinder_1", ExpectedResult = "MAIN.`++ST01`.`+&FG01`.`--Cylinder_1`")]
+        public string GetCompatiblePath(string input)
         {
-            return ClientVariableExtension.CorrectVariableName(input);
+            return input.GetCompatiblePath();
         }
     }
 }
