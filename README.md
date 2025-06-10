@@ -1041,6 +1041,42 @@ You can call this function from the Material Flow component’s context menu in 
 
 ![BoundBoxColliderSize_Inspector.png](Documentation/Images/BoundBoxColliderSize_Inspector.png)
 
+
+# Snapping Tool
+
+The Snapping Tool included in the package allows to snap GameObjects to other GameObjects on defined snap points. This functionality is used to align GameObjects in a scene with precision.
+
+## Usage
+
+### SnapPoint Class
+The `SnapPoint` class is used to define snapping points on a game object. It is visualized by a blue sphere gizmo.
+
+![SnapPoint Component](Documentation/Images/SnapPoint.png)
+
+- **Group Id**: Only SnapPoints with the same *Group Id* can snap to each other
+- **Parent**: The *Parent* property must be set to the GameObject that should move with the snapping points.
+- **Type**: Possible Types: *Plug* or *Slot*. Snap Points of *Plug* type can be dragged and snap to *Slot* Snap Points. *Slot* Snap Points can not be dragged.
+- **Draw Gizmos**, **Gizmos Color**, **Gizmos Radius**: controls the Gizmos
+
+### SnappingHandles Object
+Provides visual handles for all `SnapPoint` components in the GameObjects children.
+When the scene window is active and the GameObject containing the `SnappingHandles` component is selected, press the **S-Key** to display the handles. These handles can be used to drag the GameObject and snap it to other snap points if they are within proximity.
+
+![SnappingHandles Component](Documentation/Images/SnappingHandles.png)
+
+## Workflow
+
+1. Attach the `SnapPoint` class to a GameObject to define a snap point.
+2. Ensure that the *Parent* property of each `SnapPoint` is set to the GameObject that should be moved when dragging the SnapPoint.
+3. Attach the `SnappingHandles` object to the GameObject that should be moved.
+4. In the scene window, select the GameObject with the `SnappingHandles` component.
+5. Press the **S-Key** to display the snapping handles.
+6. Use the handles to drag the GameObject and snap it to other `SnapPoints`.
+
+![Snapping in action](Documentation/Images/snapping.gif)
+
+
+
 # Contributing
 
 We welcome contributions from everyone and appreciate your effort to improve this project.
