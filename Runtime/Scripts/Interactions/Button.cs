@@ -71,7 +71,10 @@ namespace OC.Interactions
 
         protected override void Reset()
         {
-            _link = new Link(this, "FB_Button");
+            _link = new Link
+            {
+                Type = "FB_Button"
+            };
         }
 
         public void Click()
@@ -110,12 +113,12 @@ namespace OC.Interactions
 
         private void LateUpdate()
         {
-            if (!_localFeedback) _feedback.Value = Connector.Control.GetBit(0);
+            if (!_localFeedback) _feedback.Value = _link.Control.GetBit(0);
         }
 
         private void PressedOnOnValueChanged(bool value)
         {
-            Connector.Status.SetBit(0, value);
+            _link.Status.SetBit(0, value);
             OnPressedChanged?.Invoke(value);
             if (value) OnClickEvent?.Invoke();
             if (_localFeedback) _feedback.Value = value;

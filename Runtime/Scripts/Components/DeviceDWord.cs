@@ -7,22 +7,22 @@ namespace OC.Components
     public abstract class DeviceDWord : MonoComponent, IDevice
     {
         public Link Link => _link;
-        public ConnectorDataDWord ConnectorData => _connectorData;
         public abstract int AllocatedBitLength { get; }
 
         [SerializeField]
-        protected Link _link; 
-        private ConnectorDataDWord _connectorData;
+        protected LinkDataDWord _link; 
         
         protected void Start()
         {
             _link.Initialize(this);
-            _connectorData = new ConnectorDataDWord(Link);
         }
         
         private void Reset()
         {
-            _link = new Link(this, "FB_DeviceDWord");
+            _link = new LinkDataDWord
+            {
+                Type = "FB_DeviceDWord"
+            };
         }
     }
 }

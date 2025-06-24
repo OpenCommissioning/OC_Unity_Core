@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace OC.Communication
@@ -13,8 +12,25 @@ namespace OC.Communication
             get => _enable;
             set => _enable = value;
         }
-        public string Name => _name;
-        public string Path => _path;
+
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+        
+        public string Path
+        {
+            get => _path;
+            set => _path = value;
+        }
+
+        public Component Component
+        {
+            get => _component;
+            set => _component = value;
+        }
+        
         public Hierarchy Parent => _parent;
         public Client Client => _client;
         public string Type 
@@ -27,8 +43,11 @@ namespace OC.Communication
         
         public Property<bool> Connected => _connected;
         public Property<bool> Override => _override;
-        public Component Component => _component;
+        
         public List<LinkAttribute> Attributes => _attributes;
+        
+        public byte Control;
+        public byte Status;
 
         [SerializeField]
         private bool _enable = true;
@@ -38,38 +57,33 @@ namespace OC.Communication
         private Property<bool> _connected = new (false);
         
         [SerializeField]
+        private string _name;
+        [SerializeField]
+        private string _path;
+        [SerializeField]
         private string _type;
         [SerializeField]
         private Hierarchy _parent;
         [SerializeField]
         private List<LinkAttribute> _attributes = new ();
-        
-        [HideInInspector, SerializeField]
-        private string _name;
-        [HideInInspector, SerializeField]
-        private string _path;
 
         private Component _component;
         private Client _client;
-        private List<Connector> _connectors;
+        
+        [SerializeField]
+        protected List<ClientVariableDescription> _variablesDescription = new();
+        
+        protected List<ClientVariable> _variables = new();
 
+        public Link()
+        {
+            
+        }
+        
         public Link(Component component, string type)
         {
             Initialize(component);
             _type = type;
-        }
-
-        public Link(Component component, string name, string path)
-        {
-            _component = component;
-            _name = name;
-            _path = path;
-            _connectors = new List<Connector>();
-        }
-        
-        public Link(Component component)
-        {
-            Initialize(component);
         }
 
         public void Initialize(Component component)
@@ -77,34 +91,26 @@ namespace OC.Communication
             _component = component;
             _name = this.GetHierarchyName();
             _path = this.GetHierarchyPath();
-            _client = this.GetClient();
-            _connectors = new List<Connector>();
-        }
-
-        public Link Reset(Component component)
-        {
-            Initialize(component);
-            return this;
         }
 
         public void Connect(Client client)
         {
-            if (client is null) return;
-
-            _client = client;
-            
             if (!_enable)
             {
                 _connected.Value = false;
                 return;
             }
 
-            foreach (var connector in _connectors)
+            if (client is null)
             {
-                connector.Connect(client);
+                _connected.Value = false;
+                return;
             }
-            
-            _connected.Value = _connectors.All(connector => connector.IsConnected);
+
+            _client = client;
+
+            _variablesDescription = GetClientVariableDescriptions();
+            _connected.Value = TryGetVariables(_variablesDescription, out _variables);
         }
         
         public void Disconnect()
@@ -116,29 +122,62 @@ namespace OC.Communication
         {
             if (!_connected.Value) return;
             if (!_enable) return;
-
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < _connectors.Count; i++)
-            {
-                _connectors[i].Read();
-            }
+            ReadClientVariables();
         }
         
         public void Write()
         {
             if (!_connected.Value) return;
             if (!_enable) return;
-
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < _connectors.Count; i++)
-            {
-                _connectors[i].Write();
-            }
+            WriteClientVariables();
         }
 
-        public void Add(Connector connector)
+        protected virtual List<ClientVariableDescription> GetClientVariableDescriptions()
         {
-            _connectors.Add(connector);
+            var descriptions = new List<ClientVariableDescription>
+            {
+                new() { Name = Path + ".Control", Direction = ClientVariableDirection.Input },
+                new() { Name = Path + ".Status", Direction = ClientVariableDirection.Output }
+            };
+            return descriptions;
+        }
+
+        protected virtual void ReadClientVariables()
+        {
+            _variables[0].Read(ref Control);
+        }
+
+        protected virtual void WriteClientVariables()
+        {
+            _variables[1].Write(Status);
+        }
+
+        private bool TryGetVariables(IReadOnlyList<ClientVariableDescription> variableDescriptions, out List<ClientVariable> variables)
+        {
+            var result = true;
+            variables = new List<ClientVariable>();
+            
+            foreach (var description in variableDescriptions)
+            {
+                var variable = _client.GetClientVariable(description);
+                if (variable == null)
+                {
+                    Logging.Logger.Log(LogType.Warning, $"{description.Name} can't be found in client!", Component);
+                    result = false;
+                    continue;
+                }
+
+                if (variable.Reserved)
+                {
+                    Logging.Logger.Log(LogType.Warning, $"{description.Name} already reserved!", Component);
+                    result = false;
+                    continue;
+                }
+                
+                variable.Reserved = true;
+                variables.Add(variable);
+            }
+            return result;
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor
 {
-    [CustomPropertyDrawer(typeof(Link))]
+    [CustomPropertyDrawer(typeof(Link), true)]
     public class PropertyDrawerLink : PropertyDrawer
     {
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
