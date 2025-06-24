@@ -24,7 +24,7 @@ namespace OC.Editor.Tests.Client
         [TestCase("MAIN.++ST01.+&FG01.--Cylinder_1", ExpectedResult = "MAIN.`++ST01`.`+&FG01`.`--Cylinder_1`")]
         public string GetCompatiblePath(string input)
         {
-            return input.GetCompatiblePath();
+            return input.GetClientCompatiblePath();
         }
     }
 }

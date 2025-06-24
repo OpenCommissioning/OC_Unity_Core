@@ -19,10 +19,16 @@ namespace OC.Communication
             set => _name = value;
         }
         
-        public string Path
+        public string ScenePath
         {
-            get => _path;
-            set => _path = value;
+            get => _scenePath;
+            set => _scenePath = value;
+        }
+
+        public string ClientPath
+        {
+            get => _clientPath;
+            set => _clientPath = value;
         }
 
         public Component Component
@@ -59,7 +65,9 @@ namespace OC.Communication
         [SerializeField]
         private string _name;
         [SerializeField]
-        private string _path;
+        private string _scenePath;
+        [SerializeField]
+        private string _clientPath;
         [SerializeField]
         private string _type;
         [SerializeField]
@@ -75,22 +83,12 @@ namespace OC.Communication
         
         protected List<ClientVariable> _variables = new();
 
-        public Link()
-        {
-            
-        }
-        
-        public Link(Component component, string type)
-        {
-            Initialize(component);
-            _type = type;
-        }
-
         public void Initialize(Component component)
         {
             _component = component;
             _name = this.GetHierarchyName();
-            _path = this.GetHierarchyPath();
+            _scenePath = this.GetHierarchyPath();
+            _clientPath = _scenePath.GetClientCompatiblePath();
         }
 
         public void Connect(Client client)
@@ -136,8 +134,8 @@ namespace OC.Communication
         {
             var descriptions = new List<ClientVariableDescription>
             {
-                new() { Name = Path + ".Control", Direction = ClientVariableDirection.Input },
-                new() { Name = Path + ".Status", Direction = ClientVariableDirection.Output }
+                new() { Path = ClientPath + ".Control", Direction = ClientVariableDirection.Input },
+                new() { Path = ClientPath + ".Status", Direction = ClientVariableDirection.Output }
             };
             return descriptions;
         }
@@ -162,14 +160,14 @@ namespace OC.Communication
                 var variable = _client.GetClientVariable(description);
                 if (variable == null)
                 {
-                    Logging.Logger.Log(LogType.Warning, $"{description.Name} can't be found in client!", Component);
+                    Logging.Logger.Log(LogType.Warning, $"{description.Path} can't be found in client!", Component);
                     result = false;
                     continue;
                 }
 
                 if (variable.Reserved)
                 {
-                    Logging.Logger.Log(LogType.Warning, $"{description.Name} already reserved!", Component);
+                    Logging.Logger.Log(LogType.Warning, $"{description.Path} already reserved!", Component);
                     result = false;
                     continue;
                 }

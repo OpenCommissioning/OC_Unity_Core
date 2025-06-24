@@ -73,7 +73,7 @@ namespace OC.Project
             foreach (var item in _devices.Where(item => item.Link.Override.Value))
             {
                 item.Link.Override.Value = false;
-                Logging.Logger.Log(LogType.Log, $"Link Override is DISABLED: {item.Link.Path}");
+                Logging.Logger.Log(LogType.Log, $"Link Override is DISABLED: {item.Link.ScenePath}");
             }
         }
 
@@ -81,7 +81,7 @@ namespace OC.Project
         {
             foreach (var item in _devices.Where(item => item.Link.Override.Value))
             {
-                Logging.Logger.Log(LogType.Log, $"Link Override is ACTIVE: {item.Link.Path}");
+                Logging.Logger.Log(LogType.Log, $"Link Override is ACTIVE: {item.Link.ScenePath}");
             }
         }
     }

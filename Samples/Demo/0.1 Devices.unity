@@ -560,7 +560,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Drive_Speed
-    _path: MAIN.Devices.Drives.Drive_Speed
+    _scenePath: MAIN.Devices.Drives.Drive_Speed
+    _clientPath: MAIN.Devices.Drives.Drive_Speed
     _type: FB_Drive
     _parent: {fileID: 0}
     _attributes: []
@@ -640,7 +641,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: SensorAnalog_1
-    _path: MAIN.Devices.SensorsAnalog.SensorAnalog_1
+    _scenePath: MAIN.Devices.SensorsAnalog.SensorAnalog_1
+    _clientPath: MAIN.Devices.SensorsAnalog.SensorAnalog_1
     _type: FB_SensorAnalog
     _parent: {fileID: 0}
     _attributes: []
@@ -797,7 +799,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Cylinder_1
-    _path: MAIN.Devices.Cylinders.Cylinder_1
+    _scenePath: MAIN.Devices.++Cylinders.Cylinder_1
+    _clientPath: MAIN.Devices.`++Cylinders`.Cylinder_1
     _type: FB_Cylinder
     _parent: {fileID: 0}
     _attributes: []
@@ -1189,7 +1192,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: SensorBinary_1
-    _path: MAIN.Devices.SensorsBinary.SensorBinary_1
+    _scenePath: MAIN.Devices.SensorsBinary.SensorBinary_1
+    _clientPath: MAIN.Devices.SensorsBinary.SensorBinary_1
     _type: FB_SensorBinary
     _parent: {fileID: 0}
     _attributes: []
@@ -2325,7 +2329,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Drive_Simple
-    _path: MAIN.Devices.Drives.Drive_Simple
+    _scenePath: MAIN.Devices.Drives.Drive_Simple
+    _clientPath: MAIN.Devices.Drives.Drive_Simple
     _type: FB_Drive
     _parent: {fileID: 0}
     _attributes: []
@@ -3326,7 +3331,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: SensorBinary_3
-    _path: MAIN.Devices.SensorsBinary.SensorBinary_3
+    _scenePath: MAIN.Devices.SensorsBinary.SensorBinary_3
+    _clientPath: MAIN.Devices.SensorsBinary.SensorBinary_3
     _type: FB_SensorBinary
     _parent: {fileID: 0}
     _attributes: []
@@ -3687,7 +3693,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: SensorBinary_2
-    _path: MAIN.Devices.SensorsBinary.SensorBinary_2
+    _scenePath: MAIN.Devices.SensorsBinary.SensorBinary_2
+    _clientPath: MAIN.Devices.SensorsBinary.SensorBinary_2
     _type: FB_SensorBinary
     _parent: {fileID: 0}
     _attributes: []
@@ -3950,7 +3957,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Cylinder_3
-    _path: MAIN.Devices.Cylinders.Cylinder_3
+    _scenePath: MAIN.Devices.++Cylinders.Cylinder_3
+    _clientPath: MAIN.Devices.`++Cylinders`.Cylinder_3
     _type: FB_Cylinder
     _parent: {fileID: 0}
     _attributes: []
@@ -4152,7 +4160,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: SensorAnalog_2
-    _path: MAIN.Devices.SensorsAnalog.SensorAnalog_2
+    _scenePath: MAIN.Devices.SensorsAnalog.SensorAnalog_2
+    _clientPath: MAIN.Devices.SensorsAnalog.SensorAnalog_2
     _type: FB_SensorAnalog
     _parent: {fileID: 0}
     _attributes: []
@@ -4772,7 +4781,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Lock
-    _path: MAIN.Devices.Interactions.Lock
+    _scenePath: MAIN.Devices.Interactions.Lock
+    _clientPath: MAIN.Devices.Interactions.Lock
     _type: FB_Lock
     _parent: {fileID: 0}
     _attributes: []
@@ -5025,7 +5035,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Drive_Position
-    _path: MAIN.Devices.Drives.Drive_Position
+    _scenePath: MAIN.Devices.Drives.Drive_Position
+    _clientPath: MAIN.Devices.Drives.Drive_Position
     _type: FB_Drive
     _parent: {fileID: 0}
     _attributes: []
@@ -5139,7 +5150,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: SensorAnalog_3
-    _path: MAIN.Devices.SensorsAnalog.SensorAnalog_3
+    _scenePath: MAIN.Devices.SensorsAnalog.SensorAnalog_3
+    _clientPath: MAIN.Devices.SensorsAnalog.SensorAnalog_3
     _type: FB_SensorAnalog
     _parent: {fileID: 0}
     _attributes: []
@@ -5396,7 +5408,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Cylinder_2
-    _path: MAIN.Devices.Cylinders.Cylinder_2
+    _scenePath: MAIN.Devices.++Cylinders.Cylinder_2
+    _clientPath: MAIN.Devices.`++Cylinders`.Cylinder_2
     _type: FB_Cylinder
     _parent: {fileID: 0}
     _attributes: []
@@ -6255,7 +6268,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: fbSystem
-    _path: MAIN.fbSystem
+    _scenePath: 
+    _clientPath: 
     _type: 
     _parent: {fileID: 0}
     _attributes: []
@@ -6519,7 +6533,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Lamp
-    _path: MAIN.Devices.Interactions.Lamp
+    _scenePath: MAIN.Devices.Interactions.Lamp
+    _clientPath: MAIN.Devices.Interactions.Lamp
     _type: FB_Lamp
     _parent: {fileID: 0}
     _attributes: []
@@ -6980,7 +6995,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Switch
-    _path: MAIN.Devices.Interactions.Switch
+    _scenePath: MAIN.Devices.Interactions.Switch
+    _clientPath: MAIN.Devices.Interactions.Switch
     _type: FB_Switch
     _parent: {fileID: 0}
     _attributes: []

@@ -5,7 +5,7 @@ namespace OC.Communication
         /// <summary>
         /// Returns a path with each segment wrapped in backticks if it contains invalid characters.
         /// </summary>
-        public static string GetCompatiblePath(this string path)
+        public static string GetClientCompatiblePath(this string path)
         {
             if (string.IsNullOrWhiteSpace(path)) return string.Empty;
             
