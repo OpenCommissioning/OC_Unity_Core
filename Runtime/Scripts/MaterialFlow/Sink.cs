@@ -20,9 +20,8 @@ namespace OC.MaterialFlow
             GetComponent<BoxCollider>().isTrigger = true;
         }
         
-        private new void OnValidate()
+        private void OnValidate()
         {
-            base.OnValidate();
             _auto.OnValidate();
         }
         
@@ -30,10 +29,7 @@ namespace OC.MaterialFlow
         {
             if (_auto) Delete();
         }
-        
-        public void Delete()
-        {
-            _collisionDetector.DestroyAll();
-        }
+
+        public void Delete() => DestroyAll();
     }
 }

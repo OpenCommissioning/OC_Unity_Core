@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace OC.Components
 {
+    [SelectionBase]
+    [DisallowMultipleComponent]
     public abstract class Device : MonoComponent, IDevice
     {
         public Link Link => _link;
@@ -16,7 +18,7 @@ namespace OC.Components
             _link.Initialize(this);
         }
 
-        protected virtual void Reset()
+        public virtual void Reset()
         {
             _link = new Link
             {

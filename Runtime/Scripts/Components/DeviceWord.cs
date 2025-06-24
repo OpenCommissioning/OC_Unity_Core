@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace OC.Components
 {
+    [SelectionBase]
+    [DisallowMultipleComponent]
     [DefaultExecutionOrder(100)]
     public abstract class DeviceWord : MonoComponent, IDevice
     {
@@ -17,7 +19,7 @@ namespace OC.Components
             _link.Initialize(this);
         }
         
-        private void Reset()
+        public void Reset()
         {
             _link = new LinkDataWord
             {

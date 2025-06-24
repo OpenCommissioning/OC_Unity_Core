@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 namespace OC.Components
 {
+    [SelectionBase]
+    [DisallowMultipleComponent]
     [AddComponentMenu("Open Commissioning/Links/Link Byte")]
     public class LinkByte : MonoComponent, IDevice
     {
@@ -33,7 +35,7 @@ namespace OC.Components
             Link.Initialize(this);
         }
         
-        private void Reset()
+        public void Reset()
         {
             _link = new LinkDataByte
             {

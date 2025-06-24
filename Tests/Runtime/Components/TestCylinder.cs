@@ -17,6 +17,7 @@ namespace Components
         public IEnumerator UnitySetUp()
         {
             _cylinder = new GameObject().AddComponent<Cylinder>();
+            _cylinder.Reset();
             yield return null;
         }
 

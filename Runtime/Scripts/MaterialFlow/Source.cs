@@ -35,9 +35,8 @@ namespace OC.MaterialFlow
             GetComponent<BoxCollider>().isTrigger = true;
         }
         
-        private new void OnValidate()
+        private void OnValidate()
         {
-            base.OnValidate();
             _typeId.OnValidate();
         }
 
@@ -54,7 +53,7 @@ namespace OC.MaterialFlow
 
         public virtual void Create()
         {
-            if (_collisionDetector.Collision) return;
+            if (Collision.Value) return;
 
             try
             {
@@ -69,9 +68,6 @@ namespace OC.MaterialFlow
             }
         }
 
-        public virtual void Delete()
-        {
-            _collisionDetector.DestroyAll();
-        }
+        public virtual void Delete() => DestroyAll();
     }
 }
