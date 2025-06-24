@@ -247,17 +247,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _link:
+    Control: 0
+    Status: 0
     _enable: 1
     _override:
       _value: 0
     _connected:
       _value: 0
+    _name: Button
+    _path: Button
     _type: FB_Button
     _parent: {fileID: 0}
     _attributes: []
-    _name: Button
-    _path: Button
-    _compatiblePath: 
+    _variablesDescription: []
   _pressed:
     _value: 0
   _feedback:

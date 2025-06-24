@@ -18,8 +18,8 @@ namespace OC.Communication
         
         public float TimeScale
         {
-            get => _connector.TimeScale;
-            set => _connector.TimeScale = value;
+            get => _link.TimeScale;
+            set => _link.TimeScale = value;
         }
 
         [SerializeField]
@@ -31,10 +31,7 @@ namespace OC.Communication
 
         [HideInInspector]
         [SerializeField]
-        private Link _link;
-        [HideInInspector]
-        [SerializeField]
-        private ConnectorClient _connector;
+        private LinkDataSystem _link;
         
         private List<Link> _links;
 
@@ -54,19 +51,26 @@ namespace OC.Communication
 
         protected void Start()
         {
-            _link = new Link(this, "fbSystem", $"{_rootName}.fbSystem");
-            _connector = new ConnectorClient(_link)
-            {
-                TimeScale = Time.timeScale
-            };
+            _link.TimeScale = Time.timeScale;
 
             _links = new List<Link> { _link };
 
-            foreach (var component in GetComponentsInChildren<IConnectable>())
+            foreach (var component in GetComponentsInChildren<ILink>())
             {
                 if (!component.Link.Enable) continue;
                 _links.Add(component.Link);
             }
+        }
+
+        private void Reset()
+        {
+            _link = new LinkDataSystem
+            {
+                Name = "fbSystem",
+                Path = $"{_rootName}.fbSystem",
+                Component = this,
+                TimeScale = Time.timeScale
+            };
         }
         
         public virtual void BeforeFixedUpdate()
@@ -92,16 +96,23 @@ namespace OC.Communication
         public abstract void Connect();
         public abstract void Disconnect();
 
+        public ClientVariable GetClientVariable(ClientVariableDescription description)
+        {
+            return description.Direction == ClientVariableDirection.Input ? 
+                Buffer.InputVariables.Find(x => x.Name == description.Name) :
+                Buffer.OutputVariables.Find(x => x.Name == description.Name);
+        }
+
         private bool TryFindVariable(ClientVariableDescription description, Object target, out ClientVariable variable)
         {
             try
             {
-                var clientVariable = description.Direction == ClientVariableDirection.Input ? 
-                    Buffer.InputVariables.Find(x => x.Name == description.Path) :
-                    Buffer.OutputVariables.Find(x => x.Name == description.Path);
+                var adsVariable = description.Direction == ClientVariableDirection.Input ? 
+                    Buffer.InputVariables.Find(x => x.Name == description.Name) :
+                    Buffer.OutputVariables.Find(x => x.Name == description.Name);
 
-                variable = clientVariable ?? throw new Exception($"{description.Path} can't be found in client!");
-                if (variable.Reserved) throw new Exception($"{description.Path} already reserved!");
+                variable = adsVariable ?? throw new Exception($"{description.Name} can't be found in client!");
+                if (variable.Reserved) throw new Exception($"{description.Name} already reserved!");
                 variable.Reserved = true;
                 return true;
             }

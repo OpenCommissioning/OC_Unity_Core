@@ -21,9 +21,7 @@ namespace OC.Components
         public UnityEvent<bool> OnActiveChanged;
 
         [SerializeField]
-        protected Link _link;
-        [SerializeField]
-        protected ConnectorDataFloat _connectorData;
+        protected LinkDataFloat _link;
         [HideInInspector]
         [SerializeField]
         protected DriveStateObserver _stateObserver = new ();
@@ -31,13 +29,15 @@ namespace OC.Components
         private void Start()
         {
             _link.Initialize(this);
-            _connectorData = new ConnectorDataFloat(_link);
             _stateObserver.IsActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
         }
 
         protected void Reset()
         {
-            _link = new Link(this, "FB_Drive");
+            _link = new LinkDataFloat
+            {
+                Type = "FB_Drive"
+            };
         }
         
         private void FixedUpdate()
@@ -80,10 +80,10 @@ namespace OC.Components
                 yield break;
             }
 
-            _connectorData.Status.SetBit(7, true);
-            _connectorData.StatusData = value;
+            _link.Status.SetBit(7, true);
+            _link.StatusData = value;
             yield return new WaitForSeconds(1);
-            _connectorData.Status.SetBit(7, false);
+            _link.Status.SetBit(7, false);
         }
         
         public enum DriveState

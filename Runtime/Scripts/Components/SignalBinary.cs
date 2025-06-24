@@ -26,8 +26,7 @@ namespace OC.Components
         private Component _device;
         [SerializeField]
         private Link _link;
-
-        private Connector _connector;
+        
         private bool _isMeasurementDeviceValid;
         private IMeasurement<bool> _measurementDevice;
         
@@ -46,14 +45,16 @@ namespace OC.Components
         private void Start()
         {
             _link.Initialize(this);
-            _connector = new Connector(_link);
             GetMeasurementDevice();
             OnValueChanged(_value.Value);
         }
 
         private void Reset()
         {
-            _link = new Link(this, "FB_SensorBinary");
+            _link = new Link
+            {
+                Type = "FB_SensorBinary"
+            };
         }
         
         private void OnSignalChanged(bool value)
@@ -63,7 +64,7 @@ namespace OC.Components
         
         private void OnValueChanged(bool value)
         {
-            _connector.Status.SetBit(0, value);
+            _link.Status.SetBit(0, value);
             OnValueChangedEvent?.Invoke(value);
         }
         

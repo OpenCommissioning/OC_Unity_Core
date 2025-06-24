@@ -34,7 +34,6 @@ namespace OC.Components
         public UnityEvent<bool> OnValueChangedEvent;
         
         private const float DIAMETER = 0.004f;
-        private Connector _connector;
         
         private BoxCollider _collider;
         private Rigidbody _rigidbody;
@@ -59,13 +58,15 @@ namespace OC.Components
         private void Start()
         {
             _link.Initialize(this);
-            _connector = new Connector(_link);
             Initialize();
         }
 
         private void Reset()
         {
-            _link = new Link(this, "FB_SensorBinary");
+            _link = new Link
+            {
+                Type = "FB_SensorBinary"
+            };
         }
 
         private new void OnValidate()
@@ -99,7 +100,7 @@ namespace OC.Components
         
         private void OnValueChanged(bool value)
         {
-            _connector.Status.SetBit(0, value);
+            _link.Status.SetBit(0, value);
             OnValueChangedEvent?.Invoke(value);
         }
 

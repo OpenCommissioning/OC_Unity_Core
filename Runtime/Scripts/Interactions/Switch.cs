@@ -31,7 +31,11 @@ namespace OC.Interactions
         
         protected override void Reset()
         {
-            _link = new Link(this, "FB_Switch");
+            _link = new Link
+            {
+                Type = "FB_Switch"
+            };
+            
         }
 
         protected void OnValidate()
@@ -42,7 +46,7 @@ namespace OC.Interactions
         private void IndexChanged(int index)
         {
             index %= _stateCount;
-            Connector.Status = index > 0 ? (byte)Mathf.Pow(2, index - 1) : (byte)0;
+            Link.Status = index > 0 ? (byte)Mathf.Pow(2, index - 1) : (byte)0;
             OnIndexChanged?.Invoke(index);
         }
 
