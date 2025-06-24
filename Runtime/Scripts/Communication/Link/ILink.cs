@@ -1,6 +1,6 @@
 namespace OC.Communication
 {
-    public interface IConnectable
+    public interface ILink
     {
         public Link Link { get; }  
     }

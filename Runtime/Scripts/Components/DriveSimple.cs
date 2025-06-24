@@ -33,8 +33,8 @@ namespace OC.Components
 
         protected override void GetLinkData()
         {
-            _forward.Value = _connectorData.Control.GetBit(0);
-            _backward.Value = _connectorData.Control.GetBit(1);
+            _forward.Value = _link.Control.GetBit(0);
+            _backward.Value = _link.Control.GetBit(1);
         }
 
         protected override void Operation(float deltaTime)

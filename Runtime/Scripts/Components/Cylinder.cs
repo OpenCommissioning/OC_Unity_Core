@@ -10,7 +10,7 @@ namespace OC.Components
     [DisallowMultipleComponent]
     public class Cylinder : Actor, IDevice, ICustomInspector, IInteractable
     {
-        public Link Link => _link ?? CreateLink();
+        public Link Link => _link;
 
         #region Control
         public IProperty<bool> Minus => _minus;
@@ -82,14 +82,10 @@ namespace OC.Components
 
         [SerializeField]
         protected Link _link;
-        [SerializeField]
-        private Connector _connector;
 
         private void Start()
         {
-            _link = Link;
             _link.Initialize(this);
-            _connector = new Connector(_link);
             _progress.OnValueChanged += OnProgressChanged;
             _isActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
             _onLimitMin.OnValueChanged += value => OnLimitMinEvent?.Invoke(value);
@@ -105,7 +101,10 @@ namespace OC.Components
 
         private void Reset()
         {
-            _link = CreateLink();
+            _link = new Link
+            {
+                Type = "FB_Cylinder"
+            };
         }
 
         private void FixedUpdate()
@@ -117,14 +116,14 @@ namespace OC.Components
 
         private void GetLinkData()
         {
-            _minus.Value = _connector.Control.GetBit(0);
-            _plus.Value = _connector.Control.GetBit(1);
+            _minus.Value = _link.Control.GetBit(0);
+            _plus.Value = _link.Control.GetBit(1);
         }
 
         private void SetLinkData()
         {
-            _connector.Status.SetBit(0, _onLimitMin);
-            _connector.Status.SetBit(1, _onLimitMax);
+            _link.Status.SetBit(0, _onLimitMin);
+            _link.Status.SetBit(1, _onLimitMax);
         }
 
         private void Operation(float deltaTime)
@@ -168,11 +167,6 @@ namespace OC.Components
             _onLimitMin.Value = Math.FastApproximately(_value, _limits.Value.x, 1e-3f);
             _onLimitMax.Value = Math.FastApproximately(_value, _limits.Value.y, 1e-3f);
             SetLinkData();
-        }
-
-        private Link CreateLink()
-        {
-            return new Link(this, "FB_Cylinder");
         }
     }
 }

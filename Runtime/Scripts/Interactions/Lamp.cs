@@ -46,12 +46,15 @@ namespace OC.Interactions
         
         protected override void Reset()
         {
-            _link = new Link(this, "FB_Lamp");
+            _link = new Link
+            {
+                Type = "FB_Lamp"
+            };
         }
 
         private void LateUpdate()
         {
-            if (!_override) _value.Value = Connector.Control.GetBit(0);
+            if (!_override) _value.Value = _link.Control.GetBit(0);
         }
 
         private void OnValidate()
