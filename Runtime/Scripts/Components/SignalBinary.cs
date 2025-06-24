@@ -49,7 +49,7 @@ namespace OC.Components
             OnValueChanged(_value.Value);
         }
 
-        private void Reset()
+        public void Reset()
         {
             _link = new Link
             {

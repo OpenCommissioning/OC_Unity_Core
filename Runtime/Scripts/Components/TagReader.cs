@@ -55,7 +55,7 @@ namespace OC.Components
             Initialize();
         }
 
-        private void Reset()
+        public void Reset()
         {
             _link = new LinkDataLWord
             {

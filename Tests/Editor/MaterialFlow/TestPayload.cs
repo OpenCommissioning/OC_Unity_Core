@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace OC.Tests.Editor.MaterialFlow
 {
-    public class TestEntity
+    public class TestPayload
     {
         private Payload _payload;
 
@@ -46,9 +46,9 @@ namespace OC.Tests.Editor.MaterialFlow
         [TestCase("Case3", Payload.PayloadCategory.Transport, ControlState.Error, PhysicState.Static)]
         [TestCase("Case4", Payload.PayloadCategory.Part, ControlState.Done, PhysicState.Free)]
         [TestCase("Case5", Payload.PayloadCategory.Assembly, ControlState.Ready, PhysicState.Parent)]
-        public void ApplyDiscription(string name, Payload.PayloadCategory entityType, ControlState controlState, PhysicState physicState)
+        public void ApplyDescription(string name, Payload.PayloadCategory entityType, ControlState controlState, PhysicState physicState)
         {
-            var discription = new PayloadDescription()
+            var description = new PayloadDescription()
             {
                 Name = name,
                 Type = (int)entityType,
@@ -56,7 +56,7 @@ namespace OC.Tests.Editor.MaterialFlow
                 PhysicState = (int)physicState
             };
 
-            _payload.ApplyDescription(discription);
+            _payload.ApplyDescription(description);
             
             Assert.AreEqual(name, _payload.name, "Name is wrong");
             Assert.AreEqual(entityType, _payload.Category, "Type is wrong");
@@ -71,16 +71,16 @@ namespace OC.Tests.Editor.MaterialFlow
         [TestCase(3, 6, (ulong)51)]
         [TestCase(4, 8, (ulong)61)]
         [TestCase(5, 10, (ulong)71)]
-        public void ApplyDiscription(int typeId, int groupId, ulong uniqueId)
+        public void ApplyDescription(int typeId, int groupId, ulong uniqueId)
         {
-            var discription = new PayloadDescription()
+            var description = new PayloadDescription()
             {
                 TypeId = typeId,
                 GroupId = groupId,
                 UniqueId = uniqueId
             };
 
-            _payload.ApplyDescription(discription);
+            _payload.ApplyDescription(description);
             
             Assert.AreEqual(typeId, _payload.TypeId, "TypeId is wrong");
             Assert.AreEqual(groupId, _payload.GroupId, "GroupId is wrong");

@@ -10,7 +10,7 @@ namespace OC.MaterialFlow
     public class PayloadTag : MonoBehaviour
     {
         public Payload Payload => _payload;
-        public List<int> DirecotryId => _directoryId;
+        public List<int> DirectoryId => _directoryId;
         
         [SerializeField]
         private List<int> _directoryId = new();
