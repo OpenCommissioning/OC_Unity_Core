@@ -13,10 +13,10 @@ namespace OC.Communication
         {
             var descriptions = new List<ClientVariableDescription>
             {
-                new() { Name = Path + ".Control", Direction = ClientVariableDirection.Input },
-                new() { Name = Path + ".Status", Direction = ClientVariableDirection.Output },
-                new() { Name = Path + ".JointTarget", Direction = ClientVariableDirection.Input },
-                new() { Name = Path + ".JointStatus", Direction = ClientVariableDirection.Output }
+                new() { Path = ClientPath + ".Control", Direction = ClientVariableDirection.Input },
+                new() { Path = ClientPath + ".Status", Direction = ClientVariableDirection.Output },
+                new() { Path = ClientPath + ".JointTarget", Direction = ClientVariableDirection.Input },
+                new() { Path = ClientPath + ".JointStatus", Direction = ClientVariableDirection.Output }
             };
             return descriptions;
         }

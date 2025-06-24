@@ -12,9 +12,9 @@ namespace OC.Communication
         {
             var descriptions = new List<ClientVariableDescription>
             {
-                new() { Name = Path + ".Control", Direction = ClientVariableDirection.Input },
-                new() { Name = Path + ".Status", Direction = ClientVariableDirection.Output },
-                new() { Name = Path + ".TimeScaling", Direction = ClientVariableDirection.Output }
+                new() { Path = ClientPath + ".Control", Direction = ClientVariableDirection.Input },
+                new() { Path = ClientPath + ".Status", Direction = ClientVariableDirection.Output },
+                new() { Path = ClientPath + ".TimeScaling", Direction = ClientVariableDirection.Output }
             };
             return descriptions;
         }

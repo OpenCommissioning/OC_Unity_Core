@@ -95,7 +95,7 @@ namespace OC.Editor
                     {
                         label.style.display = DisplayStyle.Flex;
                         if (item.Component is not IDevice device) return;
-                        label.text = device.Link.Path;
+                        label.text = device.Link.ScenePath;
                     }
                 }
             };

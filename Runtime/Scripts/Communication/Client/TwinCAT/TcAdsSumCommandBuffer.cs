@@ -151,7 +151,7 @@ namespace OC.Communication.TwinCAT
                 _blockReadWrStream.Write(adsSymbol.IndexGroup);
                 _blockReadWrStream.Write(adsSymbol.IndexOffset);
                 _blockReadWrStream.Write(adsSymbol.ByteSize);
-                _inputVariables.Add(new ClientVariable(_blockReadRdStream.Buffer, adsSymbol.InstancePath, adsSymbol.Size, offset));
+                _inputVariables.Add(new ClientVariable(adsSymbol.InstancePath, _blockReadRdStream.Buffer, adsSymbol.Size, offset));
                 offset += adsSymbol.ByteSize;
             }
 
@@ -164,7 +164,7 @@ namespace OC.Communication.TwinCAT
                 _blockWriteWrStream.Write(adsSymbol.IndexGroup);
                 _blockWriteWrStream.Write(adsSymbol.IndexOffset);
                 _blockWriteWrStream.Write(adsSymbol.ByteSize);
-                _outputVariables.Add(new ClientVariable(_blockWriteWrStream.Buffer, adsSymbol.InstancePath, adsSymbol.Size, offset));
+                _outputVariables.Add(new ClientVariable(adsSymbol.InstancePath, _blockWriteWrStream.Buffer, adsSymbol.Size, offset));
                 offset += adsSymbol.ByteSize;
             }
         }

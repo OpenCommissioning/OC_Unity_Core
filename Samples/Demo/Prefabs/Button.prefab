@@ -255,7 +255,8 @@ MonoBehaviour:
     _connected:
       _value: 0
     _name: Button
-    _path: Button
+    _scenePath: 
+    _clientPath: 
     _type: FB_Button
     _parent: {fileID: 0}
     _attributes: []
