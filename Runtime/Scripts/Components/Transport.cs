@@ -80,7 +80,7 @@ namespace OC.Components
             MoveSurface(_value.Value);
         }
 
-        protected void Reset()
+        public void Reset()
         {
             gameObject.layer = LayerMask.NameToLayer("Transport");
             OnValidate();

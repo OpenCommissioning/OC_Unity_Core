@@ -13,20 +13,20 @@ namespace OC.Tests.Editor.MaterialFlow
     {
         private PoolManager _poolManager;
 
-        private static Payload CreateEntity(int typeId = 0, uint uniqueId = 0, GameObject parent = null)
+        private static Payload CreatePayload(int typeId = 0, uint uniqueId = 0, GameObject parent = null)
         {
             var gameObject = new GameObject();
             gameObject.AddComponent<Rigidbody>();
             gameObject.AddComponent<BoxCollider>();
             var entity = gameObject.AddComponent<Payload>();
 
-            var discription = new PayloadDescription()
+            var description = new PayloadDescription()
             {
                 TypeId = typeId,
                 UniqueId = uniqueId
             };
 
-            entity.ApplyDescription(discription);
+            entity.ApplyDescription(description);
 
             if (parent != null) gameObject.transform.parent = parent.transform;
             return entity;
@@ -36,9 +36,9 @@ namespace OC.Tests.Editor.MaterialFlow
         public void SetUp()
         {
             _poolManager = new PoolManager();
-            _poolManager.PayloadList.Add(CreateEntity());
-            _poolManager.PayloadList.Add(CreateEntity(1));
-            _poolManager.PayloadList.Add(CreateEntity(2));
+            _poolManager.PayloadList.Add(CreatePayload());
+            _poolManager.PayloadList.Add(CreatePayload(1));
+            _poolManager.PayloadList.Add(CreatePayload(2));
         }
 
         [Test]
@@ -66,18 +66,18 @@ namespace OC.Tests.Editor.MaterialFlow
         [Test]
         public void InvalidTypeIdLog()
         {
-            var entity = CreateEntity(5);
-            _poolManager.Registrate(entity);
+            var payload = CreatePayload(5);
+            _poolManager.Registrate(payload);
             LogAssert.Expect(LogType.Error, new Regex(@"(isn't valid)"));
         }
 
         [Test]
         public void InvalidUniqueIdLog()
         {
-            var entity1 = CreateEntity(0, 1);
-            var entity2 = CreateEntity(0, 1);
-            _poolManager.Registrate(entity1);
-            _poolManager.Registrate(entity2);
+            var payload1 = CreatePayload(0, 1);
+            var payload2= CreatePayload(0, 1);
+            _poolManager.Registrate(payload1);
+            _poolManager.Registrate(payload2);
             LogAssert.Expect(LogType.Error, new Regex(@"(already exists)"));
         }
         
@@ -109,39 +109,39 @@ namespace OC.Tests.Editor.MaterialFlow
 
         [Test]
         [TestCaseSource(nameof(GetEntityInfos))]
-        public void InstantiateWithInfo(EntityDiscriptionTestCase entityDiscriptionTestCase)
+        public void InstantiateWithInfo(PayloadDescriptionTestCase payloadDescriptionTestCase)
         {
-            for (var i = 1; i <= entityDiscriptionTestCase.ActualCount; i++)
+            for (var i = 1; i <= payloadDescriptionTestCase.ActualCount; i++)
             {
                 _poolManager.Instantiate(Vector3.zero, Quaternion.identity, 0, (ulong)i);
             }
 
             LogAssert.ignoreFailingMessages = true;
-            _poolManager.Instantiate(entityDiscriptionTestCase.Description);
-            Assert.AreEqual(entityDiscriptionTestCase.ExpectedCount, _poolManager.Count, $"Pool Entities Count: {_poolManager.Count}, Expected: {entityDiscriptionTestCase.ExpectedCount}");
+            _poolManager.Instantiate(payloadDescriptionTestCase.Description);
+            Assert.AreEqual(payloadDescriptionTestCase.ExpectedCount, _poolManager.Count, $"Pool Entities Count: {_poolManager.Count}, Expected: {payloadDescriptionTestCase.ExpectedCount}");
         }
 
-        public static IEnumerable<EntityDiscriptionTestCase> GetEntityInfos()
+        public static IEnumerable<PayloadDescriptionTestCase> GetEntityInfos()
         {
-            yield return new EntityDiscriptionTestCase
+            yield return new PayloadDescriptionTestCase
             {
                 Description = new PayloadDescription(){Type = 1, UniqueId = 1, Transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one)}, 
                 ActualCount = 3, 
                 ExpectedCount = 3,
             };
-            yield return new EntityDiscriptionTestCase
+            yield return new PayloadDescriptionTestCase
             {
                 Description = new PayloadDescription{Type = 1, UniqueId = 4, Transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one)}, 
                 ActualCount = 3, 
                 ExpectedCount = 4,
             };
-            yield return new EntityDiscriptionTestCase
+            yield return new PayloadDescriptionTestCase
             {
                 Description = new PayloadDescription{Type = 1, UniqueId = 5, Transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one)}, 
                 ActualCount = 5, 
                 ExpectedCount = 5,
             };
-            yield return new EntityDiscriptionTestCase
+            yield return new PayloadDescriptionTestCase
             {
                 Description = new PayloadDescription{Type = 1, UniqueId = 6, Transform = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one)}, 
                 ActualCount = 5, 
@@ -149,7 +149,7 @@ namespace OC.Tests.Editor.MaterialFlow
             };
         }
 
-        public struct EntityDiscriptionTestCase
+        public struct PayloadDescriptionTestCase
         {
             public PayloadDescription Description;
             public int ActualCount;
@@ -174,33 +174,33 @@ namespace OC.Tests.Editor.MaterialFlow
         }
 
         [Test]
-        public void RegistrateParts()
+        public void RegisterParts()
         {
             const int expected = 3;
             for (var i = 0; i < expected; i++)
             {
-                _poolManager.Registrate(CreateEntity());
+                _poolManager.Registrate(CreatePayload());
             }
             Assert.AreEqual(expected, _poolManager.Count, $"Pool Entities Count: {_poolManager.Count}, Expected: {expected}");
 
-            _poolManager.Registrate(CreateEntity(uniqueId: 1));
+            _poolManager.Registrate(CreatePayload(uniqueId: 1));
             LogAssert.Expect(LogType.Error, new Regex(@"(already exists)"));
             Assert.AreEqual(expected, _poolManager.Count, $"Pool Entities Count: {_poolManager.Count}, Expected: {expected}");
             
-            _poolManager.Registrate(CreateEntity(typeId: 4));
+            _poolManager.Registrate(CreatePayload(typeId: 4));
             LogAssert.Expect(LogType.Error, new Regex(@"(isn't valid)"));
             Assert.AreEqual(expected, _poolManager.Count, $"Pool Entities Count: {_poolManager.Count}, Expected: {expected}");
         }
         
         [Test]
-        public void UnregistrateParts()
+        public void UnregistrParts()
         {
             const int partsCount = 4;
             var parts = new List<Payload>();
 
             for (var i = 0; i < partsCount; i++)
             {
-                var part = CreateEntity();
+                var part = CreatePayload();
                 parts.Add(part);
                 _poolManager.Registrate(part);
             }
@@ -214,24 +214,24 @@ namespace OC.Tests.Editor.MaterialFlow
         }
         
         [Test]
-        public void RegistrateAssembly()
+        public void Registrssembly()
         {
-            var assembly = CreateEntity();
-            CreateEntity(parent: assembly.gameObject);
-            CreateEntity(parent: assembly.gameObject);
-            CreateEntity(parent: assembly.gameObject);
+            var assembly = CreatePayload();
+            CreatePayload(parent: assembly.gameObject);
+            CreatePayload(parent: assembly.gameObject);
+            CreatePayload(parent: assembly.gameObject);
             
             _poolManager.Registrate(assembly);
             Assert.AreEqual(4, _poolManager.Count, $"Pool Entities Count: {_poolManager.Count}, Expected: {4}");
         }
         
         [Test]
-        public void UnregistrateAssembly()
+        public void UnregistrAssembly()
         {
-            var assembly = CreateEntity();
-            var partA = CreateEntity(parent: assembly.gameObject);
-            CreateEntity(parent: assembly.gameObject);
-            CreateEntity(parent: assembly.gameObject);
+            var assembly = CreatePayload();
+            var partA = CreatePayload(parent: assembly.gameObject);
+            CreatePayload(parent: assembly.gameObject);
+            CreatePayload(parent: assembly.gameObject);
             
             _poolManager.Registrate(assembly);
 
@@ -242,10 +242,10 @@ namespace OC.Tests.Editor.MaterialFlow
         }
         
         [Test]
-        public void UnregistrateInvalidPart()
+        public void UnregistrInvalidPart()
         {
-            var partA = CreateEntity();
-            var partB = CreateEntity();
+            var partA = CreatePayload();
+            var partB = CreatePayload();
             partB.Registrate(123);
 
             _poolManager.Registrate(partA);
@@ -256,10 +256,10 @@ namespace OC.Tests.Editor.MaterialFlow
         }
         
         [Test]
-        public void UnregistrateInvalidUniqueId()
+        public void UnregistrInvalidUniqueId()
         {
-            var partA = CreateEntity(uniqueId: 1);
-            var partB = CreateEntity(uniqueId: 2);
+            var partA = CreatePayload(uniqueId: 1);
+            var partB = CreatePayload(uniqueId: 2);
 
             _poolManager.Registrate(partA);
             _poolManager.Registrate(partB);
@@ -278,7 +278,7 @@ namespace OC.Tests.Editor.MaterialFlow
 
             for (var i = 0; i < partsCount; i++)
             {
-                var part = CreateEntity();
+                var part = CreatePayload();
                 parts.Add(part);
                 _poolManager.Registrate(part);
             }
@@ -294,11 +294,11 @@ namespace OC.Tests.Editor.MaterialFlow
         [Test]
         public void DestroyAssembly()
         {
-            var part = CreateEntity();
-            var assembly = CreateEntity();
-            CreateEntity(parent: assembly.gameObject);
-            CreateEntity(parent: assembly.gameObject);
-            CreateEntity(parent: assembly.gameObject);
+            var part = CreatePayload();
+            var assembly = CreatePayload();
+            CreatePayload(parent: assembly.gameObject);
+            CreatePayload(parent: assembly.gameObject);
+            CreatePayload(parent: assembly.gameObject);
             
             _poolManager.Registrate(part);
             _poolManager.Registrate(assembly);
@@ -311,11 +311,11 @@ namespace OC.Tests.Editor.MaterialFlow
         [Test]
         public void DestroyAll()
         {
-            var part = CreateEntity();
-            var assembly = CreateEntity();
-            CreateEntity(parent: assembly.gameObject);
-            CreateEntity(parent: assembly.gameObject);
-            CreateEntity(parent: assembly.gameObject);
+            var part = CreatePayload();
+            var assembly = CreatePayload();
+            CreatePayload(parent: assembly.gameObject);
+            CreatePayload(parent: assembly.gameObject);
+            CreatePayload(parent: assembly.gameObject);
 
             _poolManager.Registrate(assembly);
             _poolManager.Registrate(part);
@@ -328,7 +328,7 @@ namespace OC.Tests.Editor.MaterialFlow
         public void ReplaceLogs()
         {
             var source = new GameObject("TestSource");
-            var part = CreateEntity(typeId: 1);
+            var part = CreatePayload(typeId: 1);
             _poolManager.Registrate(part);
 
             _poolManager.Replace(source, null,0);
@@ -352,7 +352,7 @@ namespace OC.Tests.Editor.MaterialFlow
             var source = new GameObject("TestSource");
             for (var i = 1; i <= entitiesCount; i++)
             {
-                _poolManager.Registrate(CreateEntity(1, (uint)i));
+                _poolManager.Registrate(CreatePayload(1, (uint)i));
             }
 
             var part = _poolManager.Payloads[(ulong)uniqueId];
@@ -377,12 +377,12 @@ namespace OC.Tests.Editor.MaterialFlow
         [TestCase(1, 6, ExpectedResult = true)]
         [TestCase(5, 9, ExpectedResult = true)]
         [Obsolete("Obsolete")]
-        public bool RegistrateWithNewUniqueId(int actualUniqueId, int newUniqueId)
+        public bool RegistrWithNewUniqueId(int actualUniqueId, int newUniqueId)
         {
             const int entitiesCount = 5;
             for (var i = 1; i <= entitiesCount; i++)
             {
-                _poolManager.Registrate(CreateEntity(1, (uint)i));
+                _poolManager.Registrate(CreatePayload(1, (uint)i));
             }
 
             var part = _poolManager.Payloads[(ulong)actualUniqueId];
@@ -404,7 +404,7 @@ namespace OC.Tests.Editor.MaterialFlow
             const int entitiesCount = 5;
             for (var i = 1; i <= entitiesCount; i++)
             {
-                _poolManager.Registrate(CreateEntity(1, (uint)i));
+                _poolManager.Registrate(CreatePayload(1, (uint)i));
             }
 
             var result = _poolManager.IsUniqueIdValid((ulong)uniqueId);
@@ -422,7 +422,7 @@ namespace OC.Tests.Editor.MaterialFlow
             const int entitiesCount = 5;
             for (var i = 1; i <= entitiesCount; i++)
             {
-                _poolManager.Registrate(CreateEntity(1, (uint)i));
+                _poolManager.Registrate(CreatePayload(1, (uint)i));
             }
 
             return (int)_poolManager.GetPossibleUniqueId((ulong)uniqueId);
@@ -437,7 +437,7 @@ namespace OC.Tests.Editor.MaterialFlow
             const int entitiesCount = 5;
             for (var i = 1; i <= entitiesCount; i++)
             {
-                _poolManager.Registrate(CreateEntity(1, (uint)i));
+                _poolManager.Registrate(CreatePayload(1, (uint)i));
             }
 
             _poolManager.Payloads[(ulong)uniqueId] = null;

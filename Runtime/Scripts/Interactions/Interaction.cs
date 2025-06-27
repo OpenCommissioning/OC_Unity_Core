@@ -61,7 +61,7 @@ namespace OC.Interactions
             OnDestroyAction?.Invoke();
         }
 
-        private void Reset()
+        public void Reset()
         {
             BoundBoxColliderSize();
             gameObject.layer = (int)DefaultLayers.Interactions;

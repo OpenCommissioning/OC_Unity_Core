@@ -99,7 +99,7 @@ namespace OC.Components
             _plus.OnValidate();
         }
 
-        private void Reset()
+        public void Reset()
         {
             _link = new Link
             {

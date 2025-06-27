@@ -7,14 +7,15 @@ using Random = System.Random;
 
 namespace OC.Tests.Editor.MaterialFlow
 {
-    public class TestCollisionDetector
+    public class TestDetector
     {
-        private CollisionDetector _collisionDetector;
+        private Detector _detector;
         
         [SetUp]
-        public void Initilize()
+        public void Initialize()
         {
-            _collisionDetector = new CollisionDetector();
+            var gameObject = new GameObject();
+            _detector = gameObject.AddComponent<Detector>();
         }
         
         [Test]
@@ -45,10 +46,10 @@ namespace OC.Tests.Editor.MaterialFlow
         [TestCase(Payload.PayloadCategory.Part, CollisionFilter.All, ExpectedResult = true)]
         [TestCase(Payload.PayloadCategory.Assembly, CollisionFilter.All, ExpectedResult = true)]
         [TestCase(Payload.PayloadCategory.Transport, CollisionFilter.All, ExpectedResult = true)]
-        public bool IsEntityTypeValid(Payload.PayloadCategory entityType, CollisionFilter filter)
+        public bool IsPayloadTypeValid(Payload.PayloadCategory entityType, CollisionFilter filter)
         {
-            PayloadBase entityBase = NewEntity(entityType, 0);
-            return CollisionDetector.IsTypeValid(entityBase, filter);
+            PayloadBase entityBase = NewPayload(entityType, 0);
+            return PayloadUtils.IsTypeValid(entityBase, filter);
         }
 
         [Test]
@@ -59,10 +60,10 @@ namespace OC.Tests.Editor.MaterialFlow
         [TestCase(CollisionFilter.Static, ExpectedResult = true)]
         [TestCase(CollisionFilter.Storage, ExpectedResult = false)]
         [TestCase(CollisionFilter.All, ExpectedResult = true)]
-        public bool IsEntityStaticValid(CollisionFilter filter)
+        public bool IsPayloadStaticValid(CollisionFilter filter)
         {
-            PayloadBase entityBase = NewEntityStatic(0);
-            return CollisionDetector.IsTypeValid(entityBase, filter);
+            PayloadBase entityBase = NewPayloadStatic(0);
+            return PayloadUtils.IsTypeValid(entityBase, filter);
         }
 
         [Test]
@@ -73,10 +74,10 @@ namespace OC.Tests.Editor.MaterialFlow
         [TestCase(CollisionFilter.Static, ExpectedResult = false)]
         [TestCase(CollisionFilter.Storage, ExpectedResult = true)]
         [TestCase(CollisionFilter.All, ExpectedResult = true)]
-        public bool IsEntityStorgeValid(CollisionFilter filter)
+        public bool IsPayloadStorageValid(CollisionFilter filter)
         {
-            PayloadBase entityBase = NewEntityStorage(0);
-            return CollisionDetector.IsTypeValid(entityBase, filter);
+            PayloadBase entityBase = NewPayloadStorage(0);
+            return PayloadUtils.IsTypeValid(entityBase, filter);
         }
 
         [Test]
@@ -103,10 +104,10 @@ namespace OC.Tests.Editor.MaterialFlow
         [TestCase(Payload.PayloadCategory.Transport, CollisionFilter.All, ExpectedResult = true)]
         public bool AddEntityTyp(Payload.PayloadCategory entityType, CollisionFilter filter)
         {
-            PayloadBase entityBase = NewEntity(entityType, 0);
-            _collisionDetector.Filter = filter;
-            _collisionDetector.Add(entityBase);
-            return _collisionDetector.Buffer.Count > 0;
+            PayloadBase entityBase = NewPayload(entityType, 0);
+            _detector.CollisionFilter = filter;
+            _detector.Add(entityBase);
+            return _detector.CollisionBuffer.Count > 0;
         }
 
         [Test]
@@ -119,9 +120,10 @@ namespace OC.Tests.Editor.MaterialFlow
         [TestCase(CollisionFilter.All, ExpectedResult = true)]
         public bool AddEntityStatic(CollisionFilter filter)
         {
-            PayloadBase entityBase = NewEntityStatic(0);
-            _collisionDetector.Filter = filter;
-            return _collisionDetector.Add(entityBase);
+            PayloadBase entityBase = NewPayloadStatic(0);
+            _detector.CollisionFilter = filter;
+            _detector.Add(entityBase);
+            return _detector.CollisionBuffer.Count > 0;
         }
 
         [Test]
@@ -132,11 +134,12 @@ namespace OC.Tests.Editor.MaterialFlow
         [TestCase(CollisionFilter.Static, ExpectedResult = false)]
         [TestCase(CollisionFilter.Storage, ExpectedResult = true)]
         [TestCase(CollisionFilter.All, ExpectedResult = true)]
-        public bool AddEntitityStorage(CollisionFilter filter)
+        public bool AddEntityStorage(CollisionFilter filter)
         {
-            PayloadBase entityBase = NewEntityStorage(0);
-            _collisionDetector.Filter = filter;
-            return _collisionDetector.Add(entityBase);
+            PayloadBase entityBase = NewPayloadStorage(0);
+            _detector.CollisionFilter = filter;
+            _detector.Add(entityBase);
+            return _detector.CollisionBuffer.Count > 0;
         }
         
         [Test]
@@ -147,47 +150,47 @@ namespace OC.Tests.Editor.MaterialFlow
             gameObject.AddComponent<BoxCollider>();
             gameObject.AddComponent<Payload>();
             
-            _collisionDetector.Filter = CollisionFilter.All;
-            _collisionDetector.Add(gameObject);
-            Assert.IsTrue(_collisionDetector.Collision);
+            _detector.CollisionFilter = CollisionFilter.All;
+            _detector.Add(gameObject);
+            Assert.IsTrue(_detector.Collision.Value);
         }
 
         [Test]
         public void AddGameObjectFailed()
         {
-            _collisionDetector.Add(new GameObject());
-            Assert.IsFalse(_collisionDetector.Collision);
+            _detector.Add(new GameObject());
+            Assert.IsFalse(_detector.Collision.Value);
         }
 
         [Test]
         public void IsGroupIdValid()
         {
             var random = new Random().Next(0, 20);
-            Assert.IsTrue(CollisionDetector.IsGroupValid(random,0), $"0 == {random}");
-            Assert.IsTrue(CollisionDetector.IsGroupValid(random,random), $"{random} == {random}");
-            Assert.IsFalse(CollisionDetector.IsGroupValid(random,random + 1), $"{random +1} == {random}");
+            Assert.IsTrue(PayloadUtils.IsGroupValid(random,0), $"0 == {random}");
+            Assert.IsTrue(PayloadUtils.IsGroupValid(random,random), $"{random} == {random}");
+            Assert.IsFalse(PayloadUtils.IsGroupValid(random,random + 1), $"{random +1} == {random}");
         }
         
         [Test]
         public void Remove()
         {
-            Initilize();
+            Initialize();
             const int instanceCount = 3;
-            var entity = NewEntity(Payload.PayloadCategory.Part, 0);
+            var entity = NewPayload(Payload.PayloadCategory.Part, 0);
 
-            _collisionDetector.Filter = CollisionFilter.Part;
-            _collisionDetector.GroupId = 0;
+            _detector.CollisionFilter = CollisionFilter.Part;
+            _detector.GroupId = 0;
             
-            _collisionDetector.Add(entity);
+            _detector.Add(entity);
 
             for (var i = 0; i < instanceCount; i++)
             {
-                _collisionDetector.Add(NewEntity(Payload.PayloadCategory.Part, 0));
+                _detector.Add(NewPayload(Payload.PayloadCategory.Part, 0));
             }
             
-            _collisionDetector.Remove(entity);
+            _detector.Remove(entity);
             
-            Assert.IsFalse(_collisionDetector.Buffer.Contains(entity));
+            Assert.IsFalse(_detector.CollisionBuffer.Contains(entity));
         }
         
         [Test]
@@ -195,18 +198,18 @@ namespace OC.Tests.Editor.MaterialFlow
         {
             const int instanceCount = 3;
             
-            _collisionDetector.Filter = CollisionFilter.Part;
-            _collisionDetector.GroupId = 0;
+            _detector.CollisionFilter = CollisionFilter.Part;
+            _detector.GroupId = 0;
 
             for (var i = 0; i < instanceCount; i++)
             {
-                _collisionDetector.Add(NewEntity(Payload.PayloadCategory.Part, 0));
+                _detector.Add(NewPayload(Payload.PayloadCategory.Part, 0));
             }
             
-            _collisionDetector.ClearAll();
+            _detector.ClearAll();
             
-            Assert.AreEqual(_collisionDetector.Buffer.Count, 0);
-            Assert.IsFalse(_collisionDetector.Collision.Value);
+            Assert.AreEqual(_detector.CollisionBuffer.Count, 0);
+            Assert.IsFalse(_detector.Collision.Value);
         }
         
         [Test]
@@ -214,21 +217,21 @@ namespace OC.Tests.Editor.MaterialFlow
         {
             const int instanceCount = 3;
 
-            var entity = NewEntity(Payload.PayloadCategory.Part, 0);
-            _collisionDetector.Filter = CollisionFilter.Part;
-            _collisionDetector.GroupId = 0;
+            var entity = NewPayload(Payload.PayloadCategory.Part, 0);
+            _detector.CollisionFilter = CollisionFilter.Part;
+            _detector.GroupId = 0;
             
-            _collisionDetector.Add(entity);
+            _detector.Add(entity);
             
             for (var i = 0; i < instanceCount; i++)
             {
-                _collisionDetector.Add(NewEntity(Payload.PayloadCategory.Part, 0));
+                _detector.Add(NewPayload(Payload.PayloadCategory.Part, 0));
             }
             
-            _collisionDetector.DestroyAll();
+            _detector.DestroyAll();
             
             Assert.IsTrue(entity == null);
-            Assert.IsFalse(_collisionDetector.Collision);
+            Assert.IsFalse(_detector.Collision.Value);
         }
         
         [Test]
@@ -236,18 +239,18 @@ namespace OC.Tests.Editor.MaterialFlow
         {
             const int instanceCount = 3;
             
-            _collisionDetector.Filter = CollisionFilter.Part;
-            _collisionDetector.GroupId = 0;
+            _detector.CollisionFilter = CollisionFilter.Part;
+            _detector.GroupId = 0;
 
             for (var i = 0; i < instanceCount; i++)
             {
-                _collisionDetector.Add(NewEntity(Payload.PayloadCategory.Part, 0));
+                _detector.Add(NewPayload(Payload.PayloadCategory.Part, 0));
             }
             
-            _collisionDetector.Buffer[0].DestroyDirty();
-            _collisionDetector.Buffer[1].DestroyDirty();
+            _detector.CollisionBuffer[0].DestroyDirty();
+            _detector.CollisionBuffer[1].DestroyDirty();
             
-            Assert.AreEqual(1, _collisionDetector.Buffer.Count);
+            Assert.AreEqual(1, _detector.CollisionBuffer.Count);
         }
         
         [Test]
@@ -257,23 +260,23 @@ namespace OC.Tests.Editor.MaterialFlow
             const CollisionFilter requiredType =
                 CollisionFilter.Assembly | CollisionFilter.Part | CollisionFilter.Transport | CollisionFilter.Storage;
             
-            _collisionDetector.Filter = requiredType;
-            _collisionDetector.GroupId = 0;
+            _detector.CollisionFilter = requiredType;
+            _detector.GroupId = 0;
             
             foreach (Payload.PayloadCategory entityType in Enum.GetValues(typeof(Payload.PayloadCategory)))
             {
                 for (var i = 0; i < instanceCount; i++)
                 {
-                    _collisionDetector.Add(NewEntity(entityType, 0));
+                    _detector.Add(NewPayload(entityType, 0));
                 }
             }
             
-            _collisionDetector.DestroyAll();
+            _detector.DestroyAll();
             
-            Assert.IsFalse(_collisionDetector.Collision);
+            Assert.IsFalse(_detector.Collision.Value);
         }
 
-        private static Payload NewEntity(Payload.PayloadCategory type, int groupId)
+        private static Payload NewPayload(Payload.PayloadCategory type, int groupId)
         {
             var gameObject = new GameObject();
             gameObject.AddComponent<Rigidbody>();
@@ -289,7 +292,7 @@ namespace OC.Tests.Editor.MaterialFlow
             return entity;
         }
         
-        private static StaticCollider NewEntityStatic(int groupId)
+        private static StaticCollider NewPayloadStatic(int groupId)
         {
             var gameObject = new GameObject();
             var entity = gameObject.AddComponent<StaticCollider>();
@@ -297,7 +300,7 @@ namespace OC.Tests.Editor.MaterialFlow
             return entity;
         }
 
-        private static PayloadStorage NewEntityStorage(int groupId)
+        private static PayloadStorage NewPayloadStorage(int groupId)
         {
             var gameObject = new GameObject();
             var entity = gameObject.AddComponent<PayloadStorage>();

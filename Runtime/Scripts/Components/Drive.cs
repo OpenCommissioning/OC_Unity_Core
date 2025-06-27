@@ -32,7 +32,7 @@ namespace OC.Components
             _stateObserver.IsActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
         }
 
-        protected void Reset()
+        public void Reset()
         {
             _link = new LinkDataFloat
             {

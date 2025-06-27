@@ -69,7 +69,7 @@ namespace OC.Interactions
             }
         }
 
-        protected override void Reset()
+        public override void Reset()
         {
             _link = new Link
             {

@@ -217,7 +217,7 @@ namespace Components
             _gripperPick1.Pick();
             Assert.IsTrue(_gripperPick1.IsActive.Value);
             Assert.IsTrue(_gripperPick1.IsPicked.Value);
-            var count = _gripperPick1.Entites.Count;
+            var count = _gripperPick1.Buffer.Count;
 
             _gripperPick1.transform.Translate(Vector3.up);
             yield return new WaitForSecondsRealtime(DELAY);
@@ -230,7 +230,7 @@ namespace Components
             Assert.IsTrue(_gripperPick2.IsActive.Value);
             Assert.IsTrue(_gripperPick2.IsPicked.Value);
             
-            Assert.AreEqual(count - _gripperPick1.Entites.Count, _gripperPick2.Entites.Count);
+            Assert.AreEqual(count - _gripperPick1.Buffer.Count, _gripperPick2.Buffer.Count);
         }
     }
 }

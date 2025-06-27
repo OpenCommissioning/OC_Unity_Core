@@ -33,7 +33,7 @@ namespace OC.Interactions
             CheckSlots();
         }
         
-        private void Reset()
+        public void Reset()
         {
             _link = new LinkDataDWord
             {

@@ -58,7 +58,7 @@ namespace OC.Interactions
             _link.Initialize(this);
         }
         
-        protected void Reset()
+        public void Reset()
         {
             _link = new LinkDataByte
             {

@@ -91,7 +91,7 @@ namespace OC.Editor
         private void GetPayloadTagData(PayloadTag payloadTag)
         {
             _payloadTag = payloadTag;
-            _directories = ProductDataDirectoryManager.Instance.GetValidDataDirectories(payloadTag.DirecotryId);
+            _directories = ProductDataDirectoryManager.Instance.GetValidDataDirectories(payloadTag.DirectoryId);
             if (_directories.Count == 0) return;
             _dropdownFieldDirectory.choices = _directories.Select(directory => directory.Name).ToList();
             _dropdownFieldDirectory.value = _directories[0].Name;

@@ -44,7 +44,7 @@ namespace OC.Interactions
             _value.OnValueChanged -= OnOnValueChangedAction;
         }
         
-        protected override void Reset()
+        public override void Reset()
         {
             _link = new Link
             {

@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace OC.Components
 {
+    [SelectionBase]
+    [DisallowMultipleComponent]
     [AddComponentMenu("Open Commissioning/Actor/Robot 6R")]
     public class Robot6R : MonoComponent, IDevice
     {

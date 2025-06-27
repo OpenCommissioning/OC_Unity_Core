@@ -29,7 +29,7 @@ namespace OC.Interactions
             _index.OnValueChanged -= IndexChanged;
         }
         
-        protected override void Reset()
+        public override void Reset()
         {
             _link = new Link
             {

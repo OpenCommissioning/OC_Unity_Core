@@ -61,7 +61,7 @@ namespace OC.Components
             Initialize();
         }
 
-        private void Reset()
+        public void Reset()
         {
             _link = new Link
             {
@@ -69,9 +69,8 @@ namespace OC.Components
             };
         }
 
-        private new void OnValidate()
+        private void OnValidate()
         {
-            base.OnValidate();
             Initialize();
             OnStateChanged(_state.Value);
             _length.OnValidate();

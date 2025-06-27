@@ -14,7 +14,7 @@ namespace OC.MaterialFlow
         public IPropertyReadOnly<bool> IsActive => _isActive;
         public IPropertyReadOnly<bool> IsPicked => _isPicked;
 
-        public IReadOnlyList<Payload> Entites => _buffer;
+        public IReadOnlyList<Payload> Buffer => _buffer;
 
         [SerializeField]
         private Property<bool> _isActive = new (false);
@@ -45,7 +45,7 @@ namespace OC.MaterialFlow
         private BoxCollider _collider;
         
         [SerializeField]
-        private List<Payload> _buffer = new List<Payload>();
+        private List<Payload> _buffer = new ();
 
         private new void OnEnable()
         {
@@ -73,9 +73,9 @@ namespace OC.MaterialFlow
             if (_isActive.Value) return;
             _isActive.Value = true;
             
-            foreach (var payloadObject in _collisionDetector.Buffer)
+            foreach (var payloadBase in CollisionBuffer)
             {
-                if (payloadObject is not Payload e) continue;
+                if (payloadBase is not Payload e) continue;
                 if (e.Category != _pickType) continue;
                 _buffer.Add(e);
             }
@@ -113,7 +113,7 @@ namespace OC.MaterialFlow
 
         public void DeleteAll()
         {
-            _collisionDetector.DestroyAll();
+            DestroyAll();
             _buffer.Clear();
             _isPicked.Value = _buffer.Count > 0;
         }
@@ -133,18 +133,17 @@ namespace OC.MaterialFlow
         }
         private PayloadBase GetTargetPayload()
         {
-            var storage = _collisionDetector.GetLastPayloadStorage();
+            var storage = CollisionBuffer.GetLastPayloadStorage();
             if (storage != null) return storage;
 
             switch (_pickType)
             {
                 case Payload.PayloadCategory.Part:
-                    var payload = _collisionDetector.GetLastByType(Payload.PayloadCategory.Assembly);
-                    return payload != null ? payload : _collisionDetector.GetLastByType(Payload.PayloadCategory.Transport);
+                    var payload = CollisionBuffer.GetLastByType(Payload.PayloadCategory.Assembly);
+                    return payload != null ? payload : CollisionBuffer.GetLastByType(Payload.PayloadCategory.Transport);
                 case Payload.PayloadCategory.Assembly:
-                    return _collisionDetector.GetLastByType(Payload.PayloadCategory.Transport);
+                    return CollisionBuffer.GetLastByType(Payload.PayloadCategory.Transport);
                 case Payload.PayloadCategory.Transport:
-                    return null;
                 default:
                     return null;
             }
