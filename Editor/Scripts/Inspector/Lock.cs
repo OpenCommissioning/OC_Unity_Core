@@ -17,7 +17,7 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
             
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddLinkOverride(serializedObject);
+            groupControl.AddOverride(serializedObject);
             groupControl.Add(new ToggleButton("Lock").BindProperty(component.LockSignal)); 
 
             var groupStatus = new PropertyGroup("Status");

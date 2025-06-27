@@ -9,7 +9,7 @@ namespace OC.MaterialFlow
     [DisallowMultipleComponent]
     public class Detector : MonoComponent 
     {
-        public IPropertyReadOnly<bool> Collision => _collision;
+        public IProperty<bool> Collision => _collision;
 
         public IList<PayloadBase> CollisionBuffer => _collisionBuffer;
         

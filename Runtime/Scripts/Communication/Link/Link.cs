@@ -44,11 +44,9 @@ namespace OC.Communication
             get => _type;
             set => _type = value;
         }
-
-        public bool IsActive => _connected.Value && !_override.Value;
         
         public Property<bool> Connected => _connected;
-        public Property<bool> Override => _override;
+        
         
         public List<LinkAttribute> Attributes => _attributes;
         
@@ -57,8 +55,6 @@ namespace OC.Communication
 
         [SerializeField]
         private bool _enable = true;
-        [SerializeField]
-        private Property<bool> _override = new (false);
         [SerializeField]
         private Property<bool> _connected = new (false);
         

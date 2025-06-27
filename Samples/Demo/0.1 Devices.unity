@@ -551,12 +551,12 @@ MonoBehaviour:
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
+  _override:
+    _value: 0
   _link:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Drive_Speed
@@ -636,8 +636,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: SensorAnalog_1
@@ -737,6 +735,8 @@ MonoBehaviour:
     _value: 0
   _value:
     _value: 0
+  _override:
+    _value: 0
   _minus:
     _value: 0
   _plus:
@@ -794,8 +794,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Cylinder_1
@@ -1187,8 +1185,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: SensorBinary_1
@@ -2320,12 +2316,12 @@ MonoBehaviour:
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
+  _override:
+    _value: 0
   _link:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Drive_Simple
@@ -3326,8 +3322,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: SensorBinary_3
@@ -3688,8 +3682,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: SensorBinary_2
@@ -3895,6 +3887,8 @@ MonoBehaviour:
     _value: 0
   _value:
     _value: 0
+  _override:
+    _value: 0
   _minus:
     _value: 0
   _plus:
@@ -3952,8 +3946,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Cylinder_3
@@ -4155,8 +4147,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: SensorAnalog_2
@@ -4776,8 +4766,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Lock
@@ -5026,12 +5014,12 @@ MonoBehaviour:
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
+  _override:
+    _value: 0
   _link:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Drive_Position
@@ -5145,8 +5133,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: SensorAnalog_3
@@ -5346,6 +5332,8 @@ MonoBehaviour:
     _value: 0
   _value:
     _value: 0
+  _override:
+    _value: 0
   _minus:
     _value: 0
   _plus:
@@ -5403,8 +5391,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Cylinder_2
@@ -6263,8 +6249,6 @@ MonoBehaviour:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: fbSystem
@@ -6524,12 +6508,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817ecc2928f837b4aa8a08d6752902de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _override:
+    _value: 0
   _link:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Lamp
@@ -6539,8 +6523,6 @@ MonoBehaviour:
     _parent: {fileID: 0}
     _attributes: []
     _variablesDescription: []
-  _override:
-    _value: 0
   _value:
     _value: 0
   _color:
@@ -6986,12 +6968,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f93e25de85dd144596dd28727a85363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _override:
+    _value: 0
   _link:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Switch
