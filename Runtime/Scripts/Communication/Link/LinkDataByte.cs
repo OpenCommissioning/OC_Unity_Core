@@ -9,6 +9,8 @@ namespace OC.Communication
         public byte ControlData;
         public byte StatusData;
         
+        public LinkDataByte(string type) : base(type){}
+        
         protected override List<ClientVariableDescription> GetClientVariableDescriptions()
         {
             var descriptions = new List<ClientVariableDescription>

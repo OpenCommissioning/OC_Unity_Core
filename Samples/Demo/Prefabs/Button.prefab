@@ -248,6 +248,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _override:
     _value: 0
+  _pressed:
+    _value: 0
+  _feedback:
+    _value: 0
+  _localFeedback: 0
+  _type: 0
+  _visualStyle:
+    _value: 0
+  _color:
+    _value: {r: 0, g: 1, b: 1, a: 1}
+  _colorChangers: []
   _link:
     Control: 0
     Status: 0
@@ -261,17 +272,6 @@ MonoBehaviour:
     _parent: {fileID: 0}
     _attributes: []
     _variablesDescription: []
-  _pressed:
-    _value: 0
-  _feedback:
-    _value: 0
-  _localFeedback: 0
-  _type: 0
-  _visualStyle:
-    _value: 0
-  _color:
-    _value: {r: 0, g: 1, b: 1, a: 1}
-  _colorChangers: []
   OnClickEvent:
     m_PersistentCalls:
       m_Calls: []

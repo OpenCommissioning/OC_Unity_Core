@@ -4,7 +4,6 @@ using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using OC.Tests;
 using Assert = UnityEngine.Assertions.Assert;
 
 namespace OC.Tests.Runtime.Components
@@ -17,7 +16,6 @@ namespace OC.Tests.Runtime.Components
         public IEnumerator UnitySetUp()
         {
             _cylinder = new GameObject().AddComponent<Cylinder>();
-            _cylinder.Reset();
             yield return null;
         }
 

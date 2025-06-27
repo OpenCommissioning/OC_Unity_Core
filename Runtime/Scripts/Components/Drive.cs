@@ -10,7 +10,7 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Actor/Drive")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public abstract class Drive : Actor, IDeviceMetadata, ICustomInspector, IInteractable, IOverride
+    public abstract class Drive : Actor, IDevice, IMetadataAsset, ICustomInspector, IInteractable
     {
         public Link Link => _link;
         public IProperty<bool> Override => _override;
@@ -24,7 +24,7 @@ namespace OC.Components
         [SerializeField]
         protected Property<bool> _override = new (false);
         [SerializeField]
-        protected LinkDataFloat _link;
+        protected LinkDataFloat _link = new("FB_Drive");
         [HideInInspector]
         [SerializeField]
         protected DriveStateObserver _stateObserver = new ();
@@ -33,14 +33,6 @@ namespace OC.Components
         {
             _link.Initialize(this);
             _stateObserver.IsActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
-        }
-
-        public void Reset()
-        {
-            _link = new LinkDataFloat
-            {
-                Type = "FB_Drive"
-            };
         }
         
         private void FixedUpdate()

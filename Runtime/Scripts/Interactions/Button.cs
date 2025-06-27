@@ -11,8 +11,9 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Actor/Button")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Button : Device, ICustomInspector
+    public class Button : SampleDevice, ICustomInspector
     {
+        public override Link Link => _link;
         public override int AllocatedBitLength => 1;
         public Property<bool> Pressed => _pressed;
         public Property<bool> Feedback => _feedback;
@@ -24,7 +25,6 @@ namespace OC.Interactions
         protected Property<bool> _pressed = new (false);
         [SerializeField] 
         protected Property<bool> _feedback = new (false);
-
         [SerializeField] 
         protected bool _localFeedback;
         [SerializeField] 
@@ -35,6 +35,9 @@ namespace OC.Interactions
         protected Property<Color> _color = new (UnityEngine.Color.cyan);
         [SerializeField] 
         protected List<ColorChanger> _colorChangers = new ();
+        
+        [SerializeField]
+        protected Link _link = new ("FB_Button");
 
         public UnityEvent OnClickEvent;
         public UnityEvent<bool> OnPressedChanged;
@@ -42,9 +45,9 @@ namespace OC.Interactions
 
         private const float CLICK_DURATION = 0.1f;
 
-        private new void Start()
+        private void Start()
         {
-            base.Start();
+            _link.Initialize(this);
             _pressed.OnValueChanged += PressedOnOnValueChanged;
             _feedback.OnValueChanged += FeedbackOnOnValueChanged;
         }
@@ -67,14 +70,6 @@ namespace OC.Interactions
                 if (colorChanger == null) continue;
                 colorChanger.Color = _color.Value.ScaleRGB(0.5f);
             }
-        }
-
-        public override void Reset()
-        {
-            _link = new Link
-            {
-                Type = "FB_Button"
-            };
         }
 
         public void Click()
