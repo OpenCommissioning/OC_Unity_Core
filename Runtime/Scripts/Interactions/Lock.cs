@@ -30,14 +30,14 @@ namespace OC.Interactions
         [SerializeField]
         private List<Door> _doors = new ();
         [SerializeField]
-        private List<Device> _buttons = new ();
+        private List<SampleDevice> _buttons = new ();
 
         public UnityEvent<bool> OnLockChanged;
         public UnityEvent<bool> OnClosedChanged;
         public UnityEvent<bool> OnLockedChanged;
         
         [SerializeField]
-        protected LinkDataByte _link;
+        protected LinkDataByte _link = new ("FB_Lock");
 
         private void OnEnable()
         {
@@ -56,14 +56,6 @@ namespace OC.Interactions
         protected void Start()
         {
             _link.Initialize(this);
-        }
-        
-        public void Reset()
-        {
-            _link = new LinkDataByte
-            {
-                Type = "FB_Lock"
-            };
         }
 
         private void OnValidate()

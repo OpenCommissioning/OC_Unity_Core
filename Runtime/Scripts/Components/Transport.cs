@@ -23,7 +23,6 @@ namespace OC.Components
         
         [SerializeField]
         private Actor _actor;
-
         [SerializeField]
         protected float _width = 0.3f;
         [SerializeField]

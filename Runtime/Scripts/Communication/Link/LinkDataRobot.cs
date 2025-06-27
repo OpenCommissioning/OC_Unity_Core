@@ -9,6 +9,8 @@ namespace OC.Communication
         public float[] JointTarget = new float[12];
         public float[] JointStatus = new float[12];
         
+        public LinkDataRobot(string type) : base(type){}
+        
         protected override List<ClientVariableDescription> GetClientVariableDescriptions()
         {
             var descriptions = new List<ClientVariableDescription>

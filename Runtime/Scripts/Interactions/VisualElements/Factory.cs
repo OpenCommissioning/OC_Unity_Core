@@ -5,11 +5,11 @@ namespace OC.Interactions.UIElements
 {
     public static class Factory 
     {
-        public static VisualElement Create(Device interactionDevice)
+        public static VisualElement Create(SampleDevice interactionSampleDevice)
         {
-            if (interactionDevice == null) return null;
+            if (interactionSampleDevice == null) return null;
             
-            switch (interactionDevice)
+            switch (interactionSampleDevice)
             {
                 case Interactions.Button target:
                 {

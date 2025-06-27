@@ -30,21 +30,13 @@ namespace OC.Components
         [SerializeField]
         protected Property<bool> _override = new (false);
         [SerializeField]
-        private LinkDataRobot _link;
+        private LinkDataRobot _link = new("FB_Robot");
 
         private readonly float[] _value = new float[12];
         
         private void Start()
         {
             _link.Initialize(this);
-        }
-        
-        private void Reset()
-        {
-            _link = new LinkDataRobot
-            {
-                Type = "FB_Robot"
-            };
         }
 
         private void FixedUpdate()

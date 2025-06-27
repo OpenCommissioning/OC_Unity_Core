@@ -9,6 +9,8 @@ namespace OC.Communication
         public float ControlData;
         public float StatusData;
         
+        public LinkDataFloat(string type) : base(type){}
+        
         protected override List<ClientVariableDescription> GetClientVariableDescriptions()
         {
             var descriptions = new List<ClientVariableDescription>

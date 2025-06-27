@@ -16,7 +16,6 @@ namespace OC.Components
         private Vector3 _direction;
         private Vector3 _translationSurfaceDelta;
         private Quaternion _rotationSurfaceDelta;
-        
         private float _arcLength;
         private float _angularSpeedFactor;
         private float _angularDeltaSpeed;

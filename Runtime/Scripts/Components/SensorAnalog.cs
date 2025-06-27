@@ -26,7 +26,7 @@ namespace OC.Components
         public UnityEvent<float> OnValueChangedEvent;
 
         [SerializeField]
-        private LinkDataFloat _link;
+        private LinkDataFloat _link = new("FB_SensorAnalog");
 
         private bool _isDeviceValid;
         private IMeasurement<float> _measurementDevice;
@@ -46,14 +46,6 @@ namespace OC.Components
             _link.Initialize(this);
             GetValueSource();
             OnValueChanged(_value.Value);
-        }
-
-        private void Reset()
-        {
-            _link = new LinkDataFloat
-            {
-                Type = "FB_SensorAnalog"
-            };
         }
 
         public void OnValidate()

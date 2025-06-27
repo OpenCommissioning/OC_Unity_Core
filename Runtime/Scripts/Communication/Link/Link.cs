@@ -65,7 +65,7 @@ namespace OC.Communication
         [SerializeField]
         private string _clientPath;
         [SerializeField]
-        private string _type;
+        private string _type = "FB_Device";
         [SerializeField]
         private Hierarchy _parent;
         [SerializeField]
@@ -78,6 +78,16 @@ namespace OC.Communication
         protected List<ClientVariableDescription> _variablesDescription = new();
         
         protected List<ClientVariable> _variables = new();
+
+        public Link()
+        {
+            
+        }
+
+        public Link(string type)
+        {
+            _type = type;
+        }
 
         public void Initialize(Component component)
         {

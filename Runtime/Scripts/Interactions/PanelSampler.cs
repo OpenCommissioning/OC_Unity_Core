@@ -14,16 +14,16 @@ namespace OC.Interactions
     {
         public Link Link => _link;
         public IProperty<bool> Override => _override;
-        public List<Device> Components => _components;
+        public List<SampleDevice> Components => _components;
 
         [SerializeField]
         private string _name;
         [SerializeField]
-        private List<Device> _components = new ();
+        private List<SampleDevice> _components = new ();
         [SerializeField]
         protected Property<bool> _override = new (false);
         [SerializeField]
-        private LinkDataDWord _link;
+        private LinkDataDWord _link = new("FB_Panel");
         
         private int _bitLength;
         private bool _isValid;
@@ -35,14 +35,6 @@ namespace OC.Interactions
             _link.Initialize(this);
             CheckSlots();
         }
-        
-        public void Reset()
-        {
-            _link = new LinkDataDWord
-            {
-                Type = "FB_Panel"
-            };
-        } 
 
         private void LateUpdate()
         {

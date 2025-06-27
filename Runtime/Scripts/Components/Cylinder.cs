@@ -12,10 +12,16 @@ namespace OC.Components
     {
         public Link Link => _link;
         public IProperty<bool> Override => _override;
-
-        #region Control
         public IProperty<bool> Minus => _minus;
         public IProperty<bool> Plus => _plus;
+        public IPropertyReadOnly<float> Progress => _progress;
+        public IPropertyReadOnly<bool> IsActive => _isActive;
+        public IPropertyReadOnly<bool> OnLimitMin => _onLimitMin;
+        public IPropertyReadOnly<bool> OnLimitMax => _onLimitMax;
+        public IProperty<Vector2> Limits => _limits;
+        public IProperty<CylinderType> Type => _type;
+        public IProperty<float> TimeToMin => _timeToMin;
+        public IProperty<float> TimeToMax => _timeToMax;
         
         [SerializeField]
         protected Property<bool> _override = new (false);
@@ -23,16 +29,6 @@ namespace OC.Components
         protected Property<bool> _minus = new (false);
         [SerializeField]
         protected Property<bool> _plus = new (false);
-        
-        #endregion
-
-        #region Status
-        
-        public IPropertyReadOnly<float> Progress => _progress;
-        public IPropertyReadOnly<bool> IsActive => _isActive;
-        public IPropertyReadOnly<bool> OnLimitMin => _onLimitMin;
-        public IPropertyReadOnly<bool> OnLimitMax => _onLimitMax;
-        
         [SerializeField]
         protected Property<float> _progress = new (0);
         [SerializeField]
@@ -41,16 +37,6 @@ namespace OC.Components
         protected Property<bool> _onLimitMin = new (false);
         [SerializeField]
         protected Property<bool> _onLimitMax = new (false);
-
-        #endregion
-
-        #region Settings
-        
-        public IProperty<Vector2> Limits => _limits;
-        public IProperty<CylinderType> Type => _type;
-        public IProperty<float> TimeToMin => _timeToMin;
-        public IProperty<float> TimeToMax => _timeToMax;
-
         [SerializeField]
         protected Property<Vector2> _limits = new (new Vector2(0, 100));
         [SerializeField]
@@ -61,17 +47,11 @@ namespace OC.Components
         protected Property<float> _timeToMax = new (0.5f);
         [SerializeField]
         private AnimationCurve _profile = AnimationCurve.Linear(0, 0, 1, 1);
-
-        #endregion
-
-        #region Events
-
+        
         public UnityEvent<bool> OnActiveChanged;
         public UnityEvent<bool> OnLimitMinEvent;
         public UnityEvent<bool> OnLimitMaxEvent;
-
-        #endregion
-
+        
         public bool JogMinus
         {
             set => _minus.Value = value;
@@ -85,7 +65,7 @@ namespace OC.Components
         }
         
         [SerializeField]
-        protected Link _link;
+        protected Link _link = new() { Type = "FB_Cylinder" };
 
         private void Start()
         {
@@ -101,14 +81,6 @@ namespace OC.Components
         {
             _minus.OnValidate();
             _plus.OnValidate();
-        }
-
-        public void Reset()
-        {
-            _link = new Link
-            {
-                Type = "FB_Cylinder"
-            };
         }
 
         private void FixedUpdate()

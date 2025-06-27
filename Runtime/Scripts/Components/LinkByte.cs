@@ -32,21 +32,13 @@ namespace OC.Components
         public UnityEvent<bool> OnBit7Changed;
 
         [SerializeField]
-        private LinkDataByte _link;
+        private LinkDataByte _link = new("FB_DeviceByte");
 
         private void Start()
         {
             Link.Initialize(this);
         }
         
-        public void Reset()
-        {
-            _link = new LinkDataByte
-            {
-                Type = "FB_DeviceByte"
-            };
-        }
-
         private void Update()
         {
             if (!_link.Connected) return;

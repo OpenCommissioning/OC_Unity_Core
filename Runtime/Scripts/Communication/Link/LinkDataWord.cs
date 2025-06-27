@@ -9,6 +9,8 @@ namespace OC.Communication
         public short ControlData;
         public short StatusData;
         
+        public LinkDataWord(string type) : base(type){}
+        
         protected override List<ClientVariableDescription> GetClientVariableDescriptions()
         {
             var descriptions = new List<ClientVariableDescription>
