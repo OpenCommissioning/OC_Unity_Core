@@ -12,7 +12,11 @@ namespace OC.Components
     public class LinkByte : MonoComponent, IDevice
     {
         public Link Link => _link;
+        public IProperty<bool> Override => _override;
 
+        [SerializeField]
+        protected Property<bool> _override = new (false);
+        
         [ReadOnly]
         [SerializeField] 
         private byte _value;
@@ -45,7 +49,7 @@ namespace OC.Components
 
         private void Update()
         {
-            if (!_link.IsActive) return;
+            if (!_link.Connected) return;
             if (_link.ControlData == _value) return;
             
             _value = _link.ControlData;

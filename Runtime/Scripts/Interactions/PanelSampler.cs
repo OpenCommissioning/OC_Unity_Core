@@ -13,12 +13,15 @@ namespace OC.Interactions
     public class PanelSampler : MonoComponent, IIndustrialPanel, ICustomInspector
     {
         public Link Link => _link;
+        public IProperty<bool> Override => _override;
         public List<Device> Components => _components;
 
         [SerializeField]
         private string _name;
         [SerializeField]
         private List<Device> _components = new ();
+        [SerializeField]
+        protected Property<bool> _override = new (false);
         [SerializeField]
         private LinkDataDWord _link;
         

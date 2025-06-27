@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Assert = UnityEngine.Assertions.Assert;
 
-namespace Components
+namespace OC.Tests.Runtime.Components
 {
     public class TestGripper
     {

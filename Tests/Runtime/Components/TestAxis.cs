@@ -7,7 +7,7 @@ using OC;
 using UnityEngine.TestTools.Utils;
 using OC.Components;
 
-namespace Components
+namespace OC.Tests.Runtime.Components
 {
     public class TestAxis
     {

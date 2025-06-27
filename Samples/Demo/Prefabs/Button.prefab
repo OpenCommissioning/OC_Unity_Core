@@ -246,12 +246,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614c4abb630a42d08afd8b0891123dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _override:
+    _value: 0
   _link:
     Control: 0
     Status: 0
     _enable: 1
-    _override:
-      _value: 0
     _connected:
       _value: 0
     _name: Button

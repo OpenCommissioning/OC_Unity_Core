@@ -9,8 +9,11 @@ namespace OC.Components
     public abstract class DeviceWord : MonoComponent, IDevice
     {
         public Link Link => _link;
+        public IProperty<bool> Override => _override;
         public abstract int AllocatedBitLength { get; }
 
+        [SerializeField]
+        protected Property<bool> _override = new (false);
         [SerializeField]
         protected LinkDataWord _link; 
         

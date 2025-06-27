@@ -18,12 +18,9 @@ namespace OC.Interactions
         }
         
         public override int AllocatedBitLength => 1;
-        public IProperty<bool> Override => _override;
         public IProperty<bool> Value => _value;
         public IPropertyReadOnly<Color> Color => _color;
-
-        [SerializeField] 
-        protected Property<bool> _override = new(false);
+        
         [SerializeField] 
         private Property<bool> _value = new(false);
         [SerializeField] 
@@ -54,7 +51,7 @@ namespace OC.Interactions
 
         private void LateUpdate()
         {
-            if (!_override) _value.Value = _link.Control.GetBit(0);
+            if (!_override && _link.Connected) _value.Value = _link.Control.GetBit(0);
         }
 
         private void OnValidate()

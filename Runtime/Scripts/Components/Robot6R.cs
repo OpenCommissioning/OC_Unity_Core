@@ -10,6 +10,7 @@ namespace OC.Components
     public class Robot6R : MonoComponent, IDevice
     {
         public Link Link => _link;
+        public IProperty<bool> Override => _override;
         public float[] Target => _target;
 
         [Header("Control")]
@@ -26,6 +27,8 @@ namespace OC.Components
         [SerializeField]
         private List<Axis> _axes;
         
+        [SerializeField]
+        protected Property<bool> _override = new (false);
         [SerializeField]
         private LinkDataRobot _link;
 
@@ -46,7 +49,7 @@ namespace OC.Components
 
         private void FixedUpdate()
         {
-            if (_link.IsActive) _link.JointTarget.CopyTo(_value, 0);
+            if (_link.Connected) _link.JointTarget.CopyTo(_value, 0);
 
             for (var i = 0; i < _value.Length; i++)
             {

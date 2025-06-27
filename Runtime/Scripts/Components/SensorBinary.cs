@@ -17,6 +17,12 @@ namespace OC.Components
         public IPropertyReadOnly<bool> Value => _value;
         public IProperty<bool> State => _state;
         public IPropertyReadOnly<float> Length => _length;
+
+        public bool Invert
+        {
+            get => _invert;
+            set => _invert = value;
+        }
         
         [SerializeField]
         protected Property<bool> _override = new (false);
@@ -44,20 +50,24 @@ namespace OC.Components
         private new void OnEnable()
         {
             base.OnEnable();
-            _state.OnValueChanged += OnStateChanged;
-            _value.OnValueChanged += OnValueChanged;
+            _state.Subscribe(OnStateChanged);
+            _value.Subscribe(OnValueChanged);
+            //_state.OnValueChanged += OnStateChanged;
+            //_value.OnValueChanged += OnValueChanged;
         }
 
         private new void OnDisable()
         {
             base.OnDisable();
-            _state.OnValueChanged -= OnStateChanged;
-            _value.OnValueChanged -= OnValueChanged;
+            _state.Unsubscribe(OnStateChanged);
+            _value.Unsubscribe(OnValueChanged);
+            //_state.OnValueChanged -= OnStateChanged;
+            //_value.OnValueChanged -= OnValueChanged;
         }
         
         private void Start()
         {
-            _link.Initialize(this);
+            Link.Initialize(this);
             Initialize();
         }
 
@@ -99,7 +109,7 @@ namespace OC.Components
         
         private void OnValueChanged(bool value)
         {
-            _link.Status.SetBit(0, value);
+            Link.Status.SetBit(0, value);
             OnValueChangedEvent?.Invoke(value);
         }
 

@@ -11,10 +11,14 @@ namespace OC.Components
     public class Cylinder : Actor, IDevice, ICustomInspector, IInteractable
     {
         public Link Link => _link;
+        public IProperty<bool> Override => _override;
 
         #region Control
         public IProperty<bool> Minus => _minus;
         public IProperty<bool> Plus => _plus;
+        
+        [SerializeField]
+        protected Property<bool> _override = new (false);
         [SerializeField]
         protected Property<bool> _minus = new (false);
         [SerializeField]
@@ -79,7 +83,7 @@ namespace OC.Components
             set => _plus.Value = value;
             get => _plus;
         }
-
+        
         [SerializeField]
         protected Link _link;
 
@@ -109,13 +113,14 @@ namespace OC.Components
 
         private void FixedUpdate()
         {
-            if (_link.IsActive) GetLinkData();
+            GetLinkData();
             Operation(Time.fixedDeltaTime);
             SetLinkData();
         }
 
         private void GetLinkData()
         {
+            if (_override || !_link.Connected) return;
             _minus.Value = _link.Control.GetBit(0);
             _plus.Value = _link.Control.GetBit(1);
         }

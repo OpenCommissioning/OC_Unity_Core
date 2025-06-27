@@ -10,9 +10,10 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Actor/Drive")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public abstract class Drive : Actor, IDeviceMetadata, ICustomInspector, IInteractable
+    public abstract class Drive : Actor, IDeviceMetadata, ICustomInspector, IInteractable, IOverride
     {
         public Link Link => _link;
+        public IProperty<bool> Override => _override;
         public int MetadataAssetLength => 1;
 
         public IPropertyReadOnly<bool> IsActive => _stateObserver.IsActive;
@@ -20,6 +21,8 @@ namespace OC.Components
 
         public UnityEvent<bool> OnActiveChanged;
 
+        [SerializeField]
+        protected Property<bool> _override = new (false);
         [SerializeField]
         protected LinkDataFloat _link;
         [HideInInspector]
@@ -42,7 +45,7 @@ namespace OC.Components
         
         private void FixedUpdate()
         {
-            if (_link.IsActive) GetLinkData();
+            if (!_override && _link.Connected) GetLinkData();
             Operation(Time.fixedDeltaTime);
             SetLinkData();
         }
@@ -74,7 +77,7 @@ namespace OC.Components
         private IEnumerator InitializeCoroutine(float value)
         {
             _value.Value = value;
-            if (!_link.IsActive)
+            if (!_link.Connected)
             {
                 Logging.Logger.Log(LogType.Warning, "Device initialization sequence is cancelled! Simulation unit communication isn't active!", this);
                 yield break;

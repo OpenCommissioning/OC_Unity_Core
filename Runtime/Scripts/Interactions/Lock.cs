@@ -107,7 +107,7 @@ namespace OC.Interactions
 
         private void LateUpdate()
         {
-            if (_link.IsActive) _lock.Value = _link.Control.GetBit(0);
+            if (!_override && _link.Connected) _lock.Value = _link.Control.GetBit(0);
             UpdateButtons();
 
             if (_doors.Count > 0)

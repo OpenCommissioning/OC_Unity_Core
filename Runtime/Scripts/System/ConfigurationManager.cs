@@ -70,16 +70,16 @@ namespace OC.Project
 
         public void ResetForce()
         {
-            foreach (var item in _devices.Where(item => item.Link.Override.Value))
+            foreach (var item in _devices.Where(item => item.Override.Value))
             {
-                item.Link.Override.Value = false;
+                item.Override.Value = false;
                 Logging.Logger.Log(LogType.Log, $"Link Override is DISABLED: {item.Link.ScenePath}");
             }
         }
 
         public void PrintForce()
         {
-            foreach (var item in _devices.Where(item => item.Link.Override.Value))
+            foreach (var item in _devices.Where(item => item.Override.Value))
             {
                 Logging.Logger.Log(LogType.Log, $"Link Override is ACTIVE: {item.Link.ScenePath}");
             }
