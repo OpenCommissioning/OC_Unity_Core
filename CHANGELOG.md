@@ -1,3 +1,17 @@
+## [1.2.7](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.6...v1.2.7) (2025-06-30)
+
+
+### Bug Fixes
+
+* ads variable compatibility ([ae3e410](https://github.com/OpenCommissioning/OC_Unity_Core/commit/ae3e4108dd7289a5ce79a1acdf737fbe4829d1f0))
+* client path ([6fa523d](https://github.com/OpenCommissioning/OC_Unity_Core/commit/6fa523d4350fb796df4c3878c3c4267f21d7b9ab))
+* **Link:** link type initialization ([a250b4c](https://github.com/OpenCommissioning/OC_Unity_Core/commit/a250b4cb575e646308d76b15a1c3348198e648df))
+* **link:** merge connector to link ([3ed0350](https://github.com/OpenCommissioning/OC_Unity_Core/commit/3ed03506ba0186384be3723af5340bba65d22956))
+* **Metarial Flow:** detector merge ([3fe2a17](https://github.com/OpenCommissioning/OC_Unity_Core/commit/3fe2a170f09901e912c4f0fa236cdf8259e89e0c))
+* override property ([351206f](https://github.com/OpenCommissioning/OC_Unity_Core/commit/351206fa8c7f4ce14d414a0f9f196a045381f683))
+* reset hotfix ([721110c](https://github.com/OpenCommissioning/OC_Unity_Core/commit/721110c3aa8e78c61134f256c77e57a36dab962c))
+* sample scene cleanup ([4532364](https://github.com/OpenCommissioning/OC_Unity_Core/commit/4532364b6ca762d8c6fa1703aab83ce6be2745ca))
+
 ## [1.2.6](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.5...v1.2.6) (2025-05-28)
 
 
