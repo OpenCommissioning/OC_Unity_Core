@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace OC.Components
 {
+    [SelectionBase]
+    [DisallowMultipleComponent]
     public class MeasurementEncoder : MonoBehaviour, IMeasurement<float>
     {
         public IPropertyReadOnly<float> Value => _value;

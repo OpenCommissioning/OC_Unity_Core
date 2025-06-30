@@ -5,11 +5,11 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor
 {
-    public class LinkOverrideController : ToggleButton
+    public class OverrideController : ToggleButton
     {
-        private const string PROPERTY_PATH = "_link._override._value";
+        private const string PROPERTY_PATH = "_override._value";
         
-        public LinkOverrideController(SerializedObject serializedObject, VisualElement target)
+        public OverrideController(SerializedObject serializedObject, VisualElement target)
         {
             label = "Override";
             

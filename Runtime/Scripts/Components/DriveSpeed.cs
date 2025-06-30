@@ -15,7 +15,7 @@ namespace OC.Components
 
         protected override void GetLinkData()
         {
-            _target.Value = _connectorData.ControlData;
+            _target.Value = _link.ControlData;
         }
         
         protected override void Operation(float deltaTime)
@@ -26,8 +26,8 @@ namespace OC.Components
 
         protected override void SetLinkData()
         {
-            _connectorData.StatusData = _value.Value;
-            _connectorData.Status.SetBit(6, _stateObserver.IsActive.Value);
+            _link.StatusData = _value.Value;
+            _link.Status.SetBit(6, _stateObserver.IsActive.Value);
         }
     }
 }

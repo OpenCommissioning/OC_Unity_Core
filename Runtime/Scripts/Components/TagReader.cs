@@ -20,15 +20,12 @@ namespace OC.Components
         protected Property<bool> _override = new (false);
         [SerializeField]
         protected Property<ulong> _value = new (0);
-
         [SerializeField]
         private bool _holdValue;
-
-        public UnityEvent<ulong> OnValueChangedEvent;
-
         [SerializeField]
-        private Link _link;
-        private ConnectorDataLWord _connectorData;
+        private LinkDataLWord _link = new("FB_Reader");
+        
+        public UnityEvent<ulong> OnValueChangedEvent;
         
         private BoxCollider _collider;
         private Rigidbody _rigidbody;
@@ -53,13 +50,7 @@ namespace OC.Components
         private void Start()
         {
             _link.Initialize(this);
-            _connectorData = new ConnectorDataLWord(_link);
             Initialize();
-        }
-
-        private void Reset()
-        {
-            _link = new Link(this, "FB_Reader");
         }
 
         protected override void OnPayloadEnterAction(PayloadBase payloadBase)
@@ -82,7 +73,7 @@ namespace OC.Components
         private void OnValueChanged(ulong value)
         {
             OnValueChangedEvent?.Invoke(value);
-            _connectorData.StatusData = (long)value;
+            _link.StatusData = (long)value;
         }
         
         private void Initialize()

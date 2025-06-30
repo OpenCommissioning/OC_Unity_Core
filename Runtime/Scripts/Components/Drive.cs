@@ -10,9 +10,10 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Actor/Drive")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public abstract class Drive : Actor, IDeviceMetadata, ICustomInspector, IInteractable
+    public abstract class Drive : Actor, IDevice, IMetadataAsset, ICustomInspector, IInteractable
     {
         public Link Link => _link;
+        public IProperty<bool> Override => _override;
         public int MetadataAssetLength => 1;
 
         public IPropertyReadOnly<bool> IsActive => _stateObserver.IsActive;
@@ -21,9 +22,9 @@ namespace OC.Components
         public UnityEvent<bool> OnActiveChanged;
 
         [SerializeField]
-        protected Link _link;
+        protected Property<bool> _override = new (false);
         [SerializeField]
-        protected ConnectorDataFloat _connectorData;
+        protected LinkDataFloat _link = new("FB_Drive");
         [HideInInspector]
         [SerializeField]
         protected DriveStateObserver _stateObserver = new ();
@@ -31,18 +32,12 @@ namespace OC.Components
         private void Start()
         {
             _link.Initialize(this);
-            _connectorData = new ConnectorDataFloat(_link);
             _stateObserver.IsActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
-        }
-
-        protected void Reset()
-        {
-            _link = new Link(this, "FB_Drive");
         }
         
         private void FixedUpdate()
         {
-            if (_link.IsActive) GetLinkData();
+            if (!_override && _link.Connected) GetLinkData();
             Operation(Time.fixedDeltaTime);
             SetLinkData();
         }
@@ -74,16 +69,16 @@ namespace OC.Components
         private IEnumerator InitializeCoroutine(float value)
         {
             _value.Value = value;
-            if (!_link.IsActive)
+            if (!_link.Connected)
             {
                 Logging.Logger.Log(LogType.Warning, "Device initialization sequence is cancelled! Simulation unit communication isn't active!", this);
                 yield break;
             }
 
-            _connectorData.Status.SetBit(7, true);
-            _connectorData.StatusData = value;
+            _link.Status.SetBit(7, true);
+            _link.StatusData = value;
             yield return new WaitForSeconds(1);
-            _connectorData.Status.SetBit(7, false);
+            _link.Status.SetBit(7, false);
         }
         
         public enum DriveState

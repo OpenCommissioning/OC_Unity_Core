@@ -9,8 +9,10 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lamp")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lamp : Device, ICustomInspector
+    public class Lamp : SampleDevice, ICustomInspector
     {
+        public override Link Link => _link;
+        
         public bool Signal
         {
             get => _value.Value;
@@ -18,24 +20,24 @@ namespace OC.Interactions
         }
         
         public override int AllocatedBitLength => 1;
-        public IProperty<bool> Override => _override;
         public IProperty<bool> Value => _value;
         public IPropertyReadOnly<Color> Color => _color;
-
-        [SerializeField] 
-        protected Property<bool> _override = new(false);
+        
         [SerializeField] 
         private Property<bool> _value = new(false);
         [SerializeField] 
         private Property<Color> _color = new(UnityEngine.Color.cyan);
         [SerializeField] 
         protected List<ColorChanger> _colorChangers = new();
+        
+        [SerializeField]
+        protected new Link _link = new ("FB_Lamp");
 
         public UnityEvent<bool> OnValueChanged;
 
-        private new void Start()
+        private void Start()
         {
-            base.Start();
+            _link.Initialize(this);
             _value.OnValueChanged += OnOnValueChangedAction;
         }
 
@@ -44,14 +46,9 @@ namespace OC.Interactions
             _value.OnValueChanged -= OnOnValueChangedAction;
         }
         
-        protected override void Reset()
-        {
-            _link = new Link(this, "FB_Lamp");
-        }
-
         private void LateUpdate()
         {
-            if (!_override) _value.Value = Connector.Control.GetBit(0);
+            if (!_override && _link.Connected) _value.Value = _link.Control.GetBit(0);
         }
 
         private void OnValidate()

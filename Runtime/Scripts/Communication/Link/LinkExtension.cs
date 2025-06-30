@@ -1,7 +1,4 @@
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace OC.Communication
 {
@@ -16,20 +13,7 @@ namespace OC.Communication
         /// <returns>The (original) name of the GameObject. Note that the GameObject’s name is modified in-editor if it was invalid.</returns>
         public static string GetName(this Link link)
         {
-            var name = link.Component.gameObject.name;
-
-            if (!ClientVariableExtension.IsVariableNameValid(name))
-            {
-                var oldName = name;
-                name = ClientVariableExtension.CorrectVariableName(name);
-#if UNITY_EDITOR
-                Debug.LogWarning($"Link component name {oldName} is invalid! The name is modified to {name}", link.Component);
-                link.Component.gameObject.name = name;
-                EditorUtility.SetDirty(link.Component);
-#endif
-            }
-
-            return name;
+            return link.Component.gameObject.name;
         }
         
         /// <summary>
@@ -169,6 +153,51 @@ namespace OC.Communication
             }
 
             return null;
+        }
+        
+        public static void SetBit(ref this byte self, int index, bool value)
+        {
+            index = Clamp(index, 0, 7);
+            var mask = (byte)(1 << index);
+            self = (byte)(value ? (self | mask) : (self & ~mask));
+        }
+
+        public static void SetBit(ref this ushort self, int index, bool value)
+        {
+            index = Clamp(index, 0, 15);
+            var mask = (ushort)(1 << index);
+            self = (ushort)(value ? (self | mask) : (self & ~mask));
+        }
+
+        public static void SetBit(ref this uint self, int index, bool value)
+        {
+            index = Clamp(index, 0, 31);
+            var mask = (uint)(1 << index);
+            self = value ? (self | mask) : (self & ~mask);
+        }
+
+        public static bool GetBit(this byte self, int index)
+        {
+            index = Clamp(index, 0, 7);
+            return (self & (1 << index)) != 0;
+        }
+
+        public static bool GetBit(this ushort self, int index)
+        {
+            index = Clamp(index, 0, 15);
+            return (self & (1 << index)) != 0;
+        }
+
+        public static bool GetBit(this uint self, int index)
+        {
+            index = Clamp(index, 0, 31);
+            return (self & (1 << index)) != 0;
+        }
+        
+        private static int Clamp(int value, int min, int max)
+        {
+            if (value < min) return min;
+            return value > max ? max : value;
         }
     }
 }

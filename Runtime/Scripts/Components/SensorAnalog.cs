@@ -26,10 +26,9 @@ namespace OC.Components
         public UnityEvent<float> OnValueChangedEvent;
 
         [SerializeField]
-        private Link _link;
+        private LinkDataFloat _link = new("FB_SensorAnalog");
 
         private bool _isDeviceValid;
-        private ConnectorDataFloat _connector;
         private IMeasurement<float> _measurementDevice;
 
         private void OnEnable()
@@ -45,14 +44,8 @@ namespace OC.Components
         private void Start()
         { 
             _link.Initialize(this);
-            _connector = new ConnectorDataFloat(_link);
             GetValueSource();
             OnValueChanged(_value.Value);
-        }
-
-        private void Reset()
-        {
-            _link = new Link(this, "FB_SensorAnalog");
         }
 
         public void OnValidate()
@@ -87,7 +80,7 @@ namespace OC.Components
 
         private void OnValueChanged(float value)
         {
-            _connector.StatusData = _value.Value;
+            _link.StatusData = _value.Value;
             OnValueChangedEvent?.Invoke(_value.Value);
         }
     }

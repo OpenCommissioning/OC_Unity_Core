@@ -30,19 +30,14 @@ namespace OC.Interactions
         [SerializeField]
         private List<Door> _doors = new ();
         [SerializeField]
-        private List<Device> _buttons = new ();
+        private List<SampleDevice> _buttons = new ();
 
         public UnityEvent<bool> OnLockChanged;
         public UnityEvent<bool> OnClosedChanged;
         public UnityEvent<bool> OnLockedChanged;
         
         [SerializeField]
-        protected Link _link;
-        private ConnectorDataByte _connector;
-        
-        private bool _lastClosed;
-        private bool _lastLock;
-        private bool _isValid;
+        protected LinkDataByte _link = new ("FB_Lock");
 
         private void OnEnable()
         {
@@ -61,12 +56,6 @@ namespace OC.Interactions
         protected void Start()
         {
             _link.Initialize(this);
-            _connector = new ConnectorDataByte(Link);
-        }
-        
-        protected void Reset()
-        {
-            _link = new Link(this, "FB_Lock");
         }
 
         private void OnValidate()
@@ -110,7 +99,7 @@ namespace OC.Interactions
 
         private void LateUpdate()
         {
-            if (_link.IsActive) _lock.Value = _connector.Control.GetBit(0);
+            if (!_override && _link.Connected) _lock.Value = _link.Control.GetBit(0);
             UpdateButtons();
 
             if (_doors.Count > 0)
@@ -119,8 +108,8 @@ namespace OC.Interactions
                 _locked.Value = _doors.All(door => door.Locked.Value);
             }
 
-            _connector.Status.SetBit(0, _closed);
-            _connector.Status.SetBit(1, _locked);
+            _link.Status.SetBit(0, _closed);
+            _link.Status.SetBit(1, _locked);
         }
 
         private void UpdateButtons()
@@ -130,8 +119,8 @@ namespace OC.Interactions
             {
                 for (var j = 0; j < item.AllocatedBitLength; j++)
                 {
-                    _connector.StatusData.SetBit(index,item.Connector.Status.GetBit(j));
-                    item.Connector.Control.SetBit(j,_connector.ControlData.GetBit(index));
+                    _link.StatusData.SetBit(index, item.Link.Status.GetBit(j));
+                    item.Link.Control.SetBit(j,_link.ControlData.GetBit(index));
                     index++;
                 }
             }

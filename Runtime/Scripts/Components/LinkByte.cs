@@ -6,12 +6,17 @@ using UnityEngine.Events;
 
 namespace OC.Components
 {
+    [SelectionBase]
+    [DisallowMultipleComponent]
     [AddComponentMenu("Open Commissioning/Links/Link Byte")]
     public class LinkByte : MonoComponent, IDevice
     {
         public Link Link => _link;
-        public ConnectorDataByte ConnectorData => _connectorData;
+        public IProperty<bool> Override => _override;
 
+        [SerializeField]
+        protected Property<bool> _override = new (false);
+        
         [ReadOnly]
         [SerializeField] 
         private byte _value;
@@ -27,80 +32,73 @@ namespace OC.Components
         public UnityEvent<bool> OnBit7Changed;
 
         [SerializeField]
-        private Link _link;
-        private ConnectorDataByte _connectorData;
+        private LinkDataByte _link = new("FB_DeviceByte");
 
         private void Start()
         {
             Link.Initialize(this);
-            _connectorData = new ConnectorDataByte(Link);
         }
         
-        private void Reset()
-        {
-            _link = new Link(this, "FB_DeviceByte");
-        }
-
         private void Update()
         {
-            if (!_link.IsActive) return;
-            if (_connectorData.ControlData == _value) return;
+            if (!_link.Connected) return;
+            if (_link.ControlData == _value) return;
             
-            _value = _connectorData.ControlData;
-            OnBit0Changed.Invoke(_connectorData.ControlData.GetBit(0));
-            OnBit1Changed.Invoke(_connectorData.ControlData.GetBit(1));
-            OnBit2Changed.Invoke(_connectorData.ControlData.GetBit(2));
-            OnBit3Changed.Invoke(_connectorData.ControlData.GetBit(3));
-            OnBit4Changed.Invoke(_connectorData.ControlData.GetBit(4));
-            OnBit5Changed.Invoke(_connectorData.ControlData.GetBit(5));
-            OnBit6Changed.Invoke(_connectorData.ControlData.GetBit(6));
-            OnBit7Changed.Invoke(_connectorData.ControlData.GetBit(7));
+            _value = _link.ControlData;
+            OnBit0Changed.Invoke(_link.ControlData.GetBit(0));
+            OnBit1Changed.Invoke(_link.ControlData.GetBit(1));
+            OnBit2Changed.Invoke(_link.ControlData.GetBit(2));
+            OnBit3Changed.Invoke(_link.ControlData.GetBit(3));
+            OnBit4Changed.Invoke(_link.ControlData.GetBit(4));
+            OnBit5Changed.Invoke(_link.ControlData.GetBit(5));
+            OnBit6Changed.Invoke(_link.ControlData.GetBit(6));
+            OnBit7Changed.Invoke(_link.ControlData.GetBit(7));
         }
 
         public void SetDataBit(int index, bool value)
         {
             if (index is < 0 or > 7) throw new ArgumentOutOfRangeException(nameof(index));
-            _connectorData.StatusData.SetBit(index, value);
+            _link.StatusData.SetBit(index, value);
         }
 
         public void SetDataBit0(bool value)
         {
-            _connectorData.StatusData.SetBit(0, value);
+            _link.StatusData.SetBit(0, value);
         }
         
         public void SetDataBit1(bool value)
         {
-            _connectorData.StatusData.SetBit(1, value);
+            _link.StatusData.SetBit(1, value);
         }
         
         public void SetDataBit2(bool value)
         {
-            _connectorData.StatusData.SetBit(2, value);
+            _link.StatusData.SetBit(2, value);
         }
         
         public void SetDataBit3(bool value)
         {
-            _connectorData.StatusData.SetBit(3, value);
+            _link.StatusData.SetBit(3, value);
         }
         
         public void SetDataBit4(bool value)
         {
-            _connectorData.StatusData.SetBit(4, value);
+            _link.StatusData.SetBit(4, value);
         }
         
         public void SetDataBit5(bool value)
         {
-            _connectorData.StatusData.SetBit(5, value);
+            _link.StatusData.SetBit(5, value);
         }
         
         public void SetDataBit6(bool value)
         {
-            _connectorData.StatusData.SetBit(6, value);
+            _link.StatusData.SetBit(6, value);
         }
         
         public void SetDataBit7(bool value)
         {
-            _connectorData.StatusData.SetBit(7, value);
+            _link.StatusData.SetBit(7, value);
         }
     }
 }

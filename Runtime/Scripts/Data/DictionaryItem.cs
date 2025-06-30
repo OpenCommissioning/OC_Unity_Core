@@ -31,8 +31,8 @@ namespace OC.Data
 
         public void Set(DictionaryItem other)
         {
-            _key = other._key;
-            _value = other._value;
+            _key = other.Key;
+            _value = other.Value;
         }
     }
 }

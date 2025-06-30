@@ -21,7 +21,7 @@ namespace OC.Data
         {
             try
             {
-                foreach (var directoryId in payloadTag.DirecotryId)
+                foreach (var directoryId in payloadTag.DirectoryId)
                 {
                     if (!ProductDataDirectoryManager.Instance.Contains(directoryId))
                     {

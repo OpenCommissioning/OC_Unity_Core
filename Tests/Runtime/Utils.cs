@@ -73,5 +73,11 @@ namespace OC.Tests
         {
             AreEqual(expected, actual, null);
         }
+        
+        public static T CreateComponent<T>() where T : Component
+        {
+            var gameObject = new GameObject();
+            return gameObject.AddComponent<T>();
+        }
     }
 }

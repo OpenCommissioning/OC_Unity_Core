@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using OC.PlayerLoop;
 using OC.Project;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace OC.Communication
 {
@@ -18,8 +16,8 @@ namespace OC.Communication
         
         public float TimeScale
         {
-            get => _connector.TimeScale;
-            set => _connector.TimeScale = value;
+            get => _link.TimeScale;
+            set => _link.TimeScale = value;
         }
 
         [SerializeField]
@@ -31,10 +29,7 @@ namespace OC.Communication
 
         [HideInInspector]
         [SerializeField]
-        private Link _link;
-        [HideInInspector]
-        [SerializeField]
-        private ConnectorClient _connector;
+        private LinkDataSystem _link;
         
         private List<Link> _links;
 
@@ -54,19 +49,26 @@ namespace OC.Communication
 
         protected void Start()
         {
-            _link = new Link(this, "fbSystem", $"{_rootName}.fbSystem");
-            _connector = new ConnectorClient(_link)
-            {
-                TimeScale = Time.timeScale
-            };
+            _link.ScenePath = $"{_rootName}.fbSystem";
+            _link.ClientPath = _link.ScenePath.GetClientCompatiblePath();
+            _link.TimeScale = Time.timeScale;
 
             _links = new List<Link> { _link };
 
-            foreach (var component in GetComponentsInChildren<IConnectable>())
+            foreach (var component in GetComponentsInChildren<ILink>())
             {
                 if (!component.Link.Enable) continue;
                 _links.Add(component.Link);
             }
+        }
+
+        private void Reset()
+        {
+            _link = new LinkDataSystem
+            {
+                Name = "fbSystem",
+                Component = this
+            };
         }
         
         public virtual void BeforeFixedUpdate()
@@ -92,45 +94,11 @@ namespace OC.Communication
         public abstract void Connect();
         public abstract void Disconnect();
 
-        private bool TryFindVariable(ClientVariableDescription discription, Object target, out ClientVariable variable)
+        public ClientVariable GetClientVariable(ClientVariableDescription description)
         {
-            try
-            {
-                var adsVariable = discription.Direction == ClientVariableDirection.Input ? 
-                    Buffer.InputVariables.Find(x => x.Name == discription.Name) :
-                    Buffer.OutputVariables.Find(x => x.Name == discription.Name);
-
-                variable = adsVariable ?? throw new Exception($"{discription.Name} can't be found in client!");
-                if (variable.Reserved) throw new Exception($"{discription.Name} already reserved!");
-                variable.Reserved = true;
-                return true;
-            }
-            catch (Exception exception)
-            {
-                Logging.Logger.Log(LogType.Warning, exception.Message, target);
-                variable = null;
-                return false; 
-            }
-        }
-
-        public bool TryGetVariables(List<ClientVariableDescription> list, Link link, out List<ClientVariable> variables)
-        {
-            var valid = true;
-            variables = new List<ClientVariable>();
-            
-            foreach (var discription in list)
-            {
-                if (TryFindVariable(discription, link.Component, out var variable))
-                {
-                    variables.Add(variable);
-                }
-                else
-                {
-                    valid = false;
-                }
-            }
-
-            return valid;
+            return description.Direction == ClientVariableDirection.Input ? 
+                Buffer.InputVariables.Find(x => x.Name == description.Path) :
+                Buffer.OutputVariables.Find(x => x.Name == description.Path);
         }
         
         private void OnConnectionChanged(bool isConnected)

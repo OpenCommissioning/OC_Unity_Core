@@ -1,7 +1,3 @@
-#if UNITY_EDITOR
-    using UnityEditor;
-#endif
-    
 using UnityEngine;
 
 namespace OC.Communication
@@ -21,34 +17,7 @@ namespace OC.Communication
 
         private string GetName()
         {
-            if (string.IsNullOrEmpty(_name))
-            {
-                if (!ClientVariableExtension.IsVariableNameValid(transform.name))
-                {
-                    var validName = ClientVariableExtension.CorrectVariableName(transform.name);
-#if UNITY_EDITOR
-                    Debug.LogWarning($"Hierarchy GameObject name {transform.name} is invalid! The name is modified to {validName}", this);
-                    transform.name = validName;
-                    EditorUtility.SetDirty(this);
-#endif
-                }
-                
-                return transform.name;
-            }
-            else
-            {
-                if (!ClientVariableExtension.IsVariableNameValid(_name))
-                {
-                    var validCustomName = ClientVariableExtension.CorrectVariableName(_name);
-#if UNITY_EDITOR
-                    Debug.LogWarning($"Hierarchy name {_name} is invalid! The name is modified to {validCustomName}");
-                    _name = validCustomName;
-                    EditorUtility.SetDirty(this);
-#endif
-                }
-                
-                return _name;
-            }
+            return string.IsNullOrEmpty(_name) ? transform.name : _name;
         }
 
         public Transform GetParent()

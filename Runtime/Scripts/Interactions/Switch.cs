@@ -5,9 +5,11 @@ using UnityEngine.Events;
 
 namespace OC.Interactions
 {
-    public class Switch : Device
+    public class Switch : SampleDevice
     {
-        public override int AllocatedBitLength => Mathf.Max(0,_stateCount - 1);
+        public override Link Link => _link;
+        
+        public override int AllocatedBitLength => Mathf.Max(0, _stateCount - 1);
 
         public IProperty<int> Index => _index;
 
@@ -16,9 +18,17 @@ namespace OC.Interactions
         protected Property<int> _index = new (0);
         [SerializeField] 
         protected int _stateCount = 2;
+        
+        [SerializeField]
+        protected Link _link = new ("FB_Switch");
 
         public UnityEvent<int> OnIndexChanged;
 
+        private void Start()
+        {
+            _link.Initialize(this);
+        }
+        
         protected void OnEnable()
         {
             _index.OnValueChanged += IndexChanged;
@@ -27,11 +37,6 @@ namespace OC.Interactions
         protected void OnDisable()
         {
             _index.OnValueChanged -= IndexChanged;
-        }
-        
-        protected override void Reset()
-        {
-            _link = new Link(this, "FB_Switch");
         }
 
         protected void OnValidate()
@@ -42,7 +47,7 @@ namespace OC.Interactions
         private void IndexChanged(int index)
         {
             index %= _stateCount;
-            Connector.Status = index > 0 ? (byte)Mathf.Pow(2, index - 1) : (byte)0;
+            Link.Status = index > 0 ? (byte)Mathf.Pow(2, index - 1) : (byte)0;
             OnIndexChanged?.Invoke(index);
         }
 

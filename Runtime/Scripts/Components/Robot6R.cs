@@ -4,10 +4,13 @@ using UnityEngine;
 
 namespace OC.Components
 {
+    [SelectionBase]
+    [DisallowMultipleComponent]
     [AddComponentMenu("Open Commissioning/Actor/Robot 6R")]
     public class Robot6R : MonoComponent, IDevice
     {
         public Link Link => _link;
+        public IProperty<bool> Override => _override;
         public float[] Target => _target;
 
         [Header("Control")]
@@ -25,26 +28,20 @@ namespace OC.Components
         private List<Axis> _axes;
         
         [SerializeField]
-        private Link _link;
+        protected Property<bool> _override = new (false);
         [SerializeField]
-        private ConnectorDataRobot _connector;
+        private LinkDataRobot _link = new("FB_Robot");
 
         private readonly float[] _value = new float[12];
         
         private void Start()
         {
             _link.Initialize(this);
-            _connector = new ConnectorDataRobot(_link);
-        }
-        
-        private void Reset()
-        {
-            _link = new Link(this, "FB_Robot");
         }
 
         private void FixedUpdate()
         {
-            if (_link.IsActive) _connector.JointTarget.CopyTo(_value, 0);
+            if (_link.Connected) _link.JointTarget.CopyTo(_value, 0);
 
             for (var i = 0; i < _value.Length; i++)
             {

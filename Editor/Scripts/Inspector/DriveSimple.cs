@@ -17,7 +17,7 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.AddLinkOverride(serializedObject);
+            groupControl.AddOverride(serializedObject);
             var hStack = new StackHorizontal();
             hStack.Add(new ToggleButton("Backward").BindProperty(component.Backward));
             hStack.Add(new ToggleButton("Forward").BindProperty(component.Forward));

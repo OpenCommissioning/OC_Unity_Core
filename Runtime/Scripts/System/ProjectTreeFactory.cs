@@ -59,13 +59,13 @@ namespace OC
                 links.Add(link);
             }
 
-            links = links.OrderBy(x => x.Path).ToList();
+            links = links.OrderBy(x => x.ScenePath).ToList();
             return links;
         }
         
         private static void CreateDevice(XElement root, Link link)
         {
-            var groups = link.Path.Split('.');
+            var groups = link.ScenePath.Split('.');
             var localRoot = root;
 
             for (var i = 1; i < groups.Length - 1; i++)
@@ -97,7 +97,7 @@ namespace OC
             {
                 if (string.IsNullOrEmpty(attribute.Key))
                 {
-                    Logging.Logger.LogWarning($"Device: {link.Path} {link.Type}: Attribute Key is empty");
+                    Logging.Logger.LogWarning($"Device: {link.ScenePath} {link.Type}: Attribute Key is empty");
                     continue;
                 }
                 device.Add(new XElement(attribute.Key, attribute.Value));

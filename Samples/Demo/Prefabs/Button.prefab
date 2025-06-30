@@ -246,17 +246,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614c4abb630a42d08afd8b0891123dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _link:
-    _enable: 1
-    _override:
-      _value: 0
-    _connected:
-      _value: 0
-    _type: FB_Button
-    _parent: {fileID: 0}
-    _attributes: []
-    _name: Button
-    _path: Button
+  _override:
+    _value: 0
   _pressed:
     _value: 0
   _feedback:
@@ -268,6 +259,19 @@ MonoBehaviour:
   _color:
     _value: {r: 0, g: 1, b: 1, a: 1}
   _colorChangers: []
+  _link:
+    Control: 0
+    Status: 0
+    _enable: 1
+    _connected:
+      _value: 0
+    _name: Button
+    _scenePath: 
+    _clientPath: 
+    _type: FB_Button
+    _parent: {fileID: 0}
+    _attributes: []
+    _variablesDescription: []
   OnClickEvent:
     m_PersistentCalls:
       m_Calls: []

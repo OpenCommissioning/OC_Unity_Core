@@ -4,10 +4,9 @@ using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using OC.Tests;
 using Assert = UnityEngine.Assertions.Assert;
 
-namespace Components
+namespace OC.Tests.Runtime.Components
 {
     public class TestCylinder
     {

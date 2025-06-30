@@ -10,25 +10,25 @@ namespace OC.Components
     [DisallowMultipleComponent]
     public class Cylinder : Actor, IDevice, ICustomInspector, IInteractable
     {
-        public Link Link => _link ?? CreateLink();
-
-        #region Control
+        public Link Link => _link;
+        public IProperty<bool> Override => _override;
         public IProperty<bool> Minus => _minus;
         public IProperty<bool> Plus => _plus;
-        [SerializeField]
-        protected Property<bool> _minus = new (false);
-        [SerializeField]
-        protected Property<bool> _plus = new (false);
-        
-        #endregion
-
-        #region Status
-        
         public IPropertyReadOnly<float> Progress => _progress;
         public IPropertyReadOnly<bool> IsActive => _isActive;
         public IPropertyReadOnly<bool> OnLimitMin => _onLimitMin;
         public IPropertyReadOnly<bool> OnLimitMax => _onLimitMax;
+        public IProperty<Vector2> Limits => _limits;
+        public IProperty<CylinderType> Type => _type;
+        public IProperty<float> TimeToMin => _timeToMin;
+        public IProperty<float> TimeToMax => _timeToMax;
         
+        [SerializeField]
+        protected Property<bool> _override = new (false);
+        [SerializeField]
+        protected Property<bool> _minus = new (false);
+        [SerializeField]
+        protected Property<bool> _plus = new (false);
         [SerializeField]
         protected Property<float> _progress = new (0);
         [SerializeField]
@@ -37,16 +37,6 @@ namespace OC.Components
         protected Property<bool> _onLimitMin = new (false);
         [SerializeField]
         protected Property<bool> _onLimitMax = new (false);
-
-        #endregion
-
-        #region Settings
-        
-        public IProperty<Vector2> Limits => _limits;
-        public IProperty<CylinderType> Type => _type;
-        public IProperty<float> TimeToMin => _timeToMin;
-        public IProperty<float> TimeToMax => _timeToMax;
-
         [SerializeField]
         protected Property<Vector2> _limits = new (new Vector2(0, 100));
         [SerializeField]
@@ -57,17 +47,11 @@ namespace OC.Components
         protected Property<float> _timeToMax = new (0.5f);
         [SerializeField]
         private AnimationCurve _profile = AnimationCurve.Linear(0, 0, 1, 1);
-
-        #endregion
-
-        #region Events
-
+        
         public UnityEvent<bool> OnActiveChanged;
         public UnityEvent<bool> OnLimitMinEvent;
         public UnityEvent<bool> OnLimitMaxEvent;
-
-        #endregion
-
+        
         public bool JogMinus
         {
             set => _minus.Value = value;
@@ -79,17 +63,13 @@ namespace OC.Components
             set => _plus.Value = value;
             get => _plus;
         }
-
+        
         [SerializeField]
-        protected Link _link;
-        [SerializeField]
-        private Connector _connector;
+        protected Link _link = new() { Type = "FB_Cylinder" };
 
         private void Start()
         {
-            _link = Link;
             _link.Initialize(this);
-            _connector = new Connector(_link);
             _progress.OnValueChanged += OnProgressChanged;
             _isActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
             _onLimitMin.OnValueChanged += value => OnLimitMinEvent?.Invoke(value);
@@ -103,28 +83,24 @@ namespace OC.Components
             _plus.OnValidate();
         }
 
-        private void Reset()
-        {
-            _link = CreateLink();
-        }
-
         private void FixedUpdate()
         {
-            if (_link.IsActive) GetLinkData();
+            GetLinkData();
             Operation(Time.fixedDeltaTime);
             SetLinkData();
         }
 
         private void GetLinkData()
         {
-            _minus.Value = _connector.Control.GetBit(0);
-            _plus.Value = _connector.Control.GetBit(1);
+            if (_override || !_link.Connected) return;
+            _minus.Value = _link.Control.GetBit(0);
+            _plus.Value = _link.Control.GetBit(1);
         }
 
         private void SetLinkData()
         {
-            _connector.Status.SetBit(0, _onLimitMin);
-            _connector.Status.SetBit(1, _onLimitMax);
+            _link.Status.SetBit(0, _onLimitMin);
+            _link.Status.SetBit(1, _onLimitMax);
         }
 
         private void Operation(float deltaTime)
@@ -168,11 +144,6 @@ namespace OC.Components
             _onLimitMin.Value = Math.FastApproximately(_value, _limits.Value.x, 1e-3f);
             _onLimitMax.Value = Math.FastApproximately(_value, _limits.Value.y, 1e-3f);
             SetLinkData();
-        }
-
-        private Link CreateLink()
-        {
-            return new Link(this, "FB_Cylinder");
         }
     }
 }

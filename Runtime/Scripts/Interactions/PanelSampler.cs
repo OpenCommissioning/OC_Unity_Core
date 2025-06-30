@@ -13,30 +13,28 @@ namespace OC.Interactions
     public class PanelSampler : MonoComponent, IIndustrialPanel, ICustomInspector
     {
         public Link Link => _link;
-        public List<Device> Components => _components;
+        public IProperty<bool> Override => _override;
+        public List<SampleDevice> Components => _components;
 
         [SerializeField]
         private string _name;
         [SerializeField]
-        private List<Device> _components = new ();
+        private List<SampleDevice> _components = new ();
         [SerializeField]
-        private Link _link;
-
-        private ConnectorDataDWord _connectorDataDWord;
+        protected Property<bool> _override = new (false);
+        [SerializeField]
+        private LinkDataDWord _link = new("FB_Panel");
+        
         private int _bitLength;
-        private int _bitLengthMax;
         private bool _isValid;
+        
+        private const int BIT_LENGTH_MAX = 32;
 
         private void Start()
         {
-            InitializeLink();
+            _link.Initialize(this);
             CheckSlots();
         }
-        
-        private void Reset()
-        {
-            _link = new Link(this, "FB_Panel");
-        } 
 
         private void LateUpdate()
         {
@@ -48,8 +46,8 @@ namespace OC.Interactions
             {
                 for (var j = 0; j < item.AllocatedBitLength; j++)
                 {
-                    _connectorDataDWord.StatusData.SetBit(index,item.Connector.Status.GetBit(j));
-                    item.Connector.Control.SetBit(j,_connectorDataDWord.ControlData.GetBit(index));
+                    _link.StatusData.SetBit(index, item.Link.Status.GetBit(j));
+                    item.Link.Control.SetBit(j, _link.ControlData.GetBit(index));
                     index++;
                 }
             }
@@ -73,9 +71,9 @@ namespace OC.Interactions
             if (_components.Count <= 0) return;
             
             _bitLength = _components.Sum(item => item.AllocatedBitLength);
-            if (_bitLength > _bitLengthMax)
+            if (_bitLength > BIT_LENGTH_MAX)
             {
-                Logging.Logger.Log(LogType.Error, $"Interface length {_bitLength} [bit] is out of the range [0..{_bitLengthMax}]!", this);
+                Logging.Logger.Log(LogType.Error, $"Interface length {_bitLength} [bit] is out of the range [0..{BIT_LENGTH_MAX}]!", this);
                 return;
             }
 
@@ -88,13 +86,6 @@ namespace OC.Interactions
                 device.Link.Enable = false;
                 Logging.Logger.Log(LogType.Warning, $"Panel {name} override {device.name} link state to disable", device);
             }
-        }
-
-        private void InitializeLink()
-        {
-            _link.Initialize(this);
-            _connectorDataDWord = new ConnectorDataDWord(_link);
-            _bitLengthMax = sizeof(uint) * 8;
         }
     }
 }
