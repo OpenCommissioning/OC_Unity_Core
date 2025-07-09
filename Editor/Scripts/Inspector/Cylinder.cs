@@ -18,13 +18,13 @@ namespace OC.Editor.Inspector
             var groupControl = new PropertyGroup("Control");
             groupControl.AddOverride(serializedObject);
             var hStack = new StackHorizontal();
-            hStack.Add(new PushButton("Minus").BindProperty(component.Minus));
-            hStack.Add(new PushButton("Plus").BindProperty(component.Plus));
+            hStack.Add(new PushButton("Minus"){bindingPath = "_minus._value"});
+            hStack.Add(new PushButton("Plus"){bindingPath = "_plus._value"});
             groupControl.Add(hStack);
 
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new ProgressBar("Progress"){bindingPath = "_progress._value", ShowLimits = true});
-            groupStatus.Add(new FloatField("Value"){isReadOnly = true}.BindProperty(component.Value).AlignedField());
+            groupStatus.Add(new FloatField("Value"){isReadOnly = true, bindingPath = "_value._value"}.AlignedField());
             
             var groupSettings = new PropertyGroup("Settings");
             groupSettings.Add(new Vector2Field("Limits"){bindingPath = "_limits._value"}.AlignedField());

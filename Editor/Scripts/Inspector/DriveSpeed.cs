@@ -1,4 +1,3 @@
-using OC.VisualElements;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -18,11 +17,11 @@ namespace OC.Editor.Inspector
 
             var groupControl = new PropertyGroup("Control");
             groupControl.AddOverride(serializedObject);
-            groupControl.Add(new FloatField("Target").BindProperty(component.Target).AlignedField());
+            groupControl.Add(new FloatField("Target"){bindingPath = "_target._value"}.AlignedField());
 
             var groupStatus = new PropertyGroup("Status");
-            groupStatus.Add(new LampField("Is Active", Color.green).BindProperty(component.IsActive).AlignedField());
-            groupStatus.Add(new FloatField("Value"){isReadOnly = true}.BindProperty(component.Value).AlignedField());
+            groupStatus.Add(new LampField("Is Active", Color.green){bindingPath = "_stateObserver._isActive._value"}.AlignedField());
+            groupStatus.Add(new FloatField("Value"){isReadOnly = true, bindingPath = "_value._value"}.AlignedField());
             
             var groupSettings = new PropertyGroup("Settings");
             groupSettings.Add(new FloatField("Acceleration"){bindingPath = "_acceleration._value"}.AlignedField());

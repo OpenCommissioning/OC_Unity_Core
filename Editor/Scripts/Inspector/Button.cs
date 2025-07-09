@@ -1,4 +1,3 @@
-using OC.VisualElements;
 using OC.Interactions.UIElements;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -18,8 +17,8 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupStatus = new PropertyGroup("Status");
-            groupStatus.Add(new LampField("Pressed", Color.green).BindProperty(component.Pressed).AlignedField());
-            groupStatus.Add(new LampField("Feedback", Color.green).BindProperty(component.Feedback).AlignedField());
+            groupStatus.Add(new LampField("Pressed", Color.green){bindingPath = "_pressed._value"}.AlignedField());
+            groupStatus.Add(new LampField("Feedback", Color.green){bindingPath = "_feedback._value"}.AlignedField());
             
             var groupSettings = new PropertyGroup("Settings");
             groupSettings.Add(new Toggle("Local Feedback"){bindingPath = "_localFeedback"}.AlignedField());

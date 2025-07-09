@@ -5,9 +5,6 @@ namespace OC.VisualElements
 {
     public static class BaseFieldExtension
     {
-        private const string USS = "StyleSheet/oc-inspector";
-        private const string INSPECTOR_LABEL_CLASS = "inspector-label";
-        
         public static BaseField<T> BindProperty<T>(this BaseField<T> field, IProperty<T> property)
         {
             if (field.userData != null) field.UnbindProperty();
