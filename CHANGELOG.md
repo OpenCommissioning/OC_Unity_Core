@@ -1,3 +1,10 @@
+## [1.2.8](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.7...v1.2.8) (2025-07-09)
+
+
+### Bug Fixes
+
+* **Inspector:** control data binding ([ece91af](https://github.com/OpenCommissioning/OC_Unity_Core/commit/ece91affdc5f7ac54dca4236e111f7beb81fcb46))
+
 ## [1.2.7](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.6...v1.2.7) (2025-06-30)
 
 
