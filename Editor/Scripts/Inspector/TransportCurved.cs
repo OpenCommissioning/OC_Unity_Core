@@ -1,4 +1,3 @@
-using OC.VisualElements;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
@@ -16,10 +15,10 @@ namespace OC.Editor.Inspector
             var container = new VisualElement();
 
             var groupControl = new PropertyGroup("Control");
-            groupControl.Add(new FloatField("Target").BindProperty(component.Target).AlignedField());
+            groupControl.Add(new FloatField("Target"){bindingPath = "_target._value"}.AlignedField());
 
             var groupStatus = new PropertyGroup("Status");
-            groupStatus.Add(new FloatField("Value"){ isReadOnly = true }.BindProperty(component.Value).AlignedField());
+            groupStatus.Add(new FloatField("Value"){isReadOnly = true, bindingPath = "_value._value"}.AlignedField());
             
             var groupSettings = new PropertyGroup("Settings");
             groupSettings.Add(new PropertyField{bindingPath = "_gizmos"});

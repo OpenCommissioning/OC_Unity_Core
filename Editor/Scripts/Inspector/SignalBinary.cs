@@ -18,7 +18,7 @@ namespace OC.Editor.Inspector
 
             var groupControl = new PropertyGroup("Control");
             groupControl.AddOverride(serializedObject);
-            groupControl.Add(new ToggleButton("Signal").BindProperty(component.Signal).AlignedField());
+            groupControl.Add(new ToggleButton("Signal"){bindingPath = "_signal._value"}.AlignedField());
             
             var groupStatus = new PropertyGroup("Status");
             groupStatus.Add(new LampField("Value", Color.green).BindProperty(component.Value).AlignedField());

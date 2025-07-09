@@ -52,8 +52,6 @@ namespace OC.Components
             base.OnEnable();
             _state.Subscribe(OnStateChanged);
             _value.Subscribe(OnValueChanged);
-            //_state.OnValueChanged += OnStateChanged;
-            //_value.OnValueChanged += OnValueChanged;
         }
 
         private new void OnDisable()
@@ -61,8 +59,6 @@ namespace OC.Components
             base.OnDisable();
             _state.Unsubscribe(OnStateChanged);
             _value.Unsubscribe(OnValueChanged);
-            //_state.OnValueChanged -= OnStateChanged;
-            //_value.OnValueChanged -= OnValueChanged;
         }
         
         private void Start()

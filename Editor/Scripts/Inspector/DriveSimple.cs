@@ -24,8 +24,8 @@ namespace OC.Editor.Inspector
             groupControl.Add(hStack);
 
             var groupStatus = new PropertyGroup("Status");
-            groupStatus.Add(new LampField("Is Active", Color.green).BindProperty(component.IsActive).AlignedField());
-            groupStatus.Add(new FloatField("Value"){isReadOnly = true}.BindProperty(component.Value).AlignedField());
+            groupStatus.Add(new LampField("Is Active", Color.green){bindingPath = "_stateObserver._isActive._value"}.AlignedField());
+            groupStatus.Add(new FloatField("Value"){isReadOnly = true, bindingPath = "_value._value"}.AlignedField());
             
             var groupSettings = new PropertyGroup("Settings");
             groupSettings.Add(new FloatField("Speed"){bindingPath = "_speed._value"}.AlignedField());
