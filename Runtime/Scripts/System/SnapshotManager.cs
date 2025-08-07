@@ -183,9 +183,9 @@ namespace OC
         {
             var payloads = new List<Payload>();
 
-            foreach (var payloadDiscription in sceneSnapshot.PayloadsDescription)
+            foreach (var payloadDescription in sceneSnapshot.PayloadsDescription)
             {
-                var payload = Pool.Instance.PoolManager.Instantiate(payloadDiscription);
+                var payload = Pool.Instance.PoolManager.Instantiate(payloadDescription);
                 if (payload is null) continue;
                 payloads.Add(payload);
             }
@@ -218,7 +218,7 @@ namespace OC
             foreach (var tagDirectory in productDataDirectoryManager.ProductDataDirectories)
             {
                 var directory = Directory.CreateDirectory(path + $@"\{tagDirectory.Name}");
-                CopyFiles(tagDirectory.Path, directory.FullName);
+                CopyFiles(tagDirectory.GetValidPath(), directory.FullName);
             }
         }
 
@@ -230,7 +230,7 @@ namespace OC
                 var localFolder = folder.Split(@"\").Last();
                 foreach (var dataPath in ProductDataDirectoryManager.Instance.ProductDataDirectories.Where(dataPath => dataPath.Name == localFolder))
                 {
-                    CopyFiles(folder, dataPath.Path);
+                    CopyFiles(folder, dataPath.GetValidPath());
                 }
             }
         }

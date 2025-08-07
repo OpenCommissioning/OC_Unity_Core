@@ -15,7 +15,6 @@ namespace OC.Data
         private const string TEMPLATE_NAME = "Type";
         private const string DATA_NAME = "ID";
         private const string TAG_UNIQUE_ID = "UniqueId";
-        private const string STREAMING_ASSETS_PREFIX = "streamingassets:";
         
         public static void CreateProductData(this PayloadTag payloadTag, Dictionary<string, string> content = null)
         {
@@ -23,24 +22,7 @@ namespace OC.Data
             {
                 foreach (var directoryId in payloadTag.DirectoryId)
                 {
-                    if (!ProductDataDirectoryManager.Instance.Contains(directoryId))
-                    {
-                        Logging.Logger.Log(LogType.Warning, $"DirectoryId [{directoryId}] isn't contains in Directory Manager! Payload Product Data isn't created!");
-                        continue;
-                    }
-                    string directory;
-                    var configuredPath = ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryId].Path;
-                    
-                    if (configuredPath.StartsWith(STREAMING_ASSETS_PREFIX, StringComparison.OrdinalIgnoreCase))
-                    {
-                        var relativePath = configuredPath.Substring(STREAMING_ASSETS_PREFIX.Length).TrimStart('/','\\');
-                        directory = Path.Combine(Application.streamingAssetsPath, relativePath);
-                    }
-                    else
-                    {
-                        directory = configuredPath;
-                    }
-                    
+                    var directory = ProductDataDirectoryManager.Instance.GetProductDataDirectoryPath(directoryId);
                     CreateProductDataFile(payloadTag, directory, content); 
                 }
             }
@@ -50,24 +32,24 @@ namespace OC.Data
             }
         }
 
-        public static List<EntryData> GetProductDataContent(this PayloadTag payloadTag, int directoryIndex)
+        public static List<EntryData> GetProductDataContent(this PayloadTag payloadTag, int index)
         {
-            return GetProductDataContent(payloadTag, ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryIndex].Path);
+            return GetProductDataContent(payloadTag, ProductDataDirectoryManager.Instance.GetProductDataDirectoryPath(index));
         }
 
         public static List<EntryData> GetProductDataContent(this PayloadTag payloadTag, ProductDataDirectory directory)
         {
-            return GetProductDataContent(payloadTag, directory.Path);
+            return GetProductDataContent(payloadTag, directory.GetValidPath());
         }
         
-        public static void OverwriteProductData(this PayloadTag payloadTag, int directoryIndex, List<EntryData> data)
+        public static void OverwriteProductData(this PayloadTag payloadTag, int index, List<EntryData> data)
         {
-            Overwrite(payloadTag, ProductDataDirectoryManager.Instance.ProductDataDirectories[directoryIndex].Path, data);
+            Overwrite(payloadTag, ProductDataDirectoryManager.Instance.GetProductDataDirectoryPath(index), data);
         }
 
         public static void OverwriteProductData(this PayloadTag payloadTag, ProductDataDirectory directory, List<EntryData> data)
         {
-            Overwrite(payloadTag, directory.Path, data);
+            Overwrite(payloadTag, directory.GetValidPath(), data);
         }
         
         public static void CreateTemplate(string path, List<EntryData> content)
