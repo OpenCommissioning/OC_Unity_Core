@@ -1,3 +1,10 @@
+## [1.2.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.8...v1.2.9) (2025-08-07)
+
+
+### Bug Fixes
+
+* payload streamingassets valid path ([a70bfe4](https://github.com/OpenCommissioning/OC_Unity_Core/commit/a70bfe45bfa1b42fbfd313cef0fd06d2cc28badd))
+
 ## [1.2.8](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.7...v1.2.8) (2025-07-09)
 
 
