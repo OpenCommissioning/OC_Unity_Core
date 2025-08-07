@@ -113,13 +113,13 @@ namespace OC.Editor
             }
             _listView.Rebuild();
 
-            if (Path.IsPathRooted(productDataDirectory.Path))
+            if (Path.IsPathRooted(productDataDirectory.GetValidPath()))
             {
-                _fileName = $@"{productDataDirectory.Path}\ID{payloadTag.Payload.UniqueId}.{ProductDataFactory.DATA_EXTENSION}";
+                _fileName = $@"{productDataDirectory.GetValidPath()}\ID{payloadTag.Payload.UniqueId}.{ProductDataFactory.DATA_EXTENSION}";
             }
             else
             {
-                _fileName = $@"{Application.dataPath}\{productDataDirectory.Path}\ID{payloadTag.Payload.UniqueId}.{ProductDataFactory.DATA_EXTENSION}";  
+                _fileName = $@"{Application.dataPath}\{productDataDirectory.GetValidPath()}\ID{payloadTag.Payload.UniqueId}.{ProductDataFactory.DATA_EXTENSION}";  
             }
         }
 
