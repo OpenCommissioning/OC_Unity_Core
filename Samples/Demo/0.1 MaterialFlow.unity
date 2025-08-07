@@ -236,18 +236,24 @@ MonoBehaviour:
   _value:
     _value: 0
   _holdValue: 0
-  OnValueChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
   _link:
+    Control: 0
+    Status: 0
     _enable: 0
-    _isConnected:
+    _connected:
       _value: 0
+    _name: TagReader
+    _scenePath: 
+    _clientPath: 
     _type: FB_Reader
     _parent: {fileID: 0}
     _attributes: []
-    _name: TagReader
-    _path: MAIN.MaterialFlow.Readers.TagReader
+    _variablesDescription: []
+    ControlData: 0
+    StatusData: 0
+  OnValueChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &25598598
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,8 +746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50127bbeffc4cf0843699e39717d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -962,8 +966,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d17f93bb484305b75b041c193f998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -1271,8 +1273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d17f93bb484305b75b041c193f998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -1523,31 +1523,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926201315e404f5188c8d67b6a7a9f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 1
   _target:
     _value: 0
   _value:
     _value: 0
-  _isActive:
-    _value: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
+  _override:
+    _value: 1
   _link:
+    Control: 0
+    Status: 0
     _enable: 0
-    _isConnected:
+    _connected:
       _value: 0
+    _name: Drive_Speed
+    _scenePath: 
+    _clientPath: 
     _type: FB_LinkDrive
     _parent: {fileID: 0}
     _attributes: []
-    _name: Drive_Speed
-    _path: MAIN.MaterialFlow.TransportGuided.Drive_Speed
-  _connectorData:
-    Control: 0
-    Status: 0
+    _variablesDescription: []
     ControlData: 0
     StatusData: 0
+  _stateObserver:
+    _state:
+      _value: 0
+    _isActive:
+      _value: 0
+    _delay: 0.2
   _acceleration:
     _value: 100
   _speed:
@@ -1615,31 +1620,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926201315e404f5188c8d67b6a7a9f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 1
   _target:
     _value: 0
   _value:
     _value: 0
-  _isActive:
-    _value: 0
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
+  _override:
+    _value: 1
   _link:
+    Control: 0
+    Status: 0
     _enable: 0
-    _isConnected:
+    _connected:
       _value: 0
+    _name: Drive_Speed
+    _scenePath: 
+    _clientPath: 
     _type: FB_LinkDrive
     _parent: {fileID: 0}
     _attributes: []
-    _name: Drive_Speed
-    _path: MAIN.MaterialFlow.TransportPhysic.Drive_Speed
-  _connectorData:
-    Control: 0
-    Status: 0
+    _variablesDescription: []
     ControlData: 0
     StatusData: 0
+  _stateObserver:
+    _state:
+      _value: 0
+    _isActive:
+      _value: 0
+    _delay: 0.2
   _acceleration:
     _value: 100
   _speed:
@@ -1754,8 +1764,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d17f93bb484305b75b041c193f998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -1901,8 +1909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d17f93bb484305b75b041c193f998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -2098,8 +2104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50127bbeffc4cf0843699e39717d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -2550,8 +2554,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d17f93bb484305b75b041c193f998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -2696,8 +2698,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d17f93bb484305b75b041c193f998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -3394,8 +3394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50127bbeffc4cf0843699e39717d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -3502,8 +3500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50127bbeffc4cf0843699e39717d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -3715,8 +3711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d17f93bb484305b75b041c193f998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -3851,7 +3845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _productDataDirectories:
   - Name: RFID
-    Path: streamingassets:Demo/Data/RFID
+    Path: streamingassets:RFID
 --- !u!1 &1629764384
 GameObject:
   m_ObjectHideFlags: 0
@@ -3898,8 +3892,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d17f93bb484305b75b041c193f998e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -4557,8 +4549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50127bbeffc4cf0843699e39717d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -4888,23 +4878,27 @@ MonoBehaviour:
   _isConnected:
     _value: 0
   _rootName: MAIN
-  _verbose: 0
   _link:
+    Control: 0
+    Status: 0
     _enable: 0
-    _isConnected:
+    _connected:
       _value: 0
+    _name: 
+    _scenePath: 
+    _clientPath: 
     _type: 
     _parent: {fileID: 0}
     _attributes: []
-    _name: 
-    _path: 
-  _connector:
-    Control: 0
-    Status: 0
+    _variablesDescription: []
     TimeScale: 0
-  _autoConnect: 1
-  _netId: Local
-  _port: 851
+  _config:
+    _name: Client
+    _reconnect: 1
+    _netId: Local
+    _port: 851
+    _clearBuffer: 1
+    _verbose: 0
 --- !u!1 &2010636822
 GameObject:
   m_ObjectHideFlags: 0
@@ -4951,8 +4945,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50127bbeffc4cf0843699e39717d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -5111,8 +5103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50127bbeffc4cf0843699e39717d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:
@@ -5251,8 +5241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a50127bbeffc4cf0843699e39717d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _override:
-    _value: 0
   _target:
     _value: 0
   _value:

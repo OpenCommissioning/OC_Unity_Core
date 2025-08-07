@@ -54,7 +54,7 @@ namespace OC.Project
         public void ApplyToActiveScene()
         {
             var clients = Object.FindObjectsByType<TcAdsClient>(sortMode: FindObjectsSortMode.InstanceID).ToList();
-            var productDataDiractoryManagers = Object.FindObjectsByType<ProductDataDirectoryManager>(sortMode: FindObjectsSortMode.InstanceID).ToList();
+            var productDataDirectoryManagers = Object.FindObjectsByType<ProductDataDirectoryManager>(sortMode: FindObjectsSortMode.InstanceID).ToList();
             
             foreach (var client in clients)
             {
@@ -67,9 +67,9 @@ namespace OC.Project
                 }
             }
 
-            foreach (var productDataDiractoryManager in productDataDiractoryManagers)
+            foreach (var dataDirectoryManager in productDataDirectoryManagers)
             {
-                productDataDiractoryManager.ProductDataDirectories = Directories;
+                dataDirectoryManager.ProductDataDirectories = Directories;
             }
         }
     }

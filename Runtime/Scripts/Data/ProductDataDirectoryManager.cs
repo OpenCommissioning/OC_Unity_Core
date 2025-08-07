@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using OC.Project;
@@ -42,6 +43,16 @@ namespace OC.Data
         public void SetAsset(XElement xElement)
         {
             _productDataDirectories = xElement.FromXElement<List<ProductDataDirectory>>();
+        }
+
+        public string GetProductDataDirectoryPath(int index)
+        {
+            if (!Contains(index))
+            {
+                throw new IndexOutOfRangeException($"DirectoryId [{index}] isn't contains in Directory Manager!");
+            }
+
+            return ProductDataDirectories[index].GetValidPath();
         }
     }
 }
