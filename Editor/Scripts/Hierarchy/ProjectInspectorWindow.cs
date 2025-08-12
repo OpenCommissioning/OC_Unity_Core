@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using System.Linq;
 using OC.Communication;
 using OC.VisualElements;
 using UnityEngine.SceneManagement;
@@ -107,20 +108,22 @@ namespace OC.Editor
             };
 
             columnLink.makeCell += MakeCellLink;
-            columnLink.bindCell += (element, i) =>
-            {
-                var item = multiColumnTreeView.GetItemDataForIndex<HierarchyItem>(i);
-                if (element is not Toggle toggle) return;
-                toggle.SetEnabled(false);
-                toggle.style.display = item.Component == null ? DisplayStyle.None : DisplayStyle.Flex;
-            };
-            
             columnLink.bindCell += BindCellLink;
             columnLink.unbindCell += UnbindCellLink;
+            
+            var columnOverride = new Column()
+            {
+                title = "Override",
+                stretchable = false
+            };
+            columnOverride.makeCell += MakeCellOverride;
+            columnOverride.bindCell += BindCellOverride;
+            columnLink.unbindCell += UnbindCellOverride;
             
             multiColumnTreeView.columns.Add(columnHierarchy);
             multiColumnTreeView.columns.Add(columnPath);
             multiColumnTreeView.columns.Add(columnLink);
+            multiColumnTreeView.columns.Add(columnOverride);
 
             multiColumnTreeView.selectionChanged += OnSelectionChanged;
             multiColumnTreeView.itemsChosen += OnItemsChosen;
@@ -129,6 +132,13 @@ namespace OC.Editor
             return multiColumnTreeView;
             
             VisualElement MakeCellLink()
+            {
+                var toggle = new Toggle();
+                toggle.SetEnabled(false);
+                return toggle;
+            }
+            
+            VisualElement MakeCellOverride()
             {
                 var toggle = new Toggle();
                 toggle.SetEnabled(false);
@@ -155,6 +165,31 @@ namespace OC.Editor
             }
             
             void UnbindCellLink(VisualElement visualElement, int i)
+            {
+                if (visualElement is not Toggle toggle) return;
+                toggle.UnbindProperty();
+            }
+            
+            void BindCellOverride(VisualElement visualElement, int i)
+            {
+                var item = multiColumnTreeView.GetItemDataForIndex<HierarchyItem>(i);
+                if (visualElement is not Toggle toggle) return;
+
+                if (item.Component == null)
+                {
+                    toggle.style.display = DisplayStyle.None;
+                    return;
+                }
+                
+                if(item.Component is not IDevice device) return;
+                
+                toggle.style.display = DisplayStyle.Flex;
+                
+                toggle.SetValueWithoutNotify(device.Override.Value);
+                toggle.BindProperty(device.Override);
+            }
+            
+            void UnbindCellOverride(VisualElement visualElement, int i)
             {
                 if (visualElement is not Toggle toggle) return;
                 toggle.UnbindProperty();
@@ -218,8 +253,12 @@ namespace OC.Editor
 
         private void ResetOverride()
         {
-            //TODO
-            Debug.Log($"Reset Override");
+            var devices = FindObjectsOfType<MonoBehaviour>().OfType<IDevice>().ToList();
+            foreach (var item in devices.Where(item => item.Override.Value))
+            {
+                item.Override.Value = false;
+                Logging.Logger.Log(LogType.Warning, $"Component Override is DISABLED: {item.Link.ScenePath}");
+            }
         }
     }
 }
