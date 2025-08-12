@@ -1,3 +1,10 @@
+## [1.2.10](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.9...v1.2.10) (2025-08-12)
+
+
+### Bug Fixes
+
+* **Project Inspector:** Override column. Reset all override components ([2763b85](https://github.com/OpenCommissioning/OC_Unity_Core/commit/2763b8507468ca8951defc849758e8b8e804034d))
+
 ## [1.2.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.8...v1.2.9) (2025-08-07)
 
 
