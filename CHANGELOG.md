@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.10...v1.3.0) (2025-09-17)
+
+
+### Features
+
+* add documentation for Snapping Tool ([78f3a5c](https://github.com/OpenCommissioning/OC_Unity_Core/commit/78f3a5c862fee72fe26bb9905eb6e0b30ecb3639))
+* add snapping tool ([b030c1d](https://github.com/OpenCommissioning/OC_Unity_Core/commit/b030c1d884a1179f3ca86f9717c6d5810b1825ba))
+
 ## [1.2.10](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.9...v1.2.10) (2025-08-12)
 
 
