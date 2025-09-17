@@ -82,6 +82,11 @@ namespace OC
             return Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
         }
         
+        public static void SetMatrix(this Transform transform, Matrix4x4 matrix)
+        {
+            transform.SetPositionAndRotation(matrix.GetPosition(), matrix.rotation);
+        }
+        
         public static Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles)
         {
             var dir = point - pivot;
