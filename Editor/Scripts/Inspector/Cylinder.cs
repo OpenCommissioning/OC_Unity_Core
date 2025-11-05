@@ -37,6 +37,8 @@ namespace OC.Editor.Inspector
             groupEvents.Add(new PropertyField{bindingPath = "OnActiveChanged"});
             groupEvents.Add(new PropertyField{bindingPath = "OnLimitMinEvent"});
             groupEvents.Add(new PropertyField{bindingPath = "OnLimitMaxEvent"});
+            groupEvents.Add(new PropertyField{bindingPath = "OnValueChanged"});
+            groupEvents.Add(new PropertyField{bindingPath = "OnProgressChanged"});
             
             container.Add(groupControl);
             container.Add(groupStatus);
