@@ -51,6 +51,8 @@ namespace OC.Components
         public UnityEvent<bool> OnActiveChanged;
         public UnityEvent<bool> OnLimitMinEvent;
         public UnityEvent<bool> OnLimitMaxEvent;
+        public UnityEvent<float> OnValueChanged;
+        public UnityEvent<float> OnProgressChanged;
         
         public bool JogMinus
         {
@@ -67,23 +69,40 @@ namespace OC.Components
         [SerializeField]
         protected Link _link = new() { Type = "FB_Cylinder" };
 
-        private void Start()
+        protected void Start()
         {
             _link.Initialize(this);
-            _progress.OnValueChanged += OnProgressChanged;
-            _isActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
-            _onLimitMin.OnValueChanged += value => OnLimitMinEvent?.Invoke(value);
-            _onLimitMax.OnValueChanged += value => OnLimitMaxEvent?.Invoke(value);
-            OnProgressChanged(_progress.Value);
+            
+            RefreshState(_progress.Value);
         }
 
-        private void OnValidate()
+        protected void OnEnable()
+        {
+            _progress.OnValueChanged += RefreshState;
+            _isActive.Subscribe(OnActiveChanged.Invoke);
+            _onLimitMin.Subscribe(OnLimitMinEvent.Invoke);
+            _onLimitMax.Subscribe(OnLimitMaxEvent.Invoke);
+            _value.Subscribe(OnValueChanged.Invoke);
+            _progress.Subscribe(OnProgressChanged.Invoke);
+        }
+
+        protected void OnDisable()
+        {
+            _progress.OnValueChanged -= RefreshState;
+            _isActive.Unsubscribe(OnActiveChanged.Invoke);
+            _onLimitMin.Unsubscribe(OnLimitMinEvent.Invoke);
+            _onLimitMax.Unsubscribe(OnLimitMaxEvent.Invoke);
+            _value.Unsubscribe(OnValueChanged.Invoke);
+            _progress.Unsubscribe(OnProgressChanged.Invoke);
+        }
+
+        protected void OnValidate()
         {
             _minus.OnValidate();
             _plus.OnValidate();
         }
 
-        private void FixedUpdate()
+        protected void FixedUpdate()
         {
             GetLinkData();
             Operation(Time.fixedDeltaTime);
@@ -136,7 +155,7 @@ namespace OC.Components
             _progress.Value = Mathf.Clamp01(progress);
         }
         
-        private void OnProgressChanged(float value)
+        private void RefreshState(float value)
         {
             _target.Value = Mathf.Lerp(_limits.Value.x, _limits.Value.y, _profile.Evaluate(_progress));
             _isActive.Value = Math.FastApproximately(_target, _value, 1e-3f);

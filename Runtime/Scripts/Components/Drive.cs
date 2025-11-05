@@ -28,14 +28,23 @@ namespace OC.Components
         [HideInInspector]
         [SerializeField]
         protected DriveStateObserver _stateObserver = new ();
-        
-        private void Start()
+
+        protected void OnEnable()
         {
-            _link.Initialize(this);
-            _stateObserver.IsActive.OnValueChanged += value => OnActiveChanged?.Invoke(value);
+            _stateObserver.IsActive.Subscribe(OnActiveChanged.Invoke);
         }
         
-        private void FixedUpdate()
+        protected void OnDisable()
+        {
+            _stateObserver.IsActive.Unsubscribe(OnActiveChanged.Invoke);
+        }
+        
+        protected void Start()
+        {
+            _link.Initialize(this);
+        }
+        
+        protected void FixedUpdate()
         {
             if (!_override && _link.Connected) GetLinkData();
             Operation(Time.fixedDeltaTime);

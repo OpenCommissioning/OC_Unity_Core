@@ -790,6 +790,12 @@ MonoBehaviour:
   OnLimitMaxEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _link:
     Control: 0
     Status: 0
@@ -3942,6 +3948,12 @@ MonoBehaviour:
   OnLimitMaxEvent:
     m_PersistentCalls:
       m_Calls: []
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _link:
     Control: 0
     Status: 0
@@ -4928,6 +4940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _productDataDirectories:
   - Name: RFID
+    Path: 
 --- !u!1 &1571801102
 GameObject:
   m_ObjectHideFlags: 0
@@ -5384,6 +5397,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnLimitMaxEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnProgressChanged:
     m_PersistentCalls:
       m_Calls: []
   _link:
