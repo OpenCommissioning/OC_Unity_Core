@@ -551,6 +551,9 @@ MonoBehaviour:
   OnActiveChanged:
     m_PersistentCalls:
       m_Calls: []
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _override:
     _value: 0
   _link:
@@ -2320,6 +2323,9 @@ MonoBehaviour:
   _value:
     _value: 0
   OnActiveChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   _override:
@@ -5024,6 +5030,9 @@ MonoBehaviour:
   _value:
     _value: 0
   OnActiveChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   _override:
