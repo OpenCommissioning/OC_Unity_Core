@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.1...v1.3.2) (2025-11-05)
+
+
+### Bug Fixes
+
+* UnityEvent extension ([da79e17](https://github.com/OpenCommissioning/OC_Unity_Core/commit/da79e17e1ee21621f96e726045def77c70fbfcdc))
+
 ## [1.3.1](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.0...v1.3.1) (2025-11-05)
 
 
