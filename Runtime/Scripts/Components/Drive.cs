@@ -20,6 +20,7 @@ namespace OC.Components
         public IPropertyReadOnly<DriveState> State => _stateObserver.State;
 
         public UnityEvent<bool> OnActiveChanged;
+        public UnityEvent<float> OnValueChanged;
 
         [SerializeField]
         protected Property<bool> _override = new (false);
@@ -32,11 +33,13 @@ namespace OC.Components
         protected void OnEnable()
         {
             _stateObserver.IsActive.Subscribe(OnActiveChanged.Invoke);
+            _value.Subscribe(OnValueChanged.Invoke);
         }
         
         protected void OnDisable()
         {
             _stateObserver.IsActive.Unsubscribe(OnActiveChanged.Invoke);
+            _value.Unsubscribe(OnValueChanged.Invoke);
         }
         
         protected void Start()
