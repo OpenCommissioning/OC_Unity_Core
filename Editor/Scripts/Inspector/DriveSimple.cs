@@ -33,6 +33,7 @@ namespace OC.Editor.Inspector
 
             var groupEvents = new PropertyGroup("Events");
             groupEvents.Add(new PropertyField{bindingPath = "OnActiveChanged"});
+            groupEvents.Add(new PropertyField{bindingPath = "OnValueChanged"});
             
             container.Add(groupControl);
             container.Add(groupStatus);
