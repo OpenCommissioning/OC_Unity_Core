@@ -1,3 +1,11 @@
+## [1.3.1](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.0...v1.3.1) (2025-11-05)
+
+
+### Bug Fixes
+
+* scene UnityEvents calls ([5f1b132](https://github.com/OpenCommissioning/OC_Unity_Core/commit/5f1b1326044b98e2eb36ebdf4978ef969860943a))
+* UnityEvent extension ([289da98](https://github.com/OpenCommissioning/OC_Unity_Core/commit/289da981fac93442957d416d1bb076777f48f16c))
+
 # [1.3.0](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.2.10...v1.3.0) (2025-09-17)
 
 
