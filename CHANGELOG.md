@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.2...v1.3.3) (2025-11-09)
+
+
+### Bug Fixes
+
+* paylaod data ([a20407a](https://github.com/OpenCommissioning/OC_Unity_Core/commit/a20407a45a6f897ef7e566fa66595cbad463d74c))
+
 ## [1.3.2](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.1...v1.3.2) (2025-11-05)
 
 
