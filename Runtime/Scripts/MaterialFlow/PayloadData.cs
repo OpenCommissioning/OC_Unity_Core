@@ -10,6 +10,8 @@ namespace OC.MaterialFlow
     [DisallowMultipleComponent]
     public class PayloadData : MonoComponent, IComponentMetadata
     {
+        public List<DictionaryItem> Data => _data;
+        
         [SerializeField]
         private List<DictionaryItem> _data = new ();
 
