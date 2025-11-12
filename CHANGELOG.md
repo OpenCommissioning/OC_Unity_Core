@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.3...v1.3.4) (2025-11-12)
+
+
+### Bug Fixes
+
+* snapping tool ([d984fda](https://github.com/OpenCommissioning/OC_Unity_Core/commit/d984fdad504c85fa52dac9b6763641c227ae82dd))
+
 ## [1.3.3](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.2...v1.3.3) (2025-11-09)
 
 
