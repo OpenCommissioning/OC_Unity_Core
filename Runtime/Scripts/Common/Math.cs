@@ -77,14 +77,30 @@ namespace OC
             return p0 + direction * project;
         }
 
-        public static Matrix4x4 GetMatrix(this Transform transform)
+        public static Matrix4x4 GetMatrix(this Transform transform, bool local = false, bool ignoreScale = false)
         {
-            return Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
+            if (local)
+            {
+                var scale = ignoreScale ? Vector3.one : transform.localScale;
+                return Matrix4x4.TRS(transform.localPosition, transform.localRotation, scale);
+            }
+            else
+            {
+                var scale = ignoreScale ? Vector3.one : transform.lossyScale;
+                return Matrix4x4.TRS(transform.position, transform.rotation, scale);
+            }
         }
         
-        public static void SetMatrix(this Transform transform, Matrix4x4 matrix)
+        public static void SetMatrix(this Transform transform, Matrix4x4 matrix, bool local = false)
         {
-            transform.SetPositionAndRotation(matrix.GetPosition(), matrix.rotation);
+            if (local)
+            {
+                transform.SetLocalPositionAndRotation(matrix.GetPosition(), matrix.rotation);
+            }
+            else
+            {
+                transform.SetPositionAndRotation(matrix.GetPosition(), matrix.rotation);
+            }
         }
         
         public static Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles)

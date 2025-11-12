@@ -8,7 +8,7 @@ using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace OC
+namespace OC.Editor
 {
     [EditorTool("Scene Interaction")]
     [Icon(ICON)]
