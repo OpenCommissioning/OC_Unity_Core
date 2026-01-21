@@ -1,3 +1,13 @@
+## [1.3.5](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.4...v1.3.5) (2026-01-21)
+
+
+### Bug Fixes
+
+* bounding box negative space ([285df53](https://github.com/OpenCommissioning/OC_Unity_Core/commit/285df53d3fa333bfd941f1c1bbbc3716cd161a9d))
+* gripper dynamic event bool property ([9dcb813](https://github.com/OpenCommissioning/OC_Unity_Core/commit/9dcb81316bf4777695e3171b976455ba053fc518))
+* Material Utils Prefs ([67ce4a1](https://github.com/OpenCommissioning/OC_Unity_Core/commit/67ce4a17977c810e6aad1b0e0b618955c11ffa44))
+* Material Utils Undo ([2fecc35](https://github.com/OpenCommissioning/OC_Unity_Core/commit/2fecc3590372983e3e07fa7f86709ff181cbbfd3))
+
 ## [1.3.4](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.3...v1.3.4) (2025-11-12)
 
 
