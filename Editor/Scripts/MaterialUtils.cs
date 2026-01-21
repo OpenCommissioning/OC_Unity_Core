@@ -8,13 +8,14 @@ namespace OC.Editor
 {
     public class MaterialUtils : EditorWindow
     {
+        private const string PREFS_MATERIAL_LAST = "PREFS_MaterialUtils_MATERIAL_LAST";
+        
         private ObjectField _objectField;
         private ObjectField _materialField;
         private GameObject _target;
         private Material _material;
         
-        
-        [MenuItem("Open Commissioning/Material Utils")]
+        [MenuItem("Open Commissioning/Tools/Material Utils")]
         public static void ShowMaterialManager()
         {
             var window = GetWindow<MaterialUtils>();
@@ -38,22 +39,45 @@ namespace OC.Editor
             rootVisualElement.Add(_objectField); 
             rootVisualElement.Add(_materialField); 
             
-            rootVisualElement.Add(new Button(ApplyMaterial)
+            rootVisualElement.Add(new Button(OnButtonClick)
             {
                 text = "Set for all"
             });
             
-            _objectField.RegisterCallback<ChangeEvent<Object>>((evt) =>
+            _objectField.RegisterCallback<ChangeEvent<Object>>(evt =>
             {
                 _target = (GameObject)evt.newValue;
             });
             
-            _materialField.RegisterCallback<ChangeEvent<Object>>((evt) =>
+            _materialField.RegisterCallback<ChangeEvent<Object>>(evt =>
             {
                 _material = (Material)evt.newValue;
             });
 
             OnSelectionChange();
+
+            _materialField.SetValueWithoutNotify(LoadMaterialFromPrefs());
+        }
+
+        private void OnDisable()
+        {
+            SafeMaterialPrefs(_material);
+        }
+
+        private Material LoadMaterialFromPrefs()
+        {
+            var id = PlayerPrefs.GetString(PREFS_MATERIAL_LAST);
+            return string.IsNullOrEmpty(id) ? null : AssetDatabase.LoadAssetAtPath<Material>(id);
+        }
+
+        private void SafeMaterialPrefs(Material material)
+        {
+            if (material == null) return;
+            var path = AssetDatabase.GetAssetPath(material);
+            if (string.IsNullOrEmpty(path)) return;
+            
+            PlayerPrefs.SetString(PREFS_MATERIAL_LAST, path);
+            PlayerPrefs.Save();
         }
 
         private void OnSelectionChange()
@@ -65,31 +89,51 @@ namespace OC.Editor
             }
         }
 
-        private void ApplyMaterial()
+        private void OnButtonClick() => ApplyMaterial(_target, _material);
+
+        private void ApplyMaterial(GameObject root, Material material)
         {
-            if (_target == null) return;
-            if (_material == null) return;
+            if (root == null) return;
+            if (material == null) return;
             var counter = 0;
             
-            var renderes = _target.GetComponentsInChildren<Renderer>();
-            foreach (var renderer in renderes)
-            {
-                Material[] materials = new Material[renderer.materials.Length];
-                if (renderer.materials.Length > 1)
-                {
-                    for (var i = 0; i < materials.Length; i++)
-                    {
-                        materials[i] = _material;
-                    }
+            var renderers = _target.GetComponentsInChildren<Renderer>(includeInactive: false);
+            if (renderers == null || renderers.Length == 0) return;
 
-                    renderer.materials = materials;
-                    counter++;
-                }
+            Undo.SetCurrentGroupName("Assign Material To Children");
+            var group = Undo.GetCurrentGroup();
+            
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+                Undo.RecordObject(renderer, "Assign Material To Children");
                 
-                renderer.material = _material;
+                var sharedMaterials = new Material[renderer.sharedMaterials.Length];
+
+                switch (sharedMaterials.Length)
+                {
+                    case 0:
+                        continue;
+                    case 1:
+                        renderer.sharedMaterial = _material;
+                        counter++;
+                        break;
+                    case > 1:
+                    {
+                        for (var i = 0; i < sharedMaterials.Length; i++)
+                        {
+                            sharedMaterials[i] = _material;
+                        }
+
+                        renderer.sharedMaterials = sharedMaterials;
+                        counter++;
+                        break;
+                    }
+                }
             }
             
-            Debug.Log($"Materials Utils: {counter} materials are changed");
+            Undo.CollapseUndoOperations(group);
+            Debug.Log($"Material Utils: {counter} materials are changed");
         }
     }
 }

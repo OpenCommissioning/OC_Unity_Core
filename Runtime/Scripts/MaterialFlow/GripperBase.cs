@@ -13,7 +13,6 @@ namespace OC.MaterialFlow
     {
         public IPropertyReadOnly<bool> IsActive => _isActive;
         public IPropertyReadOnly<bool> IsPicked => _isPicked;
-
         public IReadOnlyList<Payload> Buffer => _buffer;
 
         [SerializeField]
@@ -66,6 +65,30 @@ namespace OC.MaterialFlow
             GetReferences();
             _initColliderSize = _collider.size;
             _initColliderCenter = _collider.center;
+        }
+
+        public void Pick(bool pick)
+        {
+            if (pick)
+            {
+                Pick();
+            }
+            else
+            {
+                Place();
+            }
+        }
+
+        public void Place(bool place)
+        {
+            if (place)
+            {
+                Place();
+            }
+            else
+            {
+                Pick();
+            }
         }
 
         public void Pick()
