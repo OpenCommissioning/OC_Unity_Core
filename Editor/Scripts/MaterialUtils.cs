@@ -8,11 +8,12 @@ namespace OC.Editor
 {
     public class MaterialUtils : EditorWindow
     {
+        private const string PREFS_MATERIAL_LAST = "PREFS_MaterialUtils_MATERIAL_LAST";
+        
         private ObjectField _objectField;
         private ObjectField _materialField;
         private GameObject _target;
         private Material _material;
-        
         
         [MenuItem("Open Commissioning/Tools/Material Utils")]
         public static void ShowMaterialManager()
@@ -54,6 +55,29 @@ namespace OC.Editor
             });
 
             OnSelectionChange();
+
+            _materialField.SetValueWithoutNotify(LoadMaterialFromPrefs());
+        }
+
+        private void OnDisable()
+        {
+            SafeMaterialPrefs(_material);
+        }
+
+        private Material LoadMaterialFromPrefs()
+        {
+            var id = PlayerPrefs.GetString(PREFS_MATERIAL_LAST);
+            return string.IsNullOrEmpty(id) ? null : AssetDatabase.LoadAssetAtPath<Material>(id);
+        }
+
+        private void SafeMaterialPrefs(Material material)
+        {
+            if (material == null) return;
+            var path = AssetDatabase.GetAssetPath(material);
+            if (string.IsNullOrEmpty(path)) return;
+            
+            PlayerPrefs.SetString(PREFS_MATERIAL_LAST, path);
+            PlayerPrefs.Save();
         }
 
         private void OnSelectionChange()
@@ -72,16 +96,16 @@ namespace OC.Editor
             if (root == null) return;
             if (material == null) return;
             var counter = 0;
+            
+            var renderers = _target.GetComponentsInChildren<Renderer>(includeInactive: false);
+            if (renderers == null || renderers.Length == 0) return;
 
             Undo.SetCurrentGroupName("Assign Material To Children");
             var group = Undo.GetCurrentGroup();
-            Undo.RegisterFullObjectHierarchyUndo(root, "Assign Material To Children");
             
-            var renderers = _target.GetComponentsInChildren<Renderer>(includeInactive: false);
             foreach (var renderer in renderers)
             {
                 if (renderer == null) continue;
-
                 Undo.RecordObject(renderer, "Assign Material To Children");
                 
                 var sharedMaterials = new Material[renderer.sharedMaterials.Length];
@@ -92,7 +116,6 @@ namespace OC.Editor
                         continue;
                     case 1:
                         renderer.sharedMaterial = _material;
-                        UnityEditor.EditorUtility.SetDirty(renderer);
                         counter++;
                         break;
                     case > 1:
@@ -103,7 +126,6 @@ namespace OC.Editor
                         }
 
                         renderer.sharedMaterials = sharedMaterials;
-                        UnityEditor.EditorUtility.SetDirty(renderer);
                         counter++;
                         break;
                     }
