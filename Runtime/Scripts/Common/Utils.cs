@@ -114,7 +114,10 @@ namespace OC
                 boxCollider = gameObject.GetComponent<BoxCollider>();
                 if (boxCollider == null)
                 {
-                    throw new NullReferenceException("BoxCollider is null");
+#if UNITY_EDITOR
+                    boxCollider = UnityEditor.Undo.AddComponent<BoxCollider>(gameObject);
+#endif
+                    if (boxCollider == null) throw new NullReferenceException("BoxCollider is null");
                 }
 #if UNITY_EDITOR
                 UnityEditor.Undo.RecordObject(boxCollider, "Set Box Collider Bound Size");
@@ -122,6 +125,8 @@ namespace OC
                 var bounds = GetLocalBoundsForChildrenMeshes(gameObject);
                 boxCollider.center = bounds.center;
                 boxCollider.size = bounds.size;
+                
+                Debug.Log($"BoxCollider size for {gameObject.name} is {boxCollider.size}", gameObject);
                 
 #if UNITY_EDITOR
                 
@@ -145,15 +150,23 @@ namespace OC
         public static Bounds GetLocalBoundsForChildrenMeshes(GameObject gameObject)
         {
             var transform = gameObject.transform;
-            var localBounds = new Bounds(Vector3.zero, Vector3.zero);
             var filters = gameObject.GetComponentsInChildren<MeshFilter>();
+            var localBounds = new List<Bounds>();
+            
             foreach (var meshFilter in filters)
             {
                 var matrix = transform.localToWorldMatrix.inverse * meshFilter.transform.localToWorldMatrix;
                 var axisAlignedBounds = GeometryUtility.CalculateBounds(meshFilter.sharedMesh.vertices, matrix);
-                localBounds.Encapsulate(axisAlignedBounds);
+                localBounds.Add(axisAlignedBounds);
             }
-            return localBounds;
+
+            var result = localBounds[0];
+            for (var i = 1; i < localBounds.Count; i++)
+            {
+                result.Encapsulate(localBounds[i]);
+            }
+            
+            return result;
         }
     }
 }
