@@ -14,7 +14,7 @@ namespace OC.Editor
         private Material _material;
         
         
-        [MenuItem("Open Commissioning/Material Utils")]
+        [MenuItem("Open Commissioning/Tools/Material Utils")]
         public static void ShowMaterialManager()
         {
             var window = GetWindow<MaterialUtils>();
@@ -38,17 +38,17 @@ namespace OC.Editor
             rootVisualElement.Add(_objectField); 
             rootVisualElement.Add(_materialField); 
             
-            rootVisualElement.Add(new Button(ApplyMaterial)
+            rootVisualElement.Add(new Button(OnButtonClick)
             {
                 text = "Set for all"
             });
             
-            _objectField.RegisterCallback<ChangeEvent<Object>>((evt) =>
+            _objectField.RegisterCallback<ChangeEvent<Object>>(evt =>
             {
                 _target = (GameObject)evt.newValue;
             });
             
-            _materialField.RegisterCallback<ChangeEvent<Object>>((evt) =>
+            _materialField.RegisterCallback<ChangeEvent<Object>>(evt =>
             {
                 _material = (Material)evt.newValue;
             });
@@ -65,31 +65,53 @@ namespace OC.Editor
             }
         }
 
-        private void ApplyMaterial()
-        {
-            if (_target == null) return;
-            if (_material == null) return;
-            var counter = 0;
-            
-            var renderes = _target.GetComponentsInChildren<Renderer>();
-            foreach (var renderer in renderes)
-            {
-                Material[] materials = new Material[renderer.materials.Length];
-                if (renderer.materials.Length > 1)
-                {
-                    for (var i = 0; i < materials.Length; i++)
-                    {
-                        materials[i] = _material;
-                    }
+        private void OnButtonClick() => ApplyMaterial(_target, _material);
 
-                    renderer.materials = materials;
-                    counter++;
-                }
+        private void ApplyMaterial(GameObject root, Material material)
+        {
+            if (root == null) return;
+            if (material == null) return;
+            var counter = 0;
+
+            Undo.SetCurrentGroupName("Assign Material To Children");
+            var group = Undo.GetCurrentGroup();
+            Undo.RegisterFullObjectHierarchyUndo(root, "Assign Material To Children");
+            
+            var renderers = _target.GetComponentsInChildren<Renderer>(includeInactive: false);
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+
+                Undo.RecordObject(renderer, "Assign Material To Children");
                 
-                renderer.material = _material;
+                var sharedMaterials = new Material[renderer.sharedMaterials.Length];
+
+                switch (sharedMaterials.Length)
+                {
+                    case 0:
+                        continue;
+                    case 1:
+                        renderer.sharedMaterial = _material;
+                        UnityEditor.EditorUtility.SetDirty(renderer);
+                        counter++;
+                        break;
+                    case > 1:
+                    {
+                        for (var i = 0; i < sharedMaterials.Length; i++)
+                        {
+                            sharedMaterials[i] = _material;
+                        }
+
+                        renderer.sharedMaterials = sharedMaterials;
+                        UnityEditor.EditorUtility.SetDirty(renderer);
+                        counter++;
+                        break;
+                    }
+                }
             }
             
-            Debug.Log($"Materials Utils: {counter} materials are changed");
+            Undo.CollapseUndoOperations(group);
+            Debug.Log($"Material Utils: {counter} materials are changed");
         }
     }
 }
