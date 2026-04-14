@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace OC.Interactions
 {
-    public class Switch : SampleDevice
+    public class Switch : SampleDevice, IInteractable
     {
         public override Link Link => _link;
         
