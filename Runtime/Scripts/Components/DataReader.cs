@@ -107,6 +107,16 @@ namespace OC.Components
             }
         }
 
+        public void Write(float value)
+        {
+            var str = value.ToString(CultureInfo.InvariantCulture);
+            if (float.TryParse(value.ToString(CultureInfo.InvariantCulture), NumberStyles.Float, CultureInfo.InvariantCulture, out var result))
+            {
+                _targetData.Value = str;
+                Write();
+            }
+        }
+
         public void Write()
         {
             try
