@@ -254,7 +254,7 @@ namespace OC.Editor
         private void ResetOverride()
         {
 #if UNITY_6000_3_OR_NEWER
-            var devices = FindObjectsByType<MonoBehaviour>().OfType<IDevice>().ToList();
+            var devices = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.InstanceID).OfType<IDevice>().ToList();
 #else
             var devices = FindObjectsOfType<MonoBehaviour>().OfType<IDevice>().ToList();
 #endif
