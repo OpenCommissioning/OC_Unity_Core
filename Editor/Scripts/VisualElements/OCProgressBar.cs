@@ -4,6 +4,11 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor
 {
+#if UNITY_6000_3_OR_NEWER
+    [UxmlElement("OCEditorProgressBarWithLimits")]
+    public partial class OCProgressBar : UnityEngine.UIElements.ProgressBar
+    {
+#else  
     public class ProgressBar : UnityEngine.UIElements.ProgressBar
     {
         public new class UxmlFactory : UxmlFactory<ProgressBar, UxmlTraits> { }
@@ -28,7 +33,11 @@ namespace OC.Editor
                 progressBar.ColorBackground = _colorBackground.GetValueFromBag(bag, cc);
             }
         }
-
+#endif
+        
+#if UNITY_6000_3_OR_NEWER
+        [UxmlAttribute("Color-Bar")]
+#endif
         public Color ColorBar
         {
             get => _colorBar;
@@ -39,6 +48,9 @@ namespace OC.Editor
             }
         }
 
+#if UNITY_6000_3_OR_NEWER
+        [UxmlAttribute("Color-Background")]
+#endif
         public Color ColorBackground
         {
             get => _colorBackground;
@@ -48,7 +60,10 @@ namespace OC.Editor
                 _colorBackground = value;
             }
         }
-
+        
+#if UNITY_6000_3_OR_NEWER
+        [UxmlAttribute("Show-Limits")]
+#endif
         public bool ShowLimits
         {
             get => _showLimits;
@@ -101,9 +116,9 @@ namespace OC.Editor
         private const string LIMIT_USS_CLASS_NAME = "progress-bar__limit";
         private const string LIMIT_ACTIVE_USS_CLASS_NAME = "progress-bar__limit-active";
 
-        public ProgressBar() : this(""){}
+        public OCProgressBar() : this(""){}
         
-        public ProgressBar(string title)
+        public OCProgressBar(string title)
         {
             this.title = title;
             styleSheets.Add(Resources.Load<StyleSheet>(USS));

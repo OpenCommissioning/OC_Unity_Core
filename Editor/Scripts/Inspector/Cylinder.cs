@@ -23,7 +23,7 @@ namespace OC.Editor.Inspector
             groupControl.Add(hStack);
 
             var groupStatus = new PropertyGroup("Status");
-            groupStatus.Add(new ProgressBar("Progress"){bindingPath = "_progress._value", ShowLimits = true});
+            groupStatus.Add(new OCProgressBar("Progress"){bindingPath = "_progress._value", ShowLimits = true});
             groupStatus.Add(new FloatField("Value"){isReadOnly = true, bindingPath = "_value._value"}.AlignedField());
             
             var groupSettings = new PropertyGroup("Settings");

@@ -253,7 +253,11 @@ namespace OC.Editor
 
         private void ResetOverride()
         {
+#if UNITY_6000_3_OR_NEWER
+            var devices = FindObjectsByType<MonoBehaviour>().OfType<IDevice>().ToList();
+#else
             var devices = FindObjectsOfType<MonoBehaviour>().OfType<IDevice>().ToList();
+#endif
             foreach (var item in devices.Where(item => item.Override.Value))
             {
                 item.Override.Value = false;

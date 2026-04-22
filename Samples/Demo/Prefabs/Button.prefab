@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 733263081785279292}
   - component: {fileID: 5859995647531435336}
   - component: {fileID: 1011426874826814901}
-  - component: {fileID: 1944160676565874785}
   m_Layer: 10
   m_Name: Knob
   m_TagString: Untagged
@@ -198,19 +197,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1944160676565874785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576315432846064135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82f4a2cca5d243ce8b352cc7daa7aaf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: OC.UI::OC.UI.Interactions.Outline
-  _interaction: {fileID: 1011426874826814901}
 --- !u!1 &6750308897200737481
 GameObject:
   m_ObjectHideFlags: 0
