@@ -9,7 +9,7 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lamp")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lamp : SampleDevice, ICustomInspector
+    public class Lamp : SampleDevice, IInteractable, ICustomInspector
     {
         public override Link Link => _link;
         
@@ -31,7 +31,7 @@ namespace OC.Interactions
         protected List<ColorChanger> _colorChangers = new();
         
         [SerializeField]
-        protected new Link _link = new ("FB_Lamp");
+        protected Link _link = new ("FB_Lamp");
 
         public UnityEvent<bool> OnValueChanged;
 

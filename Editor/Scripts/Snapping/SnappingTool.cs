@@ -34,7 +34,11 @@ namespace OC.Editor
 
         public override void OnActivated()
         {
+#if UNITY_6000_3_OR_NEWER
+            _sceneSnappingPoints = FindObjectsByType<SnappingPoint>(FindObjectsSortMode.InstanceID).ToList();
+#else
             _sceneSnappingPoints = FindObjectsOfType<SnappingPoint>().ToList();
+#endif
         }
 
         public override void OnWillBeDeactivated()

@@ -126,7 +126,7 @@ namespace OC
                 boxCollider.center = bounds.center;
                 boxCollider.size = bounds.size;
                 
-                Debug.Log($"BoxCollider size for {gameObject.name} is {boxCollider.size}", gameObject);
+                Logging.Logger.Log($"BoxCollider center for {gameObject.name} is {boxCollider.center}", gameObject);
                 
 #if UNITY_EDITOR
                 
@@ -136,7 +136,7 @@ namespace OC
             }
             catch (Exception exception)
             {
-                Debug.LogError($"TryBoundBoxColliderSize: {exception}", gameObject);
+                Logging.Logger.LogError($"TryBoundBoxColliderSize: {exception}", gameObject);
                 boxCollider = null;
                 return false;
             }
