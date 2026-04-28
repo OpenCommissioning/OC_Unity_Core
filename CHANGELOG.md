@@ -1,3 +1,14 @@
+## [1.3.6](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.5...v1.3.6) (2026-04-28)
+
+
+### Bug Fixes
+
+* API ([38947e1](https://github.com/OpenCommissioning/OC_Unity_Core/commit/38947e110deac56649e5aa3597a71382e557c2db))
+* API 6.3 ([80fe705](https://github.com/OpenCommissioning/OC_Unity_Core/commit/80fe70544380797d4a93f564d023230e53086e9b))
+* DataRader write ([c8093ef](https://github.com/OpenCommissioning/OC_Unity_Core/commit/c8093ef6f2783d78d554d672d956ef32f424a16a))
+* interactions ([205404c](https://github.com/OpenCommissioning/OC_Unity_Core/commit/205404c5c3935e5a7003e0f278990e7711d10455))
+* unity 64 uxml attribute ([7e99d07](https://github.com/OpenCommissioning/OC_Unity_Core/commit/7e99d070971033fe8d4b3cac7b234e0f42312c77))
+
 ## [1.3.5](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.4...v1.3.5) (2026-01-21)
 
 
