@@ -6,6 +6,7 @@ namespace OC.Interactions
     [Flags]
     public enum InteractionState
     {
+        Disabled = 0,
         Idle = 1,
         Hovered = 2,
         Selected = 4

@@ -11,7 +11,7 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Actor/Button")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Button : SampleDevice, ICustomInspector
+    public class Button : SampleDevice, IInteractable, ICustomInspector
     {
         public override Link Link => _link;
         public override int AllocatedBitLength => 1;
@@ -92,18 +92,35 @@ namespace OC.Interactions
         public void Press()
         {
             if (!Application.isPlaying) return;
-            _pressed.Value = _type switch
+
+            switch (_type)
             {
-                ButtonType.Click => true,
-                ButtonType.Toggle => !_pressed.Value,
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                case ButtonType.Click:
+                    _pressed.Value = true;
+                    break;
+                case ButtonType.Toggle:
+                    _pressed.Value = !_pressed.Value;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public void Release()
         {
             if (!Application.isPlaying) return;
-            if (_type == ButtonType.Click) _pressed.Value = false;
+            
+            switch (_type)
+            {
+                case ButtonType.Click:
+                    _pressed.Value = false;
+                    break;
+                case ButtonType.Toggle:
+                    
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void LateUpdate()
