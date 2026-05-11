@@ -7,7 +7,7 @@ namespace OC
         public Component Component => this;
         public static T Instance { get; private set; }
 	
-        public virtual void Awake ()
+        protected virtual void Awake ()
         {
             if (Instance == null) 
             {
