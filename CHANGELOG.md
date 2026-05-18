@@ -1,3 +1,10 @@
+## [1.3.7](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.6...v1.3.7) (2026-05-18)
+
+
+### Bug Fixes
+
+* OCProgressBar.cs type name error in condition ([c1d940d](https://github.com/OpenCommissioning/OC_Unity_Core/commit/c1d940d6080620e50612e0fd9b4c93332081cc5d))
+
 ## [1.3.6](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.5...v1.3.6) (2026-04-28)
 
 
