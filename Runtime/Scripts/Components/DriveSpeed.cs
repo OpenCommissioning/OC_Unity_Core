@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using OC.Communication;
 
@@ -8,6 +9,8 @@ namespace OC.Components
     [DisallowMultipleComponent]
     public class DriveSpeed : Drive
     {
+        public override Type ReferenceType => typeof(DriveSpeed);
+        
         public IProperty<float> Acceleration => _acceleration;
 
         [SerializeField]

@@ -2,7 +2,7 @@ using OC.Components;
 using OC.Interactions;
 using UnityEngine.Events;
 
-namespace OC.Editor
+namespace OC
 {
     public static class InteractionFactory
     {
@@ -39,6 +39,11 @@ namespace OC.Editor
 #endif
                     
                     Logging.Logger.Log($"Interaction {interaction.GetType().Name} connected to {@switch.gameObject.name}", interaction);
+                    break;
+                
+                default:
+                    interaction.Target = parent.gameObject;
+                    interaction.Mode = Interaction.InteractionMode.Selection | Interaction.InteractionMode.Hover;
                     break;
                     
             }

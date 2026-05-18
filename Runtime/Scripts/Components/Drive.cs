@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Globalization;
 using OC.Communication;
@@ -10,8 +11,9 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Actor/Drive")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public abstract class Drive : Actor, IDevice, IMetadataAsset, ICustomInspector, IInteractable
+    public abstract class Drive : Actor, IDevice, IMetadataAsset, IInteractable
     {
+        public abstract Type ReferenceType { get; }
         public Link Link => _link;
         public IProperty<bool> Override => _override;
         public int MetadataAssetLength => 1;

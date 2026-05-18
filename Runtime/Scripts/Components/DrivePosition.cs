@@ -1,3 +1,4 @@
+using System;
 using OC.Communication;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace OC.Components
     [DefaultExecutionOrder(100)]
     public class DrivePosition : Drive
     {
+        public override Type ReferenceType => typeof(Drive);
         public IProperty<float> Speed => _speed;
 
         [SerializeField]

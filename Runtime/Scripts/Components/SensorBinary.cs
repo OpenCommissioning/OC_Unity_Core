@@ -1,3 +1,4 @@
+using System;
 using OC.Communication;
 using OC.MaterialFlow;
 using UnityEngine;
@@ -10,8 +11,9 @@ namespace OC.Components
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BoxCollider))]
-    public class SensorBinary : Detector, IDevice, IMeasurement<bool>, ISensorBeam, ICustomInspector, IInteractable
+    public class SensorBinary : Detector, IDevice, IMeasurement<bool>, ISensorBeam, IInteractable
     {
+        public Type ReferenceType => typeof(SensorBinary);
         public Link Link => _link;
         public IProperty<bool> Override => _override;
         public IPropertyReadOnly<bool> Value => _value;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,8 +10,10 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lamp")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lamp : SampleDevice, IInteractable, ICustomInspector
+    public class Lamp : SampleDevice, IInteractable
     {
+        public Type ReferenceType => typeof(Lamp);
+        
         public override Link Link => _link;
         
         public bool Signal

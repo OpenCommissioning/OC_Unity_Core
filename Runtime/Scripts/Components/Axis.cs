@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace OC.Components
 {
@@ -7,8 +8,10 @@ namespace OC.Components
     [SelectionBase]
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(1000)]
-    public class Axis : Actor, IInteractable, ICustomInspector
+    public class Axis : Actor, IInteractable
     {
+        public Type ReferenceType => typeof(Axis);
+        
         public Actor Actor
         {
             set => _actor = value;
@@ -58,6 +61,7 @@ namespace OC.Components
         protected float _offset;
         [SerializeField] 
         protected AxisDirection _direction = AxisDirection.X;
+        [FormerlySerializedAs("_axisType")]
         [SerializeField]
         protected AxisType _type = AxisType.Translation;
         [SerializeField] 

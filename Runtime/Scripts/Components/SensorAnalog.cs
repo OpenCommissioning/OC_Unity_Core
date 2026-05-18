@@ -1,3 +1,4 @@
+using System;
 using OC.Communication;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,8 +8,9 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Sensor/Sensor Analog")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class SensorAnalog : MonoComponent, IDevice, ICustomInspector, IInteractable
+    public class SensorAnalog : MonoComponent, IDevice, IInteractable
     {
+        public Type ReferenceType => typeof(SensorAnalog);
         public Link Link => _link;
         public IProperty<bool> Override => _override;
         public IProperty<float> Value => _value;

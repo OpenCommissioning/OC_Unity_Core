@@ -1,5 +1,4 @@
 using System;
-using OC.Components;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,8 +9,9 @@ namespace OC.MaterialFlow
     [AddComponentMenu("Open Commissioning/Material Flow/Source")]
     [RequireComponent(typeof(BoxCollider))]
     [Serializable]
-    public class Source : Detector, ISource, ICustomInspector, IInteractable
+    public class Source : Detector, ISource, IInteractable
     {
+        public Type ReferenceType => typeof(Source);
         public Property<bool> Auto => _auto;
         public Property<int> TypeId => _typeId;
         public Property<ulong> UniqueId => _uniqueId;

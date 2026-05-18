@@ -8,8 +8,9 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Actor/Cylinder")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Cylinder : Actor, IDevice, ICustomInspector, IInteractable
+    public class Cylinder : Actor, IDevice, IInteractable
     {
+        public Type ReferenceType => typeof(Cylinder);
         public Link Link => _link;
         public IProperty<bool> Override => _override;
         public IProperty<bool> Minus => _minus;
