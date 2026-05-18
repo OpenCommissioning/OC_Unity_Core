@@ -9,9 +9,9 @@ namespace OC.Editor
     public partial class OCProgressBar : UnityEngine.UIElements.ProgressBar
     {
 #else  
-    public class ProgressBar : UnityEngine.UIElements.ProgressBar
+    public class OCProgressBar : UnityEngine.UIElements.ProgressBar
     {
-        public new class UxmlFactory : UxmlFactory<ProgressBar, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<OCProgressBar, UxmlTraits> { }
 
         public new class UxmlTraits : UnityEngine.UIElements.ProgressBar.UxmlTraits
         {
@@ -27,7 +27,7 @@ namespace OC.Editor
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                if (ve is not ProgressBar progressBar) return;
+                if (ve is not OCProgressBar progressBar) return;
                 progressBar.ShowLimits = _showLimits.GetValueFromBag(bag, cc);
                 progressBar.ColorBar = _colorProgressBar.GetValueFromBag(bag, cc);
                 progressBar.ColorBackground = _colorBackground.GetValueFromBag(bag, cc);
