@@ -73,13 +73,10 @@ namespace OC.Components
         protected void Start()
         {
             _link.Initialize(this);
-            
-            RefreshState(_progress.Value);
         }
 
         protected void OnEnable()
         {
-            _progress.OnValueChanged += RefreshState;
             _isActive.Subscribe(OnActiveChanged.Invoke);
             _onLimitMin.Subscribe(OnLimitMinEvent.Invoke);
             _onLimitMax.Subscribe(OnLimitMaxEvent.Invoke);
@@ -89,7 +86,6 @@ namespace OC.Components
 
         protected void OnDisable()
         {
-            _progress.OnValueChanged -= RefreshState;
             _isActive.Unsubscribe(OnActiveChanged.Invoke);
             _onLimitMin.Unsubscribe(OnLimitMinEvent.Invoke);
             _onLimitMax.Unsubscribe(OnLimitMaxEvent.Invoke);
@@ -119,8 +115,8 @@ namespace OC.Components
 
         private void SetLinkData()
         {
-            _link.Status.SetBit(0, _onLimitMin);
-            _link.Status.SetBit(1, _onLimitMax);
+            _link.Status.SetBit(0, _onLimitMin.Value);
+            _link.Status.SetBit(1, _onLimitMax.Value);
         }
 
         private void Operation(float deltaTime)
@@ -128,17 +124,19 @@ namespace OC.Components
             switch (_type.Value)
             {
                 case CylinderType.DoubleActing:
-                    if (_minus.Value ^ _plus.Value) IntegrateProgress(deltaTime, _plus.Value ? _timeToMax : -_timeToMin);
+                    if (_minus.Value ^ _plus.Value) IntegrateProgress(deltaTime, _plus.Value ? _timeToMax.Value : -_timeToMin.Value);
                     break;
                 case CylinderType.SingleActingNegative:
-                    IntegrateProgress(deltaTime, _plus.Value ? _timeToMax : -_timeToMin);
+                    IntegrateProgress(deltaTime, _plus.Value ? _timeToMax.Value : -_timeToMin.Value);
                     break;
                 case CylinderType.SingleActingPositive:
-                    IntegrateProgress(deltaTime, _minus.Value ? -_timeToMin : _timeToMax);
+                    IntegrateProgress(deltaTime, _minus.Value ? -_timeToMin.Value : _timeToMax.Value);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            
+            UpdateState();
         }
 
         public enum CylinderType
@@ -149,21 +147,20 @@ namespace OC.Components
         }
 
         public void SetProgress(float value) =>  _progress.Value = Mathf.Clamp01(value);
-
+        
         private void IntegrateProgress(float deltaTime, float duration)
         {
             var progress = _progress.Value + deltaTime / duration;
             _progress.Value = Mathf.Clamp01(progress);
         }
-        
-        private void RefreshState(float value)
+
+        private void UpdateState()
         {
-            _target.Value = Mathf.Lerp(_limits.Value.x, _limits.Value.y, _profile.Evaluate(_progress));
-            _isActive.Value = Math.FastApproximately(_target, _value, 1e-3f);
+            _target.Value = Mathf.Lerp(_limits.Value.x, _limits.Value.y, _profile.Evaluate(_progress.Value));
+            _isActive.Value = !Math.FastApproximately(_target.Value, _value.Value, 1e-1f);
             _value.Value = _target.Value;
-            _onLimitMin.Value = Math.FastApproximately(_value, _limits.Value.x, 1e-3f);
-            _onLimitMax.Value = Math.FastApproximately(_value, _limits.Value.y, 1e-3f);
-            SetLinkData();
+            _onLimitMin.Value = Math.FastApproximately(_value.Value, _limits.Value.x, 1e-3f);
+            _onLimitMax.Value = Math.FastApproximately(_value.Value, _limits.Value.y, 1e-3f);
         }
     }
 }
