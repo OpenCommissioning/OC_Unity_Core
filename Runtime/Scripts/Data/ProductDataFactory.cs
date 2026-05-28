@@ -122,7 +122,7 @@ namespace OC.Data
             catch (Exception exception)
             {
                 Logging.Logger.Log(LogType.Warning, exception.Message);
-                return null;
+                return new List<EntryData>();
             }
         }
 

@@ -10,7 +10,7 @@ namespace OC.Components
     [DefaultExecutionOrder(100)]
     public class DrivePosition : Drive
     {
-        public override Type ReferenceType => typeof(Drive);
+        public override Type ReferenceType => typeof(DrivePosition);
         public IProperty<float> Speed => _speed;
 
         [SerializeField]
