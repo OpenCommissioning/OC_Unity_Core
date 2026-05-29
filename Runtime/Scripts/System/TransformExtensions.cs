@@ -23,5 +23,27 @@ namespace OC
 
             return null;
         }
+        
+        public static string GetScenePath(this Transform target)
+        {
+            if (target == null) return string.Empty;
+
+            var path = target.name;
+            var current = target.parent;
+
+            while (current != null)
+            {
+                path = current.name + "/" + path;
+                current = current.parent;
+            }
+
+            return path;
+        }
+        
+        public static string GetScenePath(this Component component)
+        {
+            var target = component.transform;
+            return GetScenePath(target);
+        }
     }
 }
