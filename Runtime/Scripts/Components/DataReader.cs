@@ -13,6 +13,7 @@ namespace OC.Components
     [RequireComponent(typeof(BoxCollider))]
     public class DataReader : Detector, IMeasurement<float>, IInteractable
     {
+        public Type ReferenceType => typeof(DataReader);
         public IProperty<string> TargetData => _targetData;
         public IPropertyReadOnly<string> RawData => _rawData;
         public IPropertyReadOnly<float> Value => _value;

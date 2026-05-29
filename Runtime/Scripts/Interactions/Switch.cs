@@ -1,3 +1,4 @@
+using System;
 using OC.Communication;
 using OC.Components;
 using UnityEngine;
@@ -5,8 +6,9 @@ using UnityEngine.Events;
 
 namespace OC.Interactions
 {
-    public class Switch : SampleDevice
+    public class Switch : SampleDevice, IInteractable
     {
+        public Type ReferenceType => typeof(Switch);
         public override Link Link => _link;
         
         public override int AllocatedBitLength => Mathf.Max(0, _stateCount - 1);

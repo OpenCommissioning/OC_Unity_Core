@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Collider Grid Green
-  m_Shader: {fileID: -6465566751694194690, guid: bba6b5efab6846e4c93f8584aae2640e,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: bba6b5efab6846e4c93f8584aae2640e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -24,6 +23,7 @@ Material:
   disabledShaderPasses:
   - DepthOnly
   - SHADOWCASTER
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -48,9 +48,11 @@ Material:
     - _CastShadows: 0
     - _Cull: 0
     - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
     - _Surface: 1
     - _Transparency: 0
     - _TransparencyFill: 0.9
@@ -61,6 +63,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 0.15493989, g: 1, b: 0.12549019, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &8629038909657136544
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -73,4 +76,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 7
+  version: 10

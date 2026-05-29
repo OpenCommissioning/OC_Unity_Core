@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,8 +10,10 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lamp")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lamp : SampleDevice, ICustomInspector
+    public class Lamp : SampleDevice, IInteractable
     {
+        public Type ReferenceType => typeof(Lamp);
+        
         public override Link Link => _link;
         
         public bool Signal
@@ -31,7 +34,7 @@ namespace OC.Interactions
         protected List<ColorChanger> _colorChangers = new();
         
         [SerializeField]
-        protected new Link _link = new ("FB_Lamp");
+        protected Link _link = new ("FB_Lamp");
 
         public UnityEvent<bool> OnValueChanged;
 

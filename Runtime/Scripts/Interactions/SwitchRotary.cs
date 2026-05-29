@@ -1,5 +1,4 @@
 using System;
-using OC.Components;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +7,7 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Switch Rotary")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class SwitchRotary : Switch, ICustomInspector
+    public class SwitchRotary : Switch
     {
         public IPropertyReadOnly<float> Angle => _angle;
 

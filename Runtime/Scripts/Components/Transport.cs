@@ -9,7 +9,7 @@ namespace OC.Components
     [SelectionBase]
     [DisallowMultipleComponent]
     [ExecuteInEditMode]
-    public abstract class Transport : Actor, ICustomInspector
+    public abstract class Transport : Actor
     {
         public Actor Actor
         {

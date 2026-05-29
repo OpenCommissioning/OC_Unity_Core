@@ -19,9 +19,14 @@ namespace OC.Editor
         private readonly List<Interaction> _hitInteractions = new ();
         private int _hitsCount;
         private Interaction _activeInteraction;
-        private int[] _outlineRenderers = Array.Empty<int>();
         private const string ICON = "d_EventTrigger Icon";
         private readonly GUIStyle _roundedBoxStyle = new ();
+        
+#if UNITY_6000_4_OR_NEWER
+        private EntityId[] _outlineRenderers = Array.Empty<EntityId>();
+#else
+       private int[] _outlineRenderers = Array.Empty<int>();
+#endif
         
         [Shortcut("Scene Interaction Tool", typeof(SceneView), KeyCode.I)]
         private static void SceneViewInteractionShortcut()
@@ -199,11 +204,21 @@ namespace OC.Editor
             _activeInteraction = _hitInteractions.First();
             PointerEnterEvent(_activeInteraction);
 
+            
+#if UNITY_6000_4_OR_NEWER
+            _outlineRenderers = new EntityId[_activeInteraction.Renderers.Count];
+            for (var i = 0; i < _activeInteraction.Renderers.Count; i++)
+            {
+                _outlineRenderers[i] = _activeInteraction.Renderers[i].GetEntityId();
+            }
+#else
             _outlineRenderers = new int[_activeInteraction.Renderers.Count];
             for (var i = 0; i < _activeInteraction.Renderers.Count; i++)
             {
                 _outlineRenderers[i] = _activeInteraction.Renderers[i].GetInstanceID();
             }
+#endif
+            
         }
 
         private void ResetHit()

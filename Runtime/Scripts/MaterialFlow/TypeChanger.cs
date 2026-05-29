@@ -1,4 +1,4 @@
-using OC.Components;
+using System;
 using UnityEngine;
 
 namespace OC.MaterialFlow
@@ -7,8 +7,9 @@ namespace OC.MaterialFlow
     [RequireComponent(typeof(BoxCollider))]
     [DisallowMultipleComponent]
     [AddComponentMenu("Open Commissioning/Material Flow/Type Changer")]
-    public class TypeChanger : Detector, ICustomInspector, IInteractable
+    public class TypeChanger : Detector, IInteractable
     {
+        public Type ReferenceType => typeof(TypeChanger);
         public IProperty<int> TargetTypeID => _targetTypeId;
         public IProperty<int> ActualTypeID => _actualTypeId;
 

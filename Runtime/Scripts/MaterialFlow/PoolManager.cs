@@ -43,6 +43,8 @@ namespace OC.MaterialFlow
         [ReadOnly]
         [SerializeField] 
         private int _count;
+        
+        public event Action<Payload> OnDestroyAction;
 
         private readonly Dictionary<ulong, Payload> _payloads;
         private const string TAG_CREATE = "Create";
@@ -233,6 +235,8 @@ namespace OC.MaterialFlow
                 }
                 
                 Unregistrate(payload);
+                
+                OnDestroyAction?.Invoke(payload);
 
                 var entityString = payload.ToString();
                 

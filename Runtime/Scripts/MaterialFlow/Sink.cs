@@ -1,4 +1,4 @@
-using OC.Components;
+using System;
 using UnityEngine;
 
 namespace OC.MaterialFlow
@@ -7,8 +7,9 @@ namespace OC.MaterialFlow
     [RequireComponent(typeof(BoxCollider))]
     [DisallowMultipleComponent]
     [AddComponentMenu("Open Commissioning/Material Flow/Sink")]
-    public class Sink : Detector, ICustomInspector, IInteractable
+    public class Sink : Detector, IInteractable
     {
+        public Type ReferenceType => typeof(Sink);
         public Property<bool> Auto => _auto;
         
         [SerializeField]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -27,10 +28,14 @@ namespace OC.Interactions
             get => _mode;
             set => _mode = value;
         }
+        
+        [CanBeNull]
+        public IInteractable Interactable => _interactable;
 
         public IProperty<InteractionState> State => _state;
 
         public List<Renderer> Renderers => _renderers;
+        public BoxCollider Collider => GetComponent<BoxCollider>();
 
         [Header("State")]
         [SerializeField] 
@@ -38,12 +43,16 @@ namespace OC.Interactions
         
         [Header("Settings")] 
         [SerializeField] 
-        private InteractionMode _mode = InteractionMode.Hover | InteractionMode.Click;
+        private InteractionMode _mode = InteractionMode.All;
         [SerializeField]
         protected GameObject _target;
         [SerializeField]
         protected bool _debug;
 
+        [CanBeNull]
+        private IInteractable _interactable;
+        private BoxCollider _collider;
+        
         public event Action OnDestroyAction;
         public UnityEvent OnPointerClickEvent;
         public UnityEvent OnPointerDownEvent;
@@ -54,6 +63,8 @@ namespace OC.Interactions
         protected void Awake()
         {
             _renderers = GetComponentsInChildren<Renderer>().ToList();
+            TryGetComponent(out _collider);
+            if (_target != null) _target.TryGetComponent(out _interactable);
         }
 
         protected void OnDestroy()
@@ -65,6 +76,7 @@ namespace OC.Interactions
         {
             BoundBoxColliderSize();
             gameObject.layer = (int)DefaultLayers.Interactions;
+            this.TryFindAndConnectToTarget();
         }
 
         [Flags]
@@ -79,6 +91,7 @@ namespace OC.Interactions
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!isActiveAndEnabled) return;
+            if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_debug) Debug.Log("Event: OnPointerEnter", this);
             if (_mode.HasFlag(InteractionMode.Hover)) _state.Value = _state.Value.SetFlag(InteractionState.Hovered);
         }
@@ -86,6 +99,7 @@ namespace OC.Interactions
         public void OnPointerExit(PointerEventData eventData)
         {
             if (!isActiveAndEnabled) return;
+            if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_debug) Debug.Log("Event: OnPointerExit", this);
             if (_mode.HasFlag(InteractionMode.Hover)) _state.Value = _state.Value.RemoveFlag(InteractionState.Hovered);
         }
@@ -93,6 +107,7 @@ namespace OC.Interactions
         public void OnSelect(BaseEventData eventData)
         {
             if (!isActiveAndEnabled) return;
+            if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_debug) Debug.Log("Event: OnSelect", this);
             if (_mode.HasFlag(InteractionMode.Selection)) _state.Value = _state.Value.SetFlag(InteractionState.Selected);
         }
@@ -100,6 +115,7 @@ namespace OC.Interactions
         public void OnDeselect(BaseEventData eventData)
         {
             if (!isActiveAndEnabled) return;
+            if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_debug) Debug.Log("Event: OnDeselect", this);
             if (_mode.HasFlag(InteractionMode.Selection)) _state.Value = _state.Value.RemoveFlag(InteractionState.Selected);
         }
@@ -107,6 +123,7 @@ namespace OC.Interactions
         public void OnPointerClick(PointerEventData eventData)
         {
             if (!isActiveAndEnabled) return;
+            if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_debug) Debug.Log("Event: OnPointerClick", this);
             if (_mode.HasFlag(InteractionMode.Click)) OnPointerClickEvent?.Invoke();
         }
@@ -114,6 +131,7 @@ namespace OC.Interactions
         public void OnPointerDown(PointerEventData eventData)
         {
             if (!isActiveAndEnabled) return;
+            if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_debug) Debug.Log("Event: OnPointerDown", this);
             if (_mode.HasFlag(InteractionMode.Click)) OnPointerDownEvent?.Invoke();
         }
@@ -121,6 +139,7 @@ namespace OC.Interactions
         public void OnPointerUp(PointerEventData eventData)
         {
             if (!isActiveAndEnabled) return;
+            if (_state.Value.HasFlag(InteractionState.Disabled)) return;
             if (_debug) Debug.Log("Event: OnPointerUp", this);
             if (_mode.HasFlag(InteractionMode.Click)) OnPointerUpEvent?.Invoke();
         }
@@ -128,9 +147,9 @@ namespace OC.Interactions
         [ContextMenu("Bound Box Collider Size", false, 100)]
         public void BoundBoxColliderSize()
         {
-            if (Utils.TryBoundBoxColliderSize(gameObject, out var boxCollider))
+            if (Utils.TryBoundBoxColliderSize(gameObject, out _collider))
             {
-                boxCollider.isTrigger = true;
+                _collider.isTrigger = true;
             }
         }
     }

@@ -4,6 +4,11 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor
 {
+#if UNITY_6000_4_OR_NEWER
+    [UxmlElement]
+    public partial class PushButton : BaseField<bool>
+    {
+#else
     public class PushButton : BaseField<bool>
     {
         public new class UxmlFactory : UxmlFactory<PushButton, UxmlTraits> { }
@@ -14,6 +19,7 @@ namespace OC.Editor
                 focusable.defaultValue = false;
             }
         }
+#endif
 
         private const string USS = "StyleSheet/oc-inspector";
         private const string USS_CLASS_NAME = "button";

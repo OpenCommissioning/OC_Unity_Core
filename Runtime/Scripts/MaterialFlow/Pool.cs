@@ -12,7 +12,7 @@ namespace OC.MaterialFlow
         [SerializeField]
         private PoolManager _poolManager = new ();
         
-        public override void Awake()
+        protected new void Awake()
         {
             base.Awake();
             if (_poolManager.Root == null) _poolManager.Root = transform;

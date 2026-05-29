@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,8 +11,9 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lock")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lock : MonoComponent, IDevice, ICustomInspector, IInteractable
+    public class Lock : MonoComponent, IDevice, IInteractable
     {
+        public Type ReferenceType => typeof(Lock);
         public Link Link => _link;
         public IProperty<bool> Override => _override;
         public IProperty<bool> LockSignal => _lock;

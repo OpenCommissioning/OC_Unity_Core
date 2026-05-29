@@ -6,6 +6,11 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor
 {
+#if UNITY_6000_3_OR_NEWER
+    [UxmlElement("OCEditorPropertyGroup")]
+    public partial class PropertyGroup : VisualElement
+    {
+#else
     public class PropertyGroup : VisualElement
     {
         public new class UxmlFactory : UxmlFactory<PropertyGroup, UxmlTraits> { }
@@ -26,7 +31,11 @@ namespace OC.Editor
                 group.Label = _label.GetValueFromBag(bag, cc); 
             }
         }
+#endif
 
+#if UNITY_6000_3_OR_NEWER
+        [UxmlAttribute("Label")]
+#endif
         public string Label
         {
             get => _labelElement.text;

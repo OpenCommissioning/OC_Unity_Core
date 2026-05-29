@@ -5,6 +5,11 @@ using UnityEngine.UIElements;
 
 namespace OC.Editor
 {
+#if UNITY_6000_3_OR_NEWER
+    [UxmlElement("OCEditorLampField")]
+    public partial class LampField : BaseField<bool> 
+    {
+#else
     public class LampField : BaseField<bool>
     {
         public new class UxmlFactory : UxmlFactory<LampField, UxmlTraits> { }
@@ -25,7 +30,7 @@ namespace OC.Editor
                 baseFieldLamp.LampShape = _lampShape.GetValueFromBag(bag, cc); 
             }
         }
-        
+#endif
         public override bool value
         {
             get => base.value;
@@ -36,6 +41,9 @@ namespace OC.Editor
             }
         }
 
+#if UNITY_6000_3_OR_NEWER
+        [UxmlAttribute("Lamp-Shape")]
+#endif
         public InspectorLampShape LampShape
         {
             get => _lampShape;
