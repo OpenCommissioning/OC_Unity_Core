@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace OC.Interactions
     [DisallowMultipleComponent]
     public class Door : MonoBehaviour, IInteractable
     {
+        public Type ReferenceType => typeof(Door);
+        public Component Component => this; 
+        
         public IProperty<bool> Lock => _lock;
         public IPropertyReadOnly<bool> Closed => _closed;
         public IPropertyReadOnly<bool> Locked => _locked;

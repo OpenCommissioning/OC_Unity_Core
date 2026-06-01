@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using OC.Communication;
 
@@ -8,6 +9,8 @@ namespace OC.Components
     [DisallowMultipleComponent]
     public class DriveSimple : DriveSpeed
     {
+        public override Type ReferenceType => typeof(DriveSimple);
+        
         public IProperty<float> Speed => _speed;
         public IProperty<bool> Forward => _forward;
         public IProperty<bool> Backward => _backward;

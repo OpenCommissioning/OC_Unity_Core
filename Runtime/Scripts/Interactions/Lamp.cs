@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,8 +10,10 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Interactions/Lamp")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Lamp : SampleDevice, IInteractable, ICustomInspector
+    public class Lamp : SampleDevice, IInteractable
     {
+        public Type ReferenceType => typeof(Lamp);
+        
         public override Link Link => _link;
         
         public bool Signal
@@ -48,7 +51,7 @@ namespace OC.Interactions
         
         private void LateUpdate()
         {
-            if (!_override && _link.Connected) _value.Value = _link.Control.GetBit(0);
+            if (!_override) _value.Value = _link.Control.GetBit(0);
         }
 
         private void OnValidate()

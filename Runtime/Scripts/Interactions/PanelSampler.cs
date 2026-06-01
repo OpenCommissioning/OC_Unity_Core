@@ -10,7 +10,7 @@ namespace OC.Interactions
 {
     [AddComponentMenu("Open Commissioning/Interactions/Panel Sampler")]
     [DefaultExecutionOrder(10)]
-    public class PanelSampler : MonoComponent, IIndustrialPanel, ICustomInspector
+    public class PanelSampler : MonoComponent, IIndustrialPanel
     {
         public Link Link => _link;
         public IProperty<bool> Override => _override;

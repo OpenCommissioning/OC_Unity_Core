@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using OC.Communication;
  using OC.MaterialFlow;
@@ -10,8 +11,9 @@ namespace OC.Components
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BoxCollider))]
-    public class TagReader : Detector, IDevice, IMeasurement<ulong>, ICustomInspector, IInteractable
+    public class TagReader : Detector, IDevice, IMeasurement<ulong>, IInteractable
     {
+        public Type ReferenceType => typeof(TagReader);
         public Link Link => _link;
         public IProperty<bool> Override => _override;
         public IPropertyReadOnly<ulong> Value => _value;

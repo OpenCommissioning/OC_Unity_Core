@@ -121,8 +121,8 @@ namespace OC.Data
             }
             catch (Exception exception)
             {
-                Logging.Logger.Log(LogType.Error, exception.Message);
-                return null;
+                Logging.Logger.Log(LogType.Warning, exception.Message);
+                return new List<EntryData>();
             }
         }
 
@@ -152,7 +152,7 @@ namespace OC.Data
             }
             catch (Exception exception)
             {
-                Logging.Logger.Log(LogType.Error, $"{TAG}: {exception.Message}", payloadTag);
+                Logging.Logger.Log(LogType.Warning, $"{TAG}: {exception.Message}", payloadTag);
             }
         }
 

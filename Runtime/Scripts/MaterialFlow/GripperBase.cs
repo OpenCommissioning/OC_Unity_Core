@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
-using OC.Components;
 
 namespace OC.MaterialFlow
 {
@@ -9,7 +8,7 @@ namespace OC.MaterialFlow
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BoxCollider))]
-    public abstract class GripperBase : Detector, IPayloadBuffer, ICustomInspector
+    public abstract class GripperBase : Detector, IPayloadBuffer
     {
         public IPropertyReadOnly<bool> IsActive => _isActive;
         public IPropertyReadOnly<bool> IsPicked => _isPicked;

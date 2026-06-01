@@ -10,6 +10,8 @@ namespace OC.MaterialFlow
     [RequireComponent(typeof(Rigidbody))]
     public class Payload : PayloadBase, IInteractable
     {
+        public Type ReferenceType => typeof(Payload);
+        public Component Component => this;
         public IProperty<ControlState> ControlState => _controlState;
         public IProperty<PhysicState> PhysicState => _physicState;
         public int TypeId => _typeId;

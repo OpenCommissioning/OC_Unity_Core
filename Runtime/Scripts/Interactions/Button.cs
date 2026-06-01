@@ -11,8 +11,9 @@ namespace OC.Interactions
     [AddComponentMenu("Open Commissioning/Actor/Button")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class Button : SampleDevice, IInteractable, ICustomInspector
+    public class Button : SampleDevice, IInteractable
     {
+        public Type ReferenceType => typeof(Button);
         public override Link Link => _link;
         public override int AllocatedBitLength => 1;
         public Property<bool> Pressed => _pressed;

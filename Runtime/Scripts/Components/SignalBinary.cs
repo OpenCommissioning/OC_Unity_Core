@@ -1,3 +1,4 @@
+using System;
 using OC.Communication;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,8 +8,9 @@ namespace OC.Components
     [AddComponentMenu("Open Commissioning/Signal Binary")]
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class SignalBinary : MonoComponent, IDevice, IMeasurement<bool>, ICustomInspector, IInteractable
+    public class SignalBinary : MonoComponent, IDevice, IMeasurement<bool>, IInteractable
     {
+        public Type ReferenceType => typeof(SignalBinary);
         public Link Link => _link;
         public IProperty<bool> Override => _override;
         public IPropertyReadOnly<bool> Value => _value;
