@@ -1,3 +1,15 @@
+## [1.3.8](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.7...v1.3.8) (2026-06-01)
+
+
+### Bug Fixes
+
+* auto load ([5152736](https://github.com/OpenCommissioning/OC_Unity_Core/commit/5152736597a1807e22c2e78fa8eb2b035ad919f0))
+* floating panel bug ([a99ab89](https://github.com/OpenCommissioning/OC_Unity_Core/commit/a99ab8959ca3777ee6a99a2f1b78322a4eb3b612))
+* interaction iteration ([9112f00](https://github.com/OpenCommissioning/OC_Unity_Core/commit/9112f00ded8026127483571473d689207db88b29))
+* lamp is connected logic ([c8f2cc5](https://github.com/OpenCommissioning/OC_Unity_Core/commit/c8f2cc5c32271ad0ccba075497e8dd256edf794b))
+* panels ([f364d60](https://github.com/OpenCommissioning/OC_Unity_Core/commit/f364d6016fb0107672e8c3b3a9b6a54ac0f2589b))
+* selection manager ([8e924d7](https://github.com/OpenCommissioning/OC_Unity_Core/commit/8e924d7e85fb8801d6ade702775b30da2532307b))
+
 ## [1.3.7](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.6...v1.3.7) (2026-05-18)
 
 
