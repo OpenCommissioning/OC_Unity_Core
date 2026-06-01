@@ -51,7 +51,7 @@ namespace OC.Interactions
         
         private void LateUpdate()
         {
-            if (!_override && _link.Connected) _value.Value = _link.Control.GetBit(0);
+            if (!_override) _value.Value = _link.Control.GetBit(0);
         }
 
         private void OnValidate()
