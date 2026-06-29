@@ -25,14 +25,15 @@ namespace OC.MaterialFlow
         private LayerMask _raycastLayer = 1 << (int)DefaultLayers.Transport;
         [SerializeField]
         private bool _showGizmos;
+        [SerializeField]
+        private bool _preserveEntryLateralOffset;
 
         private Payload _payload;
         private Transform _transform;
-        private Transport _lastTransport;
         private Rigidbody _rigidbody;
         private ConfigurableJoint _joint;
         private float _angleOffset;
-        private ControlState _lastState;
+        private Vector3 _entryLateralOffsetLocal;
         private readonly RaycastHit[] _raycastHits = new RaycastHit[2];
         private readonly List<Transport> _transports = new List<Transport>();
 
@@ -41,12 +42,12 @@ namespace OC.MaterialFlow
             _transform = GetComponent<Transform>();
             _rigidbody = GetComponent<Rigidbody>();
             _payload = GetComponent<Payload>();
-            _payload.ControlState.OnValueChanged += ControlStateChaged;
+            _payload.ControlState.OnValueChanged += ControlStateChanged;
         }
 
         private void OnDisable()
         {
-            _payload.ControlState.OnValueChanged -= ControlStateChaged;
+            _payload.ControlState.OnValueChanged -= ControlStateChanged;
         }
 
         private void FixedUpdate()
@@ -68,70 +69,72 @@ namespace OC.MaterialFlow
         {
             if (!collision.gameObject.TryGetComponent(out Transport transport)) return;
             if (!transport.IsGuiding) return;
-            if (_transports.Contains(transport)) _transports.Remove(transport);
+            _transports.Remove(transport);
             if (transport != _transport) return;
-            _transport = null;
-            if (_joint != null) Destroy(_joint);
+            DecoupleFromTransport();
         }
 
         public void Decouple()
         {
-            if (_joint != null) Destroy(_joint);
             _transports.Clear();
-            _transport = null;
+            DecoupleFromTransport();
         }
 
-        private void ControlStateChaged(ControlState state)
+        private void ControlStateChanged(ControlState state)
         {
             if (state != ControlState.Busy) return;
-            if (_joint != null) Destroy(_joint);
+            DestroyJoint();
         }
 
         private void Raycast()
         {
-            var raycastPosition = transform.position + transform.up * (_raycastLength * 0.5f);
-            var hits = Physics.RaycastNonAlloc(raycastPosition, transform.TransformDirection(Vector3.down),
+            var raycastPosition = _transform.position + _transform.up * (_raycastLength * 0.5f);
+            var hits = Physics.RaycastNonAlloc(raycastPosition, _transform.TransformDirection(Vector3.down),
                 _raycastHits, _raycastLength, _raycastLayer);
 
             if (hits == 0)
             {
-                if (_joint != null) DestroyImmediate(_joint);
+                DecoupleFromTransport();
                 return;
             }
 
-            var hitIndex = 0;
-            if (hits > 1)
+            var hitIndex = GetClosestHitIndex(hits);
+            if (!_raycastHits[hitIndex].transform.TryGetComponent(out Transport transport))
             {
-                hitIndex = GetClosestHitIndex(_raycastHits);
+                DecoupleFromTransport();
+                return;
             }
-            
-            if (!_raycastHits[hitIndex].transform.TryGetComponent(out Transport transport)) return;
-            if (transport == _transport) return;
-            _transport = transport;
 
-            if (_transport.IsGuiding)
+            if (!transport.IsGuiding)
             {
-                _angleOffset = GetOffsetAngle(_transport);
-                CreateJoint();
+                DecoupleFromTransport();
+                return;
             }
-            else
-            {
-                if (_joint != null) DestroyImmediate(_joint);
-            }
+
+            if (transport == _transport) return;
+            CoupleToTransport(transport);
         }
 
-        private int GetClosestHitIndex(IReadOnlyList<RaycastHit> hits)
+        private int GetClosestHitIndex(int hitCount)
         {
             var distance = Mathf.Infinity;
             var result = 0; 
-            for (var i = 0; i < hits.Count; i++)
+            for (var i = 0; i < hitCount; i++)
             {
-                if (distance < hits[i].distance) continue;
-                distance = hits[i].distance;
+                if (distance < _raycastHits[i].distance) continue;
+                distance = _raycastHits[i].distance;
                 result = i;
             }
 
             return result;
+        }
+
+        private void CoupleToTransport(Transport transport)
+        {
+            _transport = transport;
+            _angleOffset = GetOffsetAngle(_transport);
+            CaptureEntryLateralOffset();
+            CreateJoint();
         }
         
         private void CreateJoint()
@@ -157,9 +160,10 @@ namespace OC.MaterialFlow
             if (_transport == null) return;
             
             var normal = _transport.GetDirection(_transform.position);
-            _joint.connectedAnchor =  _transport.GetClosetPoint(_transform.position);
-            _rigidbody.transform.rotation = Quaternion.LookRotation(normal, Vector3.up) * Quaternion.AngleAxis(_angleOffset, Vector3.up);
-            _joint.axis = Quaternion.AngleAxis(_angleOffset, Vector3.up) * Vector3.forward;
+            _joint.connectedAnchor = GetGuidedAnchorPoint();
+            var angleRotation = Quaternion.AngleAxis(_angleOffset, Vector3.up);
+            _rigidbody.transform.rotation = Quaternion.LookRotation(normal, Vector3.up) * angleRotation;
+            _joint.axis = angleRotation * Vector3.forward;
 #if UNITY_6000_0_OR_NEWER
             if (!_rigidbody.isKinematic) _rigidbody.linearVelocity = normal * _transport.Value.Value;
             _rigidbody.angularVelocity = Vector3.zero;
@@ -171,16 +175,62 @@ namespace OC.MaterialFlow
         private float GetOffsetAngle(Transport transport)
         {
             var normal = transport.GetDirection(_transform.position);
-            var angle  = Vector3.SignedAngle(normal, transform.forward, Vector3.up);
+            var angle  = Vector3.SignedAngle(normal, _transform.forward, Vector3.up);
             return Mathf.Round(angle / 90f) * 90f;
+        }
+
+        private void CaptureEntryLateralOffset()
+        {
+            if (!_preserveEntryLateralOffset)
+            {
+                _entryLateralOffsetLocal = Vector3.zero;
+                return;
+            }
+
+            var closest = _transport.GetClosetPoint(_transform.position);
+            var direction = _transport.GetDirection(_transform.position);
+            var worldOffset = Vector3.ProjectOnPlane(_transform.position - closest, direction);
+            var beltRotation = Quaternion.LookRotation(direction, Vector3.up);
+            _entryLateralOffsetLocal = Quaternion.Inverse(beltRotation) * worldOffset;
+        }
+
+        private Vector3 GetGuidedAnchorPoint()
+        {
+            var closest = _transport.GetClosetPoint(_transform.position);
+            if (!_preserveEntryLateralOffset) return closest;
+
+            var direction = _transport.GetDirection(_transform.position);
+            var beltRotation = Quaternion.LookRotation(direction, Vector3.up);
+            return closest + beltRotation * _entryLateralOffsetLocal;
+        }
+
+        private void DecoupleFromTransport()
+        {
+            DestroyJoint();
+            ClearTransportCoupling();
+        }
+
+        private void DestroyJoint()
+        {
+            if (_joint == null) return;
+
+            if (Application.isPlaying) Destroy(_joint);
+            else DestroyImmediate(_joint);
+            _joint = null;
+        }
+
+        private void ClearTransportCoupling()
+        {
+            _transport = null;
+            _entryLateralOffsetLocal = Vector3.zero;
         }
 
         private void OnDrawGizmos()
         {
             if (!_showGizmos) return;
-            if (_transport == null) return;
+            if (_transport == null || !_transport.IsGuiding) return;
 
-            var point = _transport.GetClosetPoint(_transform.position);
+            var point = GetGuidedAnchorPoint();
             var normal = _transport.GetDirection(_transform.position);
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(point, 0.02f);
