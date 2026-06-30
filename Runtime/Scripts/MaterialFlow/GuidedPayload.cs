@@ -99,12 +99,6 @@ namespace OC.MaterialFlow
             if (hits == 0)
             {
                 if (_joint != null) DestroyImmediate(_joint);
-#if UNITY_6000_0_OR_NEWER
-                if (!_rigidbody.isKinematic) _rigidbody.linearVelocity = Vector3.zero;
-#else
-                if (!_rigidbody.isKinematic) _rigidbody.velocity = Vector3.zero;
-#endif
-                _rigidbody.angularVelocity = Vector3.zero;
                 return;
             }
 
@@ -116,12 +110,6 @@ namespace OC.MaterialFlow
             
             if (!_raycastHits[hitIndex].transform.TryGetComponent(out Transport transport)) return;
             if (transport == _transport) return;
-#if UNITY_6000_0_OR_NEWER
-            if (!_rigidbody.isKinematic) _rigidbody.linearVelocity = Vector3.zero;
-#else
-            if (!_rigidbody.isKinematic) _rigidbody.velocity = Vector3.zero;
-#endif
-            _rigidbody.angularVelocity = Vector3.zero;
             _transport = transport;
 
             if (_transport.IsGuiding)
@@ -165,6 +153,7 @@ namespace OC.MaterialFlow
             _joint.angularYMotion = ConfigurableJointMotion.Locked;
 #endif
             _joint.angularZMotion = ConfigurableJointMotion.Locked;
+            _joint.connectedAnchor = GetGuidedAnchorPoint();
         }
 
         private void Move()
@@ -173,14 +162,19 @@ namespace OC.MaterialFlow
             if (_transport == null) return;
             
             var normal = _transport.GetDirection(_transform.position);
-            _joint.connectedAnchor = GetGuidedAnchorPoint();
+            var speed = _transport.Value.Value;
+            if (!_preserveEntryLateralOffset || !Mathf.Approximately(speed, 0))
+            {
+                _joint.connectedAnchor = GetGuidedAnchorPoint();
+            }
+            
             _rigidbody.transform.rotation = Quaternion.LookRotation(normal, Vector3.up) * Quaternion.AngleAxis(_angleOffset, Vector3.up);
             _joint.axis = Quaternion.AngleAxis(_angleOffset, Vector3.up) * Vector3.forward;
 #if UNITY_6000_0_OR_NEWER
-            if (!_rigidbody.isKinematic) _rigidbody.linearVelocity = normal * _transport.Value.Value;
+            if (!_rigidbody.isKinematic) _rigidbody.linearVelocity = normal * speed;
             _rigidbody.angularVelocity = Vector3.zero;
 #else
-            if (!_rigidbody.isKinematic) _rigidbody.velocity = normal * _transport.Value.Value;
+            if (!_rigidbody.isKinematic) _rigidbody.velocity = normal * speed;
 #endif
         }
 
