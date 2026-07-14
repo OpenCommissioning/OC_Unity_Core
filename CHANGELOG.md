@@ -1,3 +1,10 @@
+## [1.3.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.8...v1.3.9) (2026-07-14)
+
+
+### Bug Fixes
+
+* **Editor:** rename wrong name for the connected property ([b331744](https://github.com/OpenCommissioning/OC_Unity_Core/commit/b3317440f14cd952949738a4a579445deb093ddd))
+
 ## [1.3.8](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.7...v1.3.8) (2026-06-01)
 
 
