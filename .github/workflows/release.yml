@@ -2,11 +2,17 @@ name: Release
 
 on:
   push:
-    branches: [master] 
+    branches: [master]
   workflow_dispatch:
 
-jobs:   
-  build-package: 
+env:
+  PACKAGE_NAME: OC-Core
+  DEFAULT_BRANCH: master
+  GIT_USER_NAME: oc-bot
+  GIT_USER_EMAIL: opencommissioning@spiratec.com
+
+jobs:
+  build-package:
     runs-on: ubuntu-latest
     
     steps:
@@ -15,25 +21,24 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Semantic release
         id: semantic
         uses: cycjimmy/semantic-release-action@v4
         with:
           extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
+            @semantic-release/changelog            
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}} 
-
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      
       # Recreate the UPM (Release) branch for the latest version
       - name: Create UPM Branch
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
-          echo Checking out UPM Branch
-          git checkout master
-          git config --global user.name oc-bot
-          git config --global user.email opencommissioning@spiratec.com
+          echo "Checking out '${{env.DEFAULT_BRANCH}}' and recreating 'upm' from it"
+          git checkout ${{env.DEFAULT_BRANCH}}
+          git config --global user.name ${{env.GIT_USER_NAME}}
+          git config --global user.email ${{env.GIT_USER_EMAIL}}
           git checkout -B upm
 
       # Prep for release, hide Samples/ from Unity's compiler
@@ -94,7 +99,7 @@ jobs:
       - name: Create Package Tarball
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
-          mkdir package && find . -maxdepth 1 ! -name "package" ! -name "." -exec mv {} package/ \; && tar -czf OC-Core-${{steps.semantic.outputs.new_release_version}}.tar.gz package/ && shopt -s dotglob && mv package/* ./ && rmdir package
+          mkdir package && find . -maxdepth 1 ! -name "package" ! -name "." -exec mv {} package/ \; && tar -czf ${{env.PACKAGE_NAME}}-${{steps.semantic.outputs.new_release_version}}.tar.gz package/ && shopt -s dotglob && mv package/* ./ && rmdir package
 
       # Publish this tagged as a release
       - name: Publish New Repo Release
@@ -104,12 +109,12 @@ jobs:
           gh release create upm/v${{steps.semantic.outputs.new_release_version}} -t "Release ${{steps.semantic.outputs.new_release_version}}" -n "${{steps.semantic.outputs.new_release_notes}}"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          
+      
       # Upload package Tarball
       - name: Upload Release Artifact
         if: steps.semantic.outputs.new_release_published == 'true'
         run: |
           echo Uploading release asset
-          gh release upload upm/v${{ steps.semantic.outputs.new_release_version }} OC-Core-${{ steps.semantic.outputs.new_release_version }}.tar.gz
+          gh release upload upm/v${{ steps.semantic.outputs.new_release_version }} ${{env.PACKAGE_NAME}}-${{ steps.semantic.outputs.new_release_version }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
