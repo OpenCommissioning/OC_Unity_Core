@@ -1,3 +1,11 @@
+## [1.3.10](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.9...v1.3.10) (2026-07-26)
+
+
+### Bug Fixes
+
+* payload physical state at Pick ([20a43a8](https://github.com/OpenCommissioning/OC_Unity_Core/commit/20a43a85706b2e0e196a9cead322d360bd2682d2))
+* workflow without push after PR to master ([c2366fc](https://github.com/OpenCommissioning/OC_Unity_Core/commit/c2366fc8f1c7292ef49ad878efcf8dfa6eb646ea))
+
 ## [1.3.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.8...v1.3.9) (2026-07-14)
 
 
