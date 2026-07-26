@@ -16,7 +16,7 @@ namespace OC.MaterialFlow
             foreach (var payload in payloads)
             {
                 payload.SetParent(transform);
-                payload.PhysicState.Value = PhysicState.Parent;
+                payload.PhysicState.Value = PhysicState.Static;
             }
         }
 
