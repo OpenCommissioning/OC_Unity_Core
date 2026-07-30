@@ -1,3 +1,10 @@
+## [1.3.11](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.10...v1.3.11) (2026-07-30)
+
+
+### Bug Fixes
+
+* gripper dynamic extension size ([aaf0a99](https://github.com/OpenCommissioning/OC_Unity_Core/commit/aaf0a99c6ef66e21ae1757f9625fb3edd488b848))
+
 ## [1.3.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.8...v1.3.9) (2026-07-14)
 
 
