@@ -177,7 +177,12 @@ namespace OC.MaterialFlow
 
             if (isGripped)
             {
-                _collider.size = _initColliderSize + _additionalColliderSize;
+                var expansion = new Vector3(
+                    Mathf.Abs(_additionalColliderSize.x),
+                    Mathf.Abs(_additionalColliderSize.y),
+                    Mathf.Abs(_additionalColliderSize.z));
+
+                _collider.size = _initColliderSize + expansion;
                 _collider.center = _initColliderCenter + _additionalColliderSize * 0.5f;
             }
             else
