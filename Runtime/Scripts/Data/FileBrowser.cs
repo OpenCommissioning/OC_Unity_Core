@@ -5,15 +5,17 @@ namespace OC.Data
 {
     public static class FileBrowser
     {
-        private static readonly IFileBrowser Browser;
+        private static readonly IFileBrowser _browser;
         private static string _path;
 
         static FileBrowser() 
         {
-#if UNITY_STANDALONE_WIN
-            Browser = new FileBrowserWindows();
+#if UNITY_STANDALONE_WIN && (UNITY_EDITOR_WIN || !UNITY_EDITOR)
+            _browser = new FileBrowserWindows();
 #elif UNITY_EDITOR
-            Browser = new FileBrowserEditor();
+            _browser = new FileBrowserEditor();
+#else
+            _browser = new FileBrowserNotSupported();
 #endif
         }
 
@@ -26,10 +28,10 @@ namespace OC.Data
         public static string[] OpenFilePanel(string title, string directory, ExtensionFilter[] extensions, bool multiselect)
         {
             if (string.IsNullOrEmpty(directory)) directory = _path;
-            var pathes = Browser.OpenFilePanel(title, directory, extensions, multiselect);
-            if (pathes.Length == 0) return null;
-             _path = pathes[0];
-            return pathes;
+            var path = _browser.OpenFilePanel(title, directory, extensions, multiselect);
+            if (path.Length == 0) return null;
+             _path = path[0];
+            return path;
         }
         
         public static async UniTask<string[]> OpenFilePanelAsync(string title, string directory, string extension, bool multiselect) 
@@ -41,20 +43,20 @@ namespace OC.Data
         public static async UniTask<string[]> OpenFilePanelAsync(string title, string directory, ExtensionFilter[] extensions, bool multiselect)
         {
             if (string.IsNullOrEmpty(directory)) directory = _path;
-            var pathes = await Browser.OpenFilePanelAsync(title, directory, extensions, multiselect);
-            if (pathes.Length == 0) return null;
-            _path = pathes[0];
-            return pathes;
+            var path = await _browser.OpenFilePanelAsync(title, directory, extensions, multiselect);
+            if (path.Length == 0) return null;
+            _path = path[0];
+            return path;
         }
 
         public static string[] OpenFolderPanel(string title, string directory, bool multiselect) 
         {
-            return Browser.OpenFolderPanel(title, directory, multiselect);
+            return _browser.OpenFolderPanel(title, directory, multiselect);
         }
         
         public static async UniTask<string[]> OpenFolderPanelAsync(string title, string directory, bool multiselect, Action<string[]> cb) 
         {
-            return await Browser.OpenFolderPanelAsync(title, directory, multiselect);
+            return await _browser.OpenFolderPanelAsync(title, directory, multiselect);
         }
 
         public static string SaveFilePanel(string title, string directory, string defaultName , string extension) 
@@ -65,7 +67,7 @@ namespace OC.Data
 
         public static string SaveFilePanel(string title, string directory, string defaultName, ExtensionFilter[] extensions) 
         {
-            return Browser.SaveFilePanel(title, directory, defaultName, extensions);
+            return _browser.SaveFilePanel(title, directory, defaultName, extensions);
         }
 
         public static async UniTask<string> SaveFilePanelAsync(string title, string directory, string defaultName, string extension) 
@@ -76,7 +78,7 @@ namespace OC.Data
 
         public static async UniTask<string> SaveFilePanelAsync(string title, string directory, string defaultName, ExtensionFilter[] extensions) 
         {
-            return await Browser.SaveFilePanelAsync(title, directory, defaultName, extensions);
+            return await _browser.SaveFilePanelAsync(title, directory, defaultName, extensions);
         }
     }
 
