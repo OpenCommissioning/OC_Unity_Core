@@ -1,3 +1,10 @@
+## [1.3.13](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.12...v1.3.13) (2026-08-13)
+
+
+### Bug Fixes
+
+* _lock bindingPath ([82d8ccd](https://github.com/OpenCommissioning/OC_Unity_Core/commit/82d8ccdadb98fb993266ad52a5a003fd9e9c47c4))
+
 ## [1.3.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.8...v1.3.9) (2026-07-14)
 
 
