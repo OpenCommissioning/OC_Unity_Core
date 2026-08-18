@@ -18,6 +18,7 @@ namespace OC
                     interaction.Mode = Interaction.InteractionMode.Click | Interaction.InteractionMode.Hover;
 #if UNITY_EDITOR
                     interaction.OnPointerClickEvent = new UnityEvent();
+                    interaction.OnPointerRightClickEvent = new UnityEvent();
                     interaction.OnPointerDownEvent = new UnityEvent();
                     interaction.OnPointerUpEvent = new UnityEvent();
                     UnityEditor.Events.UnityEventTools.AddPersistentListener(interaction.OnPointerDownEvent, button.Press);
@@ -33,9 +34,11 @@ namespace OC
                     
 #if UNITY_EDITOR
                     interaction.OnPointerClickEvent = new UnityEvent();
+                    interaction.OnPointerRightClickEvent = new UnityEvent();
                     interaction.OnPointerDownEvent = new UnityEvent();
                     interaction.OnPointerUpEvent = new UnityEvent();
-                    UnityEditor.Events.UnityEventTools.AddPersistentListener(interaction.OnPointerClickEvent, @switch.Click);
+                    UnityEditor.Events.UnityEventTools.AddPersistentListener(interaction.OnPointerClickEvent, @switch.ClickLeft);
+                    UnityEditor.Events.UnityEventTools.AddPersistentListener(interaction.OnPointerRightClickEvent, @switch.ClickRight);
 #endif
                     
                     Logging.Logger.Log($"Interaction {interaction.GetType().Name} connected to {@switch.gameObject.name}", interaction);

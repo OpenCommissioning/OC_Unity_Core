@@ -11,11 +11,13 @@ namespace OC.Interactions.UIElements
 
         private bool _active;
 
-        public MouseEvents()
+        public MouseEvents() : this(MouseButton.LeftMouse) {}
+
+        public MouseEvents(MouseButton button)
         {
             activators.Add(new ManipulatorActivationFilter()
             {
-                button = MouseButton.LeftMouse
+                button = button
             });
         }
 
@@ -43,6 +45,7 @@ namespace OC.Interactions.UIElements
         {
             if (!_active || !CanStopManipulation(evt)) return;
             ProcessUpEvent(evt, PointerId.mousePointerId);
+            Clicked?.Invoke();
         }
         
         private void OnMouseLeave(MouseLeaveEvent evt)
@@ -65,7 +68,6 @@ namespace OC.Interactions.UIElements
             target.ReleasePointer(pointerId);
             evt.StopPropagation();
             Up?.Invoke();
-            Clicked?.Invoke();
         }
     }
 }

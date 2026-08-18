@@ -55,6 +55,7 @@ namespace OC.Interactions
         
         public event Action OnDestroyAction;
         public UnityEvent OnPointerClickEvent;
+        public UnityEvent OnPointerRightClickEvent;
         public UnityEvent OnPointerDownEvent;
         public UnityEvent OnPointerUpEvent;
 
@@ -124,8 +125,18 @@ namespace OC.Interactions
         {
             if (!isActiveAndEnabled) return;
             if (_state.Value.HasFlag(InteractionState.Disabled)) return;
-            if (_debug) Debug.Log("Event: OnPointerClick", this);
-            if (_mode.HasFlag(InteractionMode.Click)) OnPointerClickEvent?.Invoke();
+            if (_debug) Debug.Log($"Event: OnPointerClick ({eventData.button})", this);
+            if (!_mode.HasFlag(InteractionMode.Click)) return;
+
+            switch (eventData.button)
+            {
+                case PointerEventData.InputButton.Right:
+                    OnPointerRightClickEvent?.Invoke();
+                    break;
+                default:
+                    OnPointerClickEvent?.Invoke();
+                    break;
+            }
         }
 
         public void OnPointerDown(PointerEventData eventData)
