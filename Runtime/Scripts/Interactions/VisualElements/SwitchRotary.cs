@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -28,32 +27,10 @@ namespace OC.Interactions.UIElements
             }
         }
 
-        public event Action Clicked
-        {
-            add
-            {
-                if (_clickable == null)
-                {
-                    _clickable = new Clickable(value)
-                    {
-                        target = _container
-                    };
-                }
-                else
-                {
-                    _clickable.clicked += value;
-                }
-            }
-            remove
-            {
-                if (_clickable == null) return;
-                _clickable.clicked -= value;
-            }
-        }
-        
         private const string UXML = "UXML/panel-switch-rotary";
-        
-        private Clickable _clickable;
+
+        private readonly MouseEvents _mouseEventsLeft;
+        private readonly MouseEvents _mouseEventsRight;
         private readonly VisualElement _container;
         private readonly VisualElement _knob;
         private readonly Label _label;
@@ -75,6 +52,16 @@ namespace OC.Interactions.UIElements
             _index = container.Q<Label>("index");
             
             _label.text = name.ToUpper();
+
+            _mouseEventsLeft = new MouseEvents
+            {
+                target = _container
+            };
+
+            _mouseEventsRight = new MouseEvents(MouseButton.RightMouse)
+            {
+                target = _container
+            };
         }
 
         public void Bind(Interactions.SwitchRotary switchRotary)
@@ -83,7 +70,8 @@ namespace OC.Interactions.UIElements
             Index = switchRotary.Index.Value;
             Angle = switchRotary.Angle.Value;
 
-            Clicked += switchRotary.Click; 
+            _mouseEventsLeft.Clicked += switchRotary.ClickLeft;
+            _mouseEventsRight.Clicked += switchRotary.ClickRight;
             
             switchRotary.OnStateChanged += (index, angle) =>
             {

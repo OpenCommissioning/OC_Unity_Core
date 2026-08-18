@@ -24,6 +24,8 @@ namespace OC.Editor.Inspector
             groupSettings.Add(new PropertyField{bindingPath = "_stateCount"});
             groupSettings.Add(new PropertyField{bindingPath = "_range"});
             groupSettings.Add(new PropertyField{bindingPath = "_offset"});
+            groupSettings.Add(new PropertyField{bindingPath = "_useRightClick"});
+            groupSettings.Add(new PropertyField{bindingPath = "_startIndex"});
 
             var groupEvents = new PropertyGroup("Events");
             groupEvents.Add(new PropertyField { bindingPath = "OnRotationChanged" });

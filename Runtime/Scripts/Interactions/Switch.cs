@@ -20,6 +20,10 @@ namespace OC.Interactions
         protected Property<int> _index = new (0);
         [SerializeField] 
         protected int _stateCount = 2;
+        [SerializeField] 
+        protected int _startIndex;
+        [SerializeField] 
+        protected bool _useRightClick;
         
         [SerializeField]
         protected Link _link = new ("FB_Switch");
@@ -29,6 +33,7 @@ namespace OC.Interactions
         private void Start()
         {
             _link.Initialize(this);
+            _index.Value = _startIndex;
         }
         
         protected void OnEnable()
@@ -53,17 +58,28 @@ namespace OC.Interactions
             OnIndexChanged?.Invoke(index);
         }
 
-        public void Click()
+        public void ClickLeft()
+        {
+            Step(_useRightClick ? -1 : 1);
+        }
+
+        public void ClickRight()
+        {
+            if (!_useRightClick) return;
+            Step(1);
+        }
+
+        private void Step(int step)
         {
             if (!Application.isPlaying) return;
-            
+
             if (_stateCount < 1)
             {
                 Logging.Logger.Log(LogType.Warning,"Position count < 1",this);
                 return;
             }
 
-            _index.Value = (_index.Value + 1) % _stateCount;
+            _index.Value = (_index.Value + step + _stateCount) % _stateCount;
         }
     }
 }
