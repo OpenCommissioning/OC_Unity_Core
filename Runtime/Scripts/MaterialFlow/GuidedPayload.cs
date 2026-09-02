@@ -35,18 +35,23 @@ namespace OC.MaterialFlow
         private ControlState _lastState;
         private readonly RaycastHit[] _raycastHits = new RaycastHit[2];
         private readonly List<Transport> _transports = new List<Transport>();
+        
+        private Vector3 _lastAnchor;
+        private bool _isStopped;
 
         private void OnEnable()
         {
             _transform = GetComponent<Transform>();
             _rigidbody = GetComponent<Rigidbody>();
             _payload = GetComponent<Payload>();
-            _payload.ControlState.OnValueChanged += ControlStateChaged;
+            _payload.ControlState.OnValueChanged += ControlStateChanged;
+            _rigidbody.sleepThreshold = 0.01f;
+            _rigidbody.linearDamping  = 0.05f;
         }
 
         private void OnDisable()
         {
-            _payload.ControlState.OnValueChanged -= ControlStateChaged;
+            _payload.ControlState.OnValueChanged -= ControlStateChanged;
         }
 
         private void FixedUpdate()
@@ -79,9 +84,10 @@ namespace OC.MaterialFlow
             if (_joint != null) Destroy(_joint);
             _transports.Clear();
             _transport = null;
+            _isStopped = false;
         }
 
-        private void ControlStateChaged(ControlState state)
+        private void ControlStateChanged(ControlState state)
         {
             if (state != ControlState.Busy) return;
             if (_joint != null) Destroy(_joint);
@@ -149,6 +155,9 @@ namespace OC.MaterialFlow
             _joint.angularYMotion = ConfigurableJointMotion.Locked;
 #endif
             _joint.angularZMotion = ConfigurableJointMotion.Locked;
+            
+            _joint.axis = Quaternion.AngleAxis(_angleOffset, Vector3.up) * Vector3.forward;
+            _isStopped = false;
         }
 
         private void Move()
@@ -156,15 +165,41 @@ namespace OC.MaterialFlow
             if (_joint == null) return;
             if (_transport == null) return;
             
+            var speed = _transport.Value.Value;
             var normal = _transport.GetDirection(_transform.position);
-            _joint.connectedAnchor =  _transport.GetClosetPoint(_transform.position);
-            _rigidbody.transform.rotation = Quaternion.LookRotation(normal, Vector3.up) * Quaternion.AngleAxis(_angleOffset, Vector3.up);
-            _joint.axis = Quaternion.AngleAxis(_angleOffset, Vector3.up) * Vector3.forward;
+            var point = _transport.GetClosetPoint(_transform.position);
+            var rot = Quaternion.LookRotation(normal, Vector3.up) * Quaternion.AngleAxis(_angleOffset, Vector3.up);
+            
+            var stopped = Mathf.Approximately(speed, 0f);
+            
+            if (stopped != _isStopped)
+            {
+                _isStopped = stopped;
+                _joint.xMotion = stopped ? ConfigurableJointMotion.Locked : ConfigurableJointMotion.Free;
+                if (stopped)
+                {
+                    _rigidbody.linearVelocity  = Vector3.zero;
+                    _rigidbody.angularVelocity = Vector3.zero;
+                }
+            }
+
+            if (stopped && _rigidbody.IsSleeping()) return;
+
+            if ((point - _lastAnchor).sqrMagnitude > 1e-6f)
+            {
+                _joint.connectedAnchor = point;
+                _lastAnchor = point;
+            }
+
+            if (Quaternion.Angle(rot, _rigidbody.rotation) > 1e-3f)
+            {
+                _rigidbody.MoveRotation(rot);
+            }
+
 #if UNITY_6000_0_OR_NEWER
-            if (!_rigidbody.isKinematic) _rigidbody.linearVelocity = normal * _transport.Value.Value;
-            _rigidbody.angularVelocity = Vector3.zero;
+            if (!stopped && !_rigidbody.isKinematic) _rigidbody.linearVelocity = normal * _transport.Value.Value;
 #else
-            if (!_rigidbody.isKinematic) _rigidbody.velocity = normal * _transport.Value.Value;
+            if (stopped && !_rigidbody.isKinematic) _rigidbody.velocity = normal * _transport.Value.Value;
 #endif
         }
 
