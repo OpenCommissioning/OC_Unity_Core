@@ -45,6 +45,13 @@ namespace OC.MaterialFlow
         [SerializeField]
         private List<Payload> _buffer = new ();
 
+        private void Awake()
+        {
+            GetReferences();
+            _initColliderSize = _collider.size;
+            _initColliderCenter = _collider.center;
+        }
+
         private new void OnEnable()
         {
             base.OnEnable();
@@ -55,15 +62,8 @@ namespace OC.MaterialFlow
         private new void OnDisable()
         {
             base.OnDisable();
-            _isActive.OnValueChanged += OnIsActiveChanged;
-            _isPicked.OnValueChanged += OnIsPickedChanged;
-        }
-
-        private void Start()
-        {
-            GetReferences();
-            _initColliderSize = _collider.size;
-            _initColliderCenter = _collider.center;
+            _isActive.OnValueChanged -= OnIsActiveChanged;
+            _isPicked.OnValueChanged -= OnIsPickedChanged;
         }
 
         public void Pick(bool pick)
@@ -174,6 +174,7 @@ namespace OC.MaterialFlow
         private void SetColliderSize(bool isGripped)
         {
             if (!_dynamicSize) return;
+            if (_collider == null) return;
 
             if (isGripped)
             {
