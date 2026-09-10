@@ -1,3 +1,10 @@
+## [1.3.15](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.14...v1.3.15) (2026-09-10)
+
+
+### Bug Fixes
+
+* initialize GripperBase collider references in Awake ([f84cb8b](https://github.com/OpenCommissioning/OC_Unity_Core/commit/f84cb8b84cb819bbd45f61b93134d43efac2e58f))
+
 ## [1.3.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.8...v1.3.9) (2026-07-14)
 
 
