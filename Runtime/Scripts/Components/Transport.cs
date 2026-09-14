@@ -22,7 +22,7 @@ namespace OC.Components
         public bool IsGuiding => _isGuiding;
         
         [SerializeField]
-        private Actor _actor;
+        protected Actor _actor;
         [SerializeField]
         protected float _width = 0.3f;
         [SerializeField]
@@ -32,11 +32,11 @@ namespace OC.Components
         [SerializeField]
         protected float _factor = 0.001f;
         [SerializeField]
-        private bool _isDynamic; 
+        protected bool _isDynamic; 
         [SerializeField]
-        private bool _isGuiding;
+        protected bool _isGuiding;
         [SerializeField]
-        private bool _gizmos;
+        protected bool _gizmos;
 
         private readonly Property<Vector3> _size = new (new Vector3(0.3f, 0.1f, 1));
         
