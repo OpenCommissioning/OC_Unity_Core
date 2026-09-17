@@ -1,3 +1,10 @@
+## [1.3.16](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.15...v1.3.16) (2026-09-17)
+
+
+### Bug Fixes
+
+* let GuidedPayload sleep on a stopped Transport ([4fa87b0](https://github.com/OpenCommissioning/OC_Unity_Core/commit/4fa87b0e9b376cfa77d88b5dc0dba2286c1ea6c1))
+
 ## [1.3.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.8...v1.3.9) (2026-07-14)
 
 
