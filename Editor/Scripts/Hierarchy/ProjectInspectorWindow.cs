@@ -2,8 +2,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using OC.Communication;
 using OC.VisualElements;
 using UnityEngine.SceneManagement;
@@ -16,10 +19,27 @@ namespace OC.Editor
         
         private MultiColumnTreeView _multiColumnTreeView;
         private List<TreeViewItemData<HierarchyItem>> _treeViewData = new ();
+        private List<TreeViewItemData<HierarchyItem>> _displayedTreeViewData = new ();
         private ToolbarSearchField _toolbarSearchField;
         private ToolbarButton _toolbarButtonRefresh;
+        private ToolbarButton _toolbarButtonExport;
         private ToolbarButton _toolbarButtonReset;
+        private ToolbarSearchField _filterPath;
+        private ToolbarSearchField _filterType;
+        private DropdownField _filterLink;
+        private DropdownField _filterOverride;
         private string _searchQuery = string.Empty;
+        private string _pathQuery = string.Empty;
+        private string _typeQuery = string.Empty;
+        private StateFilter _linkFilter = StateFilter.All;
+        private StateFilter _overrideFilter = StateFilter.All;
+
+        private enum StateFilter
+        {
+            All,
+            On,
+            Off
+        }
         
         [MenuItem("Open Commissioning/Project Inspector")]
         public static void ShowWindow()
@@ -35,11 +55,26 @@ namespace OC.Editor
             
             _toolbarSearchField = rootVisualElement.Q<ToolbarSearchField>("toolbarSearchField");
             _toolbarButtonRefresh = rootVisualElement.Q<ToolbarButton>("toolbarButtonRefresh");
+            _toolbarButtonExport = rootVisualElement.Q<ToolbarButton>("toolbarButtonExport");
             _toolbarButtonReset = rootVisualElement.Q<ToolbarButton>("toolbarButtonReset");
+            _filterPath = rootVisualElement.Q<ToolbarSearchField>("filterPath");
+            _filterType = rootVisualElement.Q<ToolbarSearchField>("filterType");
+            _filterLink = rootVisualElement.Q<DropdownField>("filterLink");
+            _filterOverride = rootVisualElement.Q<DropdownField>("filterOverride");
+
+            _filterLink.choices = new List<string> { "All", "Connected", "Disconnected" };
+            _filterLink.index = 0;
+            _filterOverride.choices = new List<string> { "All", "Active", "Inactive" };
+            _filterOverride.index = 0;
 
             _toolbarSearchField.RegisterValueChangedCallback(OnSearchFilterChanged);
             _toolbarButtonRefresh.clicked += RefreshTreeViewDataSource;
+            _toolbarButtonExport.clicked += ExportCsv;
             _toolbarButtonReset.clicked += ResetOverride;
+            _filterPath.RegisterValueChangedCallback(OnPathFilterChanged);
+            _filterType.RegisterValueChangedCallback(OnTypeFilterChanged);
+            _filterLink.RegisterValueChangedCallback(OnLinkFilterChanged);
+            _filterOverride.RegisterValueChangedCallback(OnOverrideFilterChanged);
             
             var content = rootVisualElement.Q("content");
             _multiColumnTreeView = CreateMultiColumnTreeView();
@@ -51,8 +86,13 @@ namespace OC.Editor
         private void OnDisable()
         {
             _toolbarSearchField?.UnregisterValueChangedCallback(OnSearchFilterChanged);
-            _toolbarButtonRefresh.clicked -= RefreshTreeViewDataSource;
-            _toolbarButtonReset.clicked -= ResetOverride;
+            if (_toolbarButtonRefresh != null) _toolbarButtonRefresh.clicked -= RefreshTreeViewDataSource;
+            if (_toolbarButtonExport != null) _toolbarButtonExport.clicked -= ExportCsv;
+            if (_toolbarButtonReset != null) _toolbarButtonReset.clicked -= ResetOverride;
+            _filterPath?.UnregisterValueChangedCallback(OnPathFilterChanged);
+            _filterType?.UnregisterValueChangedCallback(OnTypeFilterChanged);
+            _filterLink?.UnregisterValueChangedCallback(OnLinkFilterChanged);
+            _filterOverride?.UnregisterValueChangedCallback(OnOverrideFilterChanged);
         }
 
         private MultiColumnTreeView CreateMultiColumnTreeView()
@@ -101,6 +141,27 @@ namespace OC.Editor
                 }
             };
 
+            var columnType = new Column()
+            {
+                title = "Type",
+                stretchable = true,
+                minWidth = 80f
+            };
+            columnType.bindCell += (element, i) =>
+            {
+                var item = multiColumnTreeView.GetItemDataForIndex<HierarchyItem>(i);
+                if (element is not Label label) return;
+
+                if (item.Component == null)
+                {
+                    label.style.display = DisplayStyle.None;
+                    return;
+                }
+
+                label.style.display = DisplayStyle.Flex;
+                label.text = item.Component.GetType().Name;
+            };
+
             var columnLink = new Column()
             {
                 title = "Link",
@@ -118,10 +179,11 @@ namespace OC.Editor
             };
             columnOverride.makeCell += MakeCellOverride;
             columnOverride.bindCell += BindCellOverride;
-            columnLink.unbindCell += UnbindCellOverride;
+            columnOverride.unbindCell += UnbindCellOverride;
             
             multiColumnTreeView.columns.Add(columnHierarchy);
             multiColumnTreeView.columns.Add(columnPath);
+            multiColumnTreeView.columns.Add(columnType);
             multiColumnTreeView.columns.Add(columnLink);
             multiColumnTreeView.columns.Add(columnOverride);
 
@@ -214,17 +276,52 @@ namespace OC.Editor
 
         private void RefreshTreeView()
         {
-            if (string.IsNullOrEmpty(_searchQuery))
-            {
-                _multiColumnTreeView.SetRootItems(_treeViewData);
-            }
-            else
-            {
-                var filtered = _treeViewData.FilterByName(_searchQuery);
-                _multiColumnTreeView.SetRootItems(filtered);
-            }
-            
+            _displayedTreeViewData = HasActiveFilter
+                ? _treeViewData.Filter(MatchesFilters)
+                : _treeViewData;
+
+            _multiColumnTreeView.SetRootItems(_displayedTreeViewData);
             _multiColumnTreeView.RefreshItems();
+        }
+
+        private bool HasActiveFilter =>
+            !string.IsNullOrEmpty(_searchQuery)
+            || !string.IsNullOrEmpty(_pathQuery)
+            || !string.IsNullOrEmpty(_typeQuery)
+            || _linkFilter != StateFilter.All
+            || _overrideFilter != StateFilter.All;
+
+        private bool MatchesFilters(HierarchyItem item)
+        {
+            if (item.Component == null) return false;
+
+            var device = item.Component as IDevice;
+
+            if (!string.IsNullOrEmpty(_searchQuery) && !MatchesSearchQuery(item, device)) return false;
+            if (!string.IsNullOrEmpty(_pathQuery) && !Contains(device?.Link.ScenePath, _pathQuery)) return false;
+            if (!string.IsNullOrEmpty(_typeQuery) && !Contains(item.Component.GetType().Name, _typeQuery)) return false;
+            if (!MatchesState(_linkFilter, device?.Link.Connected.Value)) return false;
+            if (!MatchesState(_overrideFilter, device?.Override.Value)) return false;
+
+            return true;
+        }
+
+        private bool MatchesSearchQuery(HierarchyItem item, IDevice device)
+        {
+            return Contains(item.Name, _searchQuery)
+                   || Contains(item.Component.GetType().Name, _searchQuery)
+                   || Contains(device?.Link.ScenePath, _searchQuery);
+        }
+
+        private static bool MatchesState(StateFilter filter, bool? state)
+        {
+            if (filter == StateFilter.All) return true;
+            return state == (filter == StateFilter.On);
+        }
+
+        private static bool Contains(string value, string query)
+        {
+            return value?.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private void RefreshTreeViewDataSource()
@@ -247,8 +344,90 @@ namespace OC.Editor
         
         private void ApplySearchFilter(string filter)
         {
-            _searchQuery = filter;
+            _searchQuery = Sanitize(filter);
             RefreshTreeView();
+        }
+
+        private void OnPathFilterChanged(ChangeEvent<string> evt)
+        {
+            _pathQuery = Sanitize(evt.newValue);
+            RefreshTreeView();
+        }
+
+        private void OnTypeFilterChanged(ChangeEvent<string> evt)
+        {
+            _typeQuery = Sanitize(evt.newValue);
+            RefreshTreeView();
+        }
+
+        private void OnLinkFilterChanged(ChangeEvent<string> evt)
+        {
+            _linkFilter = (StateFilter)_filterLink.index;
+            RefreshTreeView();
+        }
+
+        private void OnOverrideFilterChanged(ChangeEvent<string> evt)
+        {
+            _overrideFilter = (StateFilter)_filterOverride.index;
+            RefreshTreeView();
+        }
+
+        private static string Sanitize(string filter)
+        {
+            return filter?.Trim() ?? string.Empty;
+        }
+
+        private void ExportCsv()
+        {
+            var path = UnityEditor.EditorUtility.SaveFilePanel(
+                "Export Project Inspector",
+                string.Empty,
+                $"ProjectInspector_{SceneManager.GetActiveScene().name}",
+                "csv");
+
+            if (string.IsNullOrEmpty(path)) return;
+
+            var csv = new StringBuilder();
+            csv.AppendLine("Hierarchy,Path,Type,Link,Override");
+
+            foreach (var rootItem in _displayedTreeViewData)
+            {
+                AppendCsvRows(csv, rootItem, string.Empty);
+            }
+
+            File.WriteAllText(path, csv.ToString(), Encoding.UTF8);
+        }
+
+        private static void AppendCsvRows(
+            StringBuilder csv,
+            TreeViewItemData<HierarchyItem> treeItem,
+            string parentHierarchy)
+        {
+            var item = treeItem.data;
+            var hierarchy = string.IsNullOrEmpty(parentHierarchy)
+                ? item.Name
+                : $"{parentHierarchy}.{item.Name}";
+
+            if (item.Component is IDevice device)
+            {
+                csv.Append(EscapeCsv(hierarchy)).Append(',');
+                csv.Append(EscapeCsv(device.Link.ScenePath)).Append(',');
+                csv.Append(EscapeCsv(item.Component.GetType().Name)).Append(',');
+                csv.Append(device.Link.Connected.Value).Append(',');
+                csv.Append(device.Override.Value).AppendLine();
+            }
+
+            foreach (var child in treeItem.children)
+            {
+                AppendCsvRows(csv, child, hierarchy);
+            }
+        }
+
+        private static string EscapeCsv(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return string.Empty;
+            if (value.IndexOfAny(new[] { ',', '"', '\r', '\n' }) < 0) return value;
+            return $"\"{value.Replace("\"", "\"\"")}\"";
         }
 
         private void ResetOverride()
