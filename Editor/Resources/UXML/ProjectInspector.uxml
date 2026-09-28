@@ -2,6 +2,17 @@
     <uie:Toolbar>
         <uie:ToolbarSearchField name="toolbarSearchField" />
         <uie:ToolbarButton text="Refresh" parse-escape-sequences="true" display-tooltip-when-elided="true" name="toolbarButtonRefresh" />
+        <uie:ToolbarButton text="Export CSV" parse-escape-sequences="true" display-tooltip-when-elided="true" name="toolbarButtonExport" />
+    </uie:Toolbar>
+    <uie:Toolbar name="toolbarFilters">
+        <ui:Label text="Path" style="align-self: center; margin-left: 2px;" />
+        <uie:ToolbarSearchField name="filterPath" style="width: 110px;" />
+        <ui:Label text="Type" style="align-self: center; margin-left: 4px;" />
+        <uie:ToolbarSearchField name="filterType" style="width: 110px;" />
+        <ui:Label text="Link" style="align-self: center; margin-left: 4px;" />
+        <ui:DropdownField name="filterLink" style="width: 120px;" />
+        <ui:Label text="Override" style="align-self: center; margin-left: 4px;" />
+        <ui:DropdownField name="filterOverride" style="width: 120px;" />
     </uie:Toolbar>
     <ui:VisualElement name="content" style="flex-grow: 1;" />
     <uie:Toolbar style="flex-direction: row-reverse;">

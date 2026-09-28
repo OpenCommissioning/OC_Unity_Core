@@ -52,13 +52,16 @@ namespace OC.Editor
             return ResampleTreeViewData(root);
         }
 
-        public static List<TreeViewItemData<HierarchyItem>> FilterByName(this List<TreeViewItemData<HierarchyItem>> source, string name)
+        public static List<TreeViewItemData<HierarchyItem>> Filter(
+            this List<TreeViewItemData<HierarchyItem>> source,
+            Func<HierarchyItem, bool> matches)
         {
             var root = new HierarchyItem("root", null);
 
             foreach (var item in source)
             {
-                root.Children.AddRange(GetChildrenByFilteredName(item.data, name));
+                var filteredItem = Filter(item.data, matches);
+                if (filteredItem != null) root.Children.Add(filteredItem);
             }
             
             return ResampleTreeViewData(root);
@@ -96,23 +99,18 @@ namespace OC.Editor
             }
         }
 
-        private static List<HierarchyItem> GetChildrenByFilteredName(HierarchyItem source, string name)
+        private static HierarchyItem Filter(HierarchyItem source, Func<HierarchyItem, bool> matches)
         {
-            var result = new List<HierarchyItem>();
-
-            if (source.HasChildren)
+            var filteredChildren = new List<HierarchyItem>();
+            foreach (var child in source.Children)
             {
-                foreach (var child in source.Children)
-                {
-                    result.AddRange(GetChildrenByFilteredName(child, name));
-                }
-            }
-            else
-            {
-                if (source.Name.Contains(name, StringComparison.OrdinalIgnoreCase)) result.Add(source);
+                var filteredChild = Filter(child, matches);
+                if (filteredChild != null) filteredChildren.Add(filteredChild);
             }
 
-            return result;
+            if (filteredChildren.Count == 0 && !matches(source)) return null;
+
+            return new HierarchyItem(source.Name, source.Component, filteredChildren);
         }
     }
 }
