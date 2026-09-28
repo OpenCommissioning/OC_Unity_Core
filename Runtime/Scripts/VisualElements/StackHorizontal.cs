@@ -3,10 +3,16 @@ using UnityEngine.UIElements;
 
 namespace OC.VisualElements
 {
+#if UNITY_6000_3_OR_NEWER
+    [UxmlElement]
+    public partial class StackHorizontal : VisualElement
+    {
+#else
     public class StackHorizontal : VisualElement
     {
         public new class UxmlFactory : UxmlFactory<StackHorizontal, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
+#endif
          
         private const string USS = "StyleSheet/oc-default";
         private const string USS_CLASS_NAME = "stack-horizontal";
