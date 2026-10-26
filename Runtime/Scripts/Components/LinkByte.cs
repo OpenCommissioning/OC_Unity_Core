@@ -43,16 +43,41 @@ namespace OC.Components
         {
             if (!_link.Connected) return;
             if (_link.ControlData == _value) return;
-            
+
+            if (_link.ControlData.GetBit(0) != _value.GetBit(0))
+            {
+                OnBit0Changed.Invoke(_link.ControlData.GetBit(0));
+            }
+            if (_link.ControlData.GetBit(1) != _value.GetBit(1))
+            {
+                OnBit1Changed.Invoke(_link.ControlData.GetBit(1));
+            }
+            if (_link.ControlData.GetBit(2) != _value.GetBit(2))
+            {
+                OnBit2Changed.Invoke(_link.ControlData.GetBit(2));
+            }
+            if (_link.ControlData.GetBit(3) != _value.GetBit(3))
+            {
+                OnBit3Changed.Invoke(_link.ControlData.GetBit(3));
+            }
+            if (_link.ControlData.GetBit(4) != _value.GetBit(4))
+            {
+                OnBit4Changed.Invoke(_link.ControlData.GetBit(4));
+            }
+            if (_link.ControlData.GetBit(5) != _value.GetBit(5))
+            {
+                OnBit5Changed.Invoke(_link.ControlData.GetBit(5));
+            }
+            if (_link.ControlData.GetBit(6) != _value.GetBit(6))
+            {
+                OnBit6Changed.Invoke(_link.ControlData.GetBit(6));
+            }
+            if (_link.ControlData.GetBit(7) != _value.GetBit(7))
+            {
+                OnBit7Changed.Invoke(_link.ControlData.GetBit(7));
+            }
+
             _value = _link.ControlData;
-            OnBit0Changed.Invoke(_link.ControlData.GetBit(0));
-            OnBit1Changed.Invoke(_link.ControlData.GetBit(1));
-            OnBit2Changed.Invoke(_link.ControlData.GetBit(2));
-            OnBit3Changed.Invoke(_link.ControlData.GetBit(3));
-            OnBit4Changed.Invoke(_link.ControlData.GetBit(4));
-            OnBit5Changed.Invoke(_link.ControlData.GetBit(5));
-            OnBit6Changed.Invoke(_link.ControlData.GetBit(6));
-            OnBit7Changed.Invoke(_link.ControlData.GetBit(7));
         }
 
         public void SetDataBit(int index, bool value)
