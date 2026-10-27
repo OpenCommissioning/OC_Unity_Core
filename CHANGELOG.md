@@ -1,3 +1,11 @@
+## [1.3.17](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.16...v1.3.17) (2026-10-27)
+
+
+### Bug Fixes
+
+* LinkByte ([3e2c337](https://github.com/OpenCommissioning/OC_Unity_Core/commit/3e2c3372a11e27e7f9c99ca28db517f1391992f2))
+* support modern UXML registration for StackHorizontal ([2b6b1fb](https://github.com/OpenCommissioning/OC_Unity_Core/commit/2b6b1fb75c7c33bd9c6a2abe3ef81f4abacffeb7)), closes [#139](https://github.com/OpenCommissioning/OC_Unity_Core/issues/139)
+
 ## [1.3.9](https://github.com/OpenCommissioning/OC_Unity_Core/compare/v1.3.8...v1.3.9) (2026-07-14)
 
 
