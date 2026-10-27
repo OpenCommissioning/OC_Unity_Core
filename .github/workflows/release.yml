@@ -5,6 +5,10 @@ on:
     branches: [master]
   workflow_dispatch:
 
+permissions:
+  contents: write
+  id-token: write
+
 env:
   PACKAGE_NAME: OC-Core
   DEFAULT_BRANCH: master
@@ -13,9 +17,19 @@ env:
 
 jobs:
   build-package:
+    # The release commit is pushed with the app token and triggers this workflow again
+    if: ${{ !startsWith(github.event.head_commit.message, 'chore(release):') }}
     runs-on: ubuntu-latest
     
     steps:
+      # Token of the release GitHub App, which is a bypass actor of the ruleset
+      - name: Create app token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+    
       - name: Checkout
         uses: actions/checkout@v3
         with:
