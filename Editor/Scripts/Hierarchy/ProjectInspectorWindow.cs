@@ -26,11 +26,13 @@ namespace OC.Editor
         private ToolbarButton _toolbarButtonReset;
         private ToolbarSearchField _filterPath;
         private ToolbarSearchField _filterType;
+        private ToolbarSearchField _filterControlType;
         private DropdownField _filterLink;
         private DropdownField _filterOverride;
         private string _searchQuery = string.Empty;
         private string _pathQuery = string.Empty;
         private string _typeQuery = string.Empty;
+        private string _controlTypeQuery = string.Empty;
         private StateFilter _linkFilter = StateFilter.All;
         private StateFilter _overrideFilter = StateFilter.All;
 
@@ -59,6 +61,7 @@ namespace OC.Editor
             _toolbarButtonReset = rootVisualElement.Q<ToolbarButton>("toolbarButtonReset");
             _filterPath = rootVisualElement.Q<ToolbarSearchField>("filterPath");
             _filterType = rootVisualElement.Q<ToolbarSearchField>("filterType");
+            _filterControlType = rootVisualElement.Q<ToolbarSearchField>("filterControlType");
             _filterLink = rootVisualElement.Q<DropdownField>("filterLink");
             _filterOverride = rootVisualElement.Q<DropdownField>("filterOverride");
 
@@ -73,6 +76,7 @@ namespace OC.Editor
             _toolbarButtonReset.clicked += ResetOverride;
             _filterPath.RegisterValueChangedCallback(OnPathFilterChanged);
             _filterType.RegisterValueChangedCallback(OnTypeFilterChanged);
+            _filterControlType.RegisterValueChangedCallback(OnControlTypeFilterChanged);
             _filterLink.RegisterValueChangedCallback(OnLinkFilterChanged);
             _filterOverride.RegisterValueChangedCallback(OnOverrideFilterChanged);
             
@@ -91,6 +95,7 @@ namespace OC.Editor
             if (_toolbarButtonReset != null) _toolbarButtonReset.clicked -= ResetOverride;
             _filterPath?.UnregisterValueChangedCallback(OnPathFilterChanged);
             _filterType?.UnregisterValueChangedCallback(OnTypeFilterChanged);
+            _filterControlType?.UnregisterValueChangedCallback(OnControlTypeFilterChanged);
             _filterLink?.UnregisterValueChangedCallback(OnLinkFilterChanged);
             _filterOverride?.UnregisterValueChangedCallback(OnOverrideFilterChanged);
         }
@@ -143,7 +148,7 @@ namespace OC.Editor
 
             var columnType = new Column()
             {
-                title = "Type",
+                title = "Simulation Type",
                 stretchable = true,
                 minWidth = 80f
             };
@@ -160,6 +165,27 @@ namespace OC.Editor
 
                 label.style.display = DisplayStyle.Flex;
                 label.text = item.Component.GetType().Name;
+            };
+
+            var columnControlType = new Column()
+            {
+                title = "Control Type",
+                stretchable = true,
+                minWidth = 80f
+            };
+            columnControlType.bindCell += (element, i) =>
+            {
+                var item = multiColumnTreeView.GetItemDataForIndex<HierarchyItem>(i);
+                if (element is not Label label) return;
+
+                if (item.Component is not IDevice device)
+                {
+                    label.style.display = DisplayStyle.None;
+                    return;
+                }
+
+                label.style.display = DisplayStyle.Flex;
+                label.text = device.Link.Type;
             };
 
             var columnLink = new Column()
@@ -184,6 +210,7 @@ namespace OC.Editor
             multiColumnTreeView.columns.Add(columnHierarchy);
             multiColumnTreeView.columns.Add(columnPath);
             multiColumnTreeView.columns.Add(columnType);
+            multiColumnTreeView.columns.Add(columnControlType);
             multiColumnTreeView.columns.Add(columnLink);
             multiColumnTreeView.columns.Add(columnOverride);
 
@@ -288,6 +315,7 @@ namespace OC.Editor
             !string.IsNullOrEmpty(_searchQuery)
             || !string.IsNullOrEmpty(_pathQuery)
             || !string.IsNullOrEmpty(_typeQuery)
+            || !string.IsNullOrEmpty(_controlTypeQuery)
             || _linkFilter != StateFilter.All
             || _overrideFilter != StateFilter.All;
 
@@ -300,6 +328,7 @@ namespace OC.Editor
             if (!string.IsNullOrEmpty(_searchQuery) && !MatchesSearchQuery(item, device)) return false;
             if (!string.IsNullOrEmpty(_pathQuery) && !Contains(device?.Link.ScenePath, _pathQuery)) return false;
             if (!string.IsNullOrEmpty(_typeQuery) && !Contains(item.Component.GetType().Name, _typeQuery)) return false;
+            if (!string.IsNullOrEmpty(_controlTypeQuery) && !Contains(device?.Link.Type, _controlTypeQuery)) return false;
             if (!MatchesState(_linkFilter, device?.Link.Connected.Value)) return false;
             if (!MatchesState(_overrideFilter, device?.Override.Value)) return false;
 
@@ -310,6 +339,7 @@ namespace OC.Editor
         {
             return Contains(item.Name, _searchQuery)
                    || Contains(item.Component.GetType().Name, _searchQuery)
+                   || Contains(device?.Link.Type, _searchQuery)
                    || Contains(device?.Link.ScenePath, _searchQuery);
         }
 
@@ -360,6 +390,12 @@ namespace OC.Editor
             RefreshTreeView();
         }
 
+        private void OnControlTypeFilterChanged(ChangeEvent<string> evt)
+        {
+            _controlTypeQuery = Sanitize(evt.newValue);
+            RefreshTreeView();
+        }
+
         private void OnLinkFilterChanged(ChangeEvent<string> evt)
         {
             _linkFilter = (StateFilter)_filterLink.index;
@@ -388,7 +424,7 @@ namespace OC.Editor
             if (string.IsNullOrEmpty(path)) return;
 
             var csv = new StringBuilder();
-            csv.AppendLine("Hierarchy,Path,Type,Link,Override");
+            csv.AppendLine("Hierarchy,Path,Simulation Type,Control Type,Link,Override");
 
             foreach (var rootItem in _displayedTreeViewData)
             {
@@ -413,6 +449,7 @@ namespace OC.Editor
                 csv.Append(EscapeCsv(hierarchy)).Append(',');
                 csv.Append(EscapeCsv(device.Link.ScenePath)).Append(',');
                 csv.Append(EscapeCsv(item.Component.GetType().Name)).Append(',');
+                csv.Append(EscapeCsv(device.Link.Type)).Append(',');
                 csv.Append(device.Link.Connected.Value).Append(',');
                 csv.Append(device.Override.Value).AppendLine();
             }

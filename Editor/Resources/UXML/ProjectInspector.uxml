@@ -7,8 +7,10 @@
     <uie:Toolbar name="toolbarFilters">
         <ui:Label text="Path" style="align-self: center; margin-left: 2px;" />
         <uie:ToolbarSearchField name="filterPath" style="width: 110px;" />
-        <ui:Label text="Type" style="align-self: center; margin-left: 4px;" />
+        <ui:Label text="Simulation Type" style="align-self: center; margin-left: 4px;" />
         <uie:ToolbarSearchField name="filterType" style="width: 110px;" />
+        <ui:Label text="Control Type" style="align-self: center; margin-left: 4px;" />
+        <uie:ToolbarSearchField name="filterControlType" style="width: 110px;" />
         <ui:Label text="Link" style="align-self: center; margin-left: 4px;" />
         <ui:DropdownField name="filterLink" style="width: 120px;" />
         <ui:Label text="Override" style="align-self: center; margin-left: 4px;" />
